@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Uses the Python Startkladde Interface (pysk) to create new user accounts. 
+# Each new user will be notified per email about his new account.
+# The program is intended to be run as cron job, so no output is generated,
+# unless an error occurds.
+
+DB_NAME="startkladde"  # MySQL Database name
+DB_USER="startkladde"  # MySQL user
+DB_PASSWORD="sk"       # MySQL password for user
+
+CLUB="FSG-Dingenskirchen"                            #create accounts for this club
+PYSK_PATH="/home/user/python-startkladde"            #path to python tools                      
+SMTP_SERVER="smtp.gmail.com"                         #smtp server address
+SMTP_USER="user@gmail.com"                           #username for smtp server
+SMTP_PASSWORD="<password>"                           #password for smtp account
+MAIL_SENDER="user@gmail.com"                         #Sender's email address
+MAIL_SUBJECT="Dein Startkladde Account"              #subject on user emails
+MAIL_FILE="${PYSK_PATH}/share/user_notification.txt" #Email message template
+
+export PYTHONPATH="${PYSK_PATH}"
+
+#Do not edit beyond this point
+
+PROGRAM_NAME=$(basename $0 .sh)
+HOST=$(hostname -i)
+LOCKFILE="${PYSK_PATH}/${PROGRAM_NAME}.lock"
+
+#Write message to stderr preceeded by program name
+function message() {
+  echo "${PROGRAM_NAME}: $*" >& 2
+}
+
+#Abort program after error
+function abort() {
+  message "$(date -u +"%Y-%m-%d %H:%M:%S UTC"): Program terminated abnormally!"
+  exit 1
+}
+
+# Uncommend for debugging only
+# message "$(date -u +"%Y-%m-%d %H:%M:%S UTC"): Starting user import"
+
+ln -s ${HOST} ${LOCKFILE} >& /dev/null
+
+if test "$?" -ne "0"; then
+  echo "Another instance seems to be running or the lockfile (${LOCKFILE}) has" 
+  echo "not been removed properly."
+  abort
+fi
+
+"${PYSK_PATH}"/bin/sk.py --verbose=0 \
+                         -d "${DB_NAME}" \
+                         -u "${DB_USER}" \
+                         -p "${DB_PASSWORD}" \
+                         create-users \
+                         -c "${CLUB}" \
+                         -H "${SMTP_SERVER}" \
+                         -P "${SMTP_PASSWORD}" \
+                         -U "${SMTP_USER}" \
+                         -S "${MAIL_SENDER}" \
+                         -s "${MAIL_SUBJECT}" \
+                         "${MAIL_FILE}" 
+ 
+rm ${LOCKFILE} >& /dev/null
+
+if test "$?" -ne "0"; then
+  echo "Could not remove lockfile (${LOCKFILE})" 
+  abort
+fi
+
+# Uncomment for debugging only
+# message "$(date -u +"%Y-%m-%d %H:%M:%S UTC"): Program terminated successfully."
+
+exit 0

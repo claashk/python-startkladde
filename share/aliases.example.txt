@@ -1,0 +1,13 @@
+#Alias file for import from fsg Landsberg csv import
+
+# Format
+# [<category>]
+# <foreign name> : <native name>
+
+  [Launch Methods]
+  WA : Winde FSG-Dingenskirchen
+  ES : Self launch
+
+  [Pilots]
+  Hirsch, Harry : Hirsch, Harald
+  Meier, Paul: Meyr, Paul

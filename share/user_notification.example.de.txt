@@ -1,0 +1,16 @@
+Hallo ${first_name}!
+
+Du erhälst diese Email, weil Du als Pilot in der elektronischen Startkladde der FSG Dingenskirchen geführt bist.
+Ab sofort kannst Du Deine Flüge online auf der Homepage der FSG (http://www.fsg-dingenskirchen.de) abrufen.
+
+Deine Zugangsdaten lauten
+Nutzername: ${username}
+Passwort  : ${password}
+
+BITTE ÄNDERE DEIN PASSWORD BEIM NÄCHSTEN LOGIN ! (Dies ist über das Menü "Sitzung..." -> "Passwort ändern" im oberen Bereich
+des Startkladde Fensters möglich.)
+
+Bei Fragen, Probleme oder Anregungen kannst Du Dich jederzeit an mich wenden, am besten per email an webmaster@fsg-dingenskirchen.de
+
+Viele Grüße
+Der Webmaster

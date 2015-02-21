@@ -1,0 +1,50 @@
+These scripts are intended to synchronise the startkladde laptop used to run
+startkladde (client) with a web-server (the server) running the startkladde web
+interface.
+
+The client is assumed to have two accounts:
+ - flight
+ - admin (not the same as root)
+
+The mysql database on the client has two accounts:
+- startkladde is the functional account used by the startkladde program
+- backup has some additional rights needed to perform backup operations
+  on the database. The scripts should be run as user backup
+ 
+The server is assumed to have an account sync.
+
+The flight account is intended as general access acount which is used to run
+startkladde. Since this account is basically open to the public, the rights
+of this account should be restricted to a minimum. It should e.g. not have read
+access to any scripts containing passwords in clear text or any sensitive ssh
+key files.
+
+The admin account is the owner of all scripts for sync and should have more
+rights in terms of database administration.
+
+The backup process runs as follows:
+- flight calls the startkladde_sync_client script. Since the script belongs to
+  admin, the right to execute this script as admin must be granted to flight
+  using visudo
+
+- The startkladde_backup script is run by admin to create a backup file, which
+  is transferred to the server using scp. Scp performs password-less login on
+  the server using RSA. For this to work a public / private key pair has to
+  exist in /home/admin/.ssh. The public key id_rsa.pub must be made availabe to
+  the server.
+  
+- The server must be configured to allow password-less login via ssh. This
+  requires to add the public key of the client to
+  /home/sync/.ssh/authorized_keys on the server. The respective line in
+  authorized_keys should have the form (without any newlines):
+    command="<path to startkladde_sync_server.sh>",no-port-forwarding,
+    no-X11-forwarding,no-agent-forwarding,no-pty,<pub-key> 
+  This automatically executes the sync_server script and exits and thus permits
+  minimal possibilities for attackers.
+  
+- The sync_server script copies the backup file using scp, performs a backup of
+  the current database using startkladde_backup and then restores the database
+  using startkladde_restore with the backup file copied from the client.
+  
+Claas H. Köhler (claashk@web.de)
+April 2013
