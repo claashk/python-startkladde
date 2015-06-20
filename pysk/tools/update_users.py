@@ -101,9 +101,20 @@ class UpdateUsers(ToolBase):
     def createUserAccounts(self):
         """Create user accounts and sent emails.
         """
+        clubMessage="for all clubs"
+        if self.config.club:
+            clubMessage="for club '{0}'".format(self.config.club)
+            
+        self.log("Creating user accounts {0} ...\n".format(clubMessage),
+                 verbose=1)
+        
         for pilot, user, pwd in self.parent.db.createUsersFromPilots():
        
+            self.log("Creating account for pilot {0} ...\n".format(pilot),
+                      verbose=3)
+
             if self.config.club and self.config.club.lower() != pilot.club.lower():
+                self.log("Skipped (account exists)\n", verbose=3)
                 continue
             
             pilot.email= pilot.getCommentField("email")
@@ -114,12 +125,18 @@ class UpdateUsers(ToolBase):
                           .format(pilot) )
                 continue
             
-            pilot.password= pwd
-            
+            pilot.password= pwd            
+            self.log("Sending notification email to {0} ...\n"
+                     .format(pilot.email),
+                     verbose=3)
             self.mailer( recipients=[pilot],
                          subject= self.config.subject,
                          sender= self.config.sender )
             
+            self.log("Adding user '{0}' to database ...\n"
+                     .format(user.username),
+                     verbose=3)
+
             self.parent.db.insertUsers([user])
             self.log("Successfully added user {0}\n".format(user.username),
                      verbose=2)        
