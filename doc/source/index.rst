@@ -5,9 +5,17 @@
 
 Welcome to python-startkladde's documentation!
 ==============================================
-Python startkladde is a python interface to the Startkladde database. It is
-intended for maintenance tasks typically executed by the admin responsible for
-the Startkladde Database and the web interface.
+Python startkladde is a python interface to the
+`Startkladde <http://startkladde.sourceforge.net/>`_ database. It is intended as
+a maintenance tool for admins who have to maintain either the Startkladde
+Database and/or the associated web interface.
+
+The python interface consists of a package called skpy and a set of executable
+tools, which provide the functionality implemented in the package from the
+command line.
+
+:doc:`modules/pysk` contains several sub-packages, which group the different
+python modules by their respective functionality.
 
 Contents:
 
@@ -17,7 +25,11 @@ Contents:
    binaries/executables
    modules/modules
 
-
+Links
+=====
+* `Startkladde on GitHub <https://github.com/startkladde/startkladde>`_
+* `Startkladde Webinterface on GitHub <https://github.com/startkladde/sk_web>`_
+   
 Indices and tables
 ==================
 

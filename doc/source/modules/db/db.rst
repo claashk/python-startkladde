@@ -1,6 +1,9 @@
 The db package
 ================
-Contains several database tools.
+The database sub-package pysk.db contains several modules for to read and
+manipulate to startkladde database.
+
+
 
 .. toctree::
    :maxdepth: 2

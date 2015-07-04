@@ -10,14 +10,11 @@ from traceback import print_exc
 class ToolBase(object):
     """Base class for command line tools
     
-    Parameters
-    ----------
-    parent Parent, e.g. if tool is used as sub-tool of another tool. Defaults
-           to None.
-           
-    description Description forwarded to ArgumentParser.
-
-    kwargs Keyword arguments forwarded to constructor of ArgumentParser   
+    Arguments:
+        parent: Parent, e.g. if tool is used as sub-tool of another tool.
+           Defaults to None.
+        description: Description forwarded to ArgumentParser.
+        kwargs: Keyword arguments forwarded to constructor of ArgumentParser   
     """
     
     def __init__(self, parent= None,
@@ -44,10 +41,9 @@ class ToolBase(object):
     def __call__(self, args=None):
         """Process command line options and invoke self._exec
         
-        Parameters
-        ----------
-        args Command line arguments forwarded to argparse. Defaults to None
-        (i.e. sys.argv)
+        Arguments:
+            args: Command line arguments forwarded to argparse. Defaults to
+               None. (i.e. sys.argv)
         """
         if self.config.parseCommandLine:
             self.parseCommandLineOptions(args)
@@ -61,13 +57,11 @@ class ToolBase(object):
         self.printHelp()
 
 
-
     def helpMessage(self):
         """Get help message as string
         
-        Returns
-        -------
-        Help message as string
+        Return:
+            Help message as string
         """
         msg= self.parser.format_help()
         
@@ -78,20 +72,21 @@ class ToolBase(object):
             
             msg+= parentHelp[pos:].replace("optional arguments",
                                            "\nglobal arguments")      
-
         return msg
-
 
 
     def displayHelp(self):
         """Print help to self.config.logStream
         """
         self.config.logStream.write( self.helpMessage() + "\n" )
-        
-            
+                
                 
     def parseCommandLineOptions(self, args=None):
         """Parse command line options
+        
+        Arguments:
+            args: Arguments to parse. If None, defaults to command line
+                arguments. Defaults to None.
         """
         config= self.parser.parse_args(args)
 
@@ -101,16 +96,14 @@ class ToolBase(object):
         self.importConfiguration(config)
 
 
-
     def log(self, message, verbose=0):
         """Print log message to output stream
         
-        Parameters
-        ----------
-        message Message to print to stream
-        
-        verbose Verbose mode. Message is only printed, if self.verbose is
-                greater or equal this value. Defaults to 0 (print always)
+        Arguments:
+            message (string): Message to print to stream
+            verbose (int): Verbose mode. Message is only printed, if
+               self.verbose is greater or equal this value. Defaults to 0
+               (print always)
         """
         if self.config.verbose < verbose:
             return
@@ -118,49 +111,39 @@ class ToolBase(object):
         self.config.logStream.write( message )
 
 
-
     def warn(self, message):
         """Print warning message to output stream
         
-        Parameters
-        ----------
-        message Message to print to stream
+        Arguments:
+            message (str): Message to print to stream
         """
         self.log("WARNING: {0}".format(message))
-
 
 
     def error(self, message):
         """Print error message to output stream
         
-        Parameters
-        ----------
-        message Message to print to stream
+        Arguments:
+            message (str): Message to print to stream
         """
         self.log("ERROR: {0}".format(message))
         self.nErrors+= 1
         
 
-
     def mayOverwrite(self, path=None, message=None, retries=None):
         """Check if a given file may be overwritten.
         
+        Arguments:
+            path (str): Path to file. Ignored if message is specified.
+            message (str): Message displayed. Defaults to '<path> exists.
+               Overwrite (yes/no) ?'
+            retries (int): Number of retries allowed. An IOError is raised if
+               the number is exceeded. A value of None, allows for infinite
+               retries. Default is None.
         
-        Parameters
-        ----------
-        path Path to file. Ignored if message is specified.
-        
-        message Message displayed. Defaults to '<path> exists. Overwrite
-                (yes/no) ?'
-        
-        retries Number of retries allowed. An IOError is raised when
-                the number is exceeded. A value of None, allows for infinite
-                retries. Default is None.
-        
-        Return
-        ------
-        True if and only if either self.config.force is True or the user
-        approves.
+        Return:
+            True if and only if either self.config.force is True or the user
+            approves.
         """
         if self.config.force:
             return True
@@ -196,9 +179,8 @@ class ToolBase(object):
         A stack trace is printed in addition to the error message, if
         config.debug is set to True.
         
-        Returns
-        -------
-        exit code
+        Return:
+            exit code
         """
         state={0: "successfully", 1: "abnormally"}
         exitCode=1
@@ -236,9 +218,8 @@ class ToolBase(object):
         Adds each attribute found in config to the current configuration.
         Existing attributes will be overwritten.        
         
-        Parameters
-        ----------
-        config Configuration to copy
+        Arguments:
+            config: Configuration to copy
         """
         for attr in dir(config):
             if attr.startswith('__'):
@@ -255,13 +236,13 @@ class ToolBase(object):
     def defaultConfiguration():
         """Get Default Configuration Options
         
-        Returns
-        -------
-        Default configuration object with the following arguments
-        - force= False
-        - logStream= sys.stderr
-        - parseCommandLine= True
-        - verbose= 1
+        Return:
+            Default configuration object with the following arguments
+            
+            - force= False
+            - logStream= sys.stderr
+            - parseCommandLine= True
+            - verbose= 1
         """
         config= argparse.Namespace()
         config.force= False
@@ -271,8 +252,3 @@ class ToolBase(object):
         config.debug= False
 
         return config        
-
-
-
-
-                    
