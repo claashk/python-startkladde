@@ -6,15 +6,15 @@ from operator import attrgetter
 from pysk.utils import UserQuery
 
 #Warning flags
-NONE                       = 0x0000
-ALL                        = 0xffff
-MISSING_DEPARTURE_TIME     = 0x0001
-MISSING_LANDING_TIME       = 0x0002
-MISSING_DEPARTURE_LOCATION = 0x0004
-MISSING_LANDING_LOCATION   = 0x0008
-MISSING_LAUNCH_METHOD      = 0x0010
-MISSING_PILOT              = 0x0020
-MISSING_PLANE              = 0x0040
+NONE                       = 0x0000 #: No warnings
+ALL                        = 0xffff #: All warnings are set
+MISSING_DEPARTURE_TIME     = 0x0001 #: Record is lacking departure time
+MISSING_LANDING_TIME       = 0x0002 #: Record is lacking landing time
+MISSING_DEPARTURE_LOCATION = 0x0004 #: Record is lacking departure location
+MISSING_LANDING_LOCATION   = 0x0008 #: Record is lacking landing location
+MISSING_LAUNCH_METHOD      = 0x0010 #: Record is lacking launch method information
+MISSING_PILOT              = 0x0020 #: Record is lacking pilot information
+MISSING_PLANE              = 0x0040 #: Record is missing airplane information
 
 WARNINGS={ MISSING_DEPARTURE_TIME    : "missing departure time",
            MISSING_LANDING_TIME      : "missing landing time",
@@ -23,12 +23,12 @@ WARNINGS={ MISSING_DEPARTURE_TIME    : "missing departure time",
            MISSING_LAUNCH_METHOD     : "missing launch method",
            MISSING_PILOT             : "missing pilot",
            MISSING_PLANE             : "missing plane"  }
-
+"""Dictionary containing a warning string message for each warning flag"""
 
 #Modes
-INTERACTIVE         = 1
-IGNORE_ALL_CONFLICTS= 2
-REJECT_ON_CONFLICT  = 3
+INTERACTIVE         = 1 #: Prompts user on conflict for manual resolution
+IGNORE_ALL_CONFLICTS= 2 #: Import all records regardless of eventual conflicts
+REJECT_ON_CONFLICT  = 3 #: Do not import records with conflicts
 
 
 class ConflictHandler(object):

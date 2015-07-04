@@ -23,7 +23,7 @@ Contents:
    :maxdepth: 2
 
    binaries/executables
-   modules/modules
+   modules/pysk
    github
 
 Links

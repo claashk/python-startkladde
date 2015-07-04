@@ -1,12 +1,11 @@
-.. python-startkladde documentation master file, created by
-   sphinx-quickstart on Sun Feb 22 14:18:23 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 The pysk package
 ================
-Pysk is the main package of python startkladde. It contains several submodules.
-Contents:
+Almost all functionality provided by Python Startkladde is implemented in several
+modules. These modules are distributed over several packages for different
+purposes.
+
+All modules are summarised in the main package called :py:mod:`pysk` (for python
+startkladde). This module contains the following sub-modules:
 
 .. toctree::
    :maxdepth: 2
@@ -14,5 +13,9 @@ Contents:
    db/db
    tools/tools
    utils/utils
+
+Pysk is the main package of python startkladde. It contains several submodules.
+Contents:
+
 
 .. automodule:: pysk

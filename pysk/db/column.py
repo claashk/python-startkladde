@@ -3,6 +3,15 @@
 
 class Column(object):
     """Represenation of a single column in a MySQL Table
+
+    Arguments:
+        name: Column name
+        dataType: Data type
+        allowsNull: True if and only if NULL is a valid value
+        index: Index type of this column. PRI (primary), UNI (unique) or
+           MUL (multiple)
+        defaultValue: The default value for the column
+        extra: Extra information, such as 'auto_increment'
     """
     
     def __init__(self, name=None,
@@ -11,24 +20,12 @@ class Column(object):
                        index=None,
                        defaultValue=None,
                        extra='' ):
-        """Construt column
-    
-        Arguments:
-            name: Column name
-            dataType: Data type
-            allowsNull: True if and only if NULL is a valid value
-            index: Index type of this column. PRI (primary), UNI (unique) or
-                MUL (multiple)
-            defaultValue: The default value for the column
-            extra: Extra information, such as 'auto_increment'
-        """                       
         self.name= name
         self.dataType= dataType
         self.allowsNull= allowsNull
         self.index= index
         self.defaultValue= defaultValue
         self.extra= extra
-
         
         
     def isPrimaryIndex(self):
@@ -39,7 +36,6 @@ class Column(object):
         """
         return self.index == 'PRI'
 
-
         
     def hasAutoIncrement(self):
         """Check if column is incremented automatically
@@ -47,8 +43,7 @@ class Column(object):
         Return:
             True if and only if the current column is incremented automatically
         """
-        return 'auto_increment' in self.extra
-        
+        return 'auto_increment' in self.extra        
         
         
     def default(self):

@@ -2,14 +2,15 @@
 
 class Table():
     """MySql table instance containing some meta information about a table
+
+    Arguments:
+        columns: Iterable of :class:`pysk.db.Column` instances storing
+           information about a table column
     """    
 
     def __init__(self, columns=None):
         """Construct new table    
     
-        Arguments:
-            columns: Iterable of Column instances storing information about a
-                table column
         """    
         self.columns= []
         
@@ -23,11 +24,10 @@ class Table():
         """Insert a column into the table
         
         Arguments:
-            col: Column to insert
+            col (:class:`pysk.db.Column`): Column to insert
         """
         self.columns.append(col)
         
-
 
     def nColumns(self):
         """Get number of columns in this table
@@ -38,7 +38,6 @@ class Table():
         return len(self.columns)
 
 
-
     def format(self):
         """Returns a tuple to be passed to INSERT INTO VALUES command.
         
@@ -47,24 +46,22 @@ class Table():
         """
         return "(" + ",".join( self.nColumns() * ["%s"] ) + ")"
         
-
         
     def getColumnByName(self, name):
         """Get column with a given name
         
         Arguments:
-            name: Column name to search for
+            name(string): Column name to search for
         
         Return:
-            Column with the given name. Raises a key error if no such column
-            exists
+            pysk.db.Column instance with the given name. Raises a KeyError if no
+            such column exists
         """
         for col in self.columns:
             if col.name == name:
                 return col
                 
         raise KeyError("No such column: '{0}'".format(name))
-        
         
 
     def iterColumns(self, cls):
@@ -80,7 +77,6 @@ class Table():
             yield getattr(cls, col.name)
 
         
-
     def iterColumnNames(self):
         """Iterate over column names
         
@@ -89,7 +85,6 @@ class Table():
         """
         for col in self.columns:
             yield col.name
-        
         
         
     def toTuple(self, cls):
@@ -104,5 +99,3 @@ class Table():
         """
         return tuple( self.iterColumns(cls) )
             
-    
-

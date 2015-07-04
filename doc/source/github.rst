@@ -7,11 +7,41 @@ on GitHub and the Sphinx generated html documentation is published on
 The following sections describe how to set up the documentation and how to clone
 and push to the repository.
 
+Software Development
+--------------------
+
+Getting the source code
+^^^^^^^^^^^^^^^^^^^^^^^
+The source code can be checked out using
+
+.. code-block:: bash
+
+   git clone git@github.com:claashk/python-startkladde.git
+   
+if ssh credentials for user *claashk* are available or via https with
+
+.. code-block:: bash
+
+   git clone https://github.com/claashk/python-startkladde.git
+
+
+Workflow
+^^^^^^^^
+Bug reports, feature requests and other issues should be reported in the
+`GitHub Issue Tracker <https://github.com/claashk/python-startkladde/issues>`_.
+
+
+Contributers are encouraged to use the
+`fork & pull <https://help.github.com/articles/using-pull-requests/#fork--pull>`_ 
+development strategie based on
+`pull requests <https://help.github.com/articles/using-pull-requests/>`_. 
+
+
 Publishing Documentation with GitHub Project Pages
 --------------------------------------------------
 `GitHub <http://github.com>`_ allows to upload html documentation in a separate
 branch called *gh-pages*. The html documentation is then available at
-`http://claashk.github.io/python-startkladde`_.
+`<http://claashk.github.io/python-startkladde>`_.
 
 Setting Up the Branch
 ^^^^^^^^^^^^^^^^^^^^^
