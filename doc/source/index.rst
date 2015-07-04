@@ -24,6 +24,7 @@ Contents:
 
    binaries/executables
    modules/modules
+   github
 
 Links
 =====
