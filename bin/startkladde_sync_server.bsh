@@ -21,7 +21,7 @@ RESTORE="/home/user/bin/startkladde_restore.sh" #restore command
 
 #Do not edit beyond this point
 
-PROGRAM_NAME=$(basename $0 .sh)
+PROGRAM_NAME=$(basename $0 .bsh)
 
 #Write message to stderr preceeded by program name
 function message() {

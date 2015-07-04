@@ -4,12 +4,12 @@
 
 LOCAL_SCP="/usr/bin/scp"                         #Local scp command for file transfer
 BACKUP_DIR="/home/user/backup"                   #Directory containing backups
-BACKUP="/home/user/bin/startkladde_backup.sh"    #Backup command
+BACKUP="/home/user/bin/startkladde_backup.bsh"   #Backup command
 SERVER="user@server"                             #user@host for ssh login
 
 #Do not edit beyond this point
 
-PROGRAM_NAME=$(basename $0 .sh)
+PROGRAM_NAME=$(basename $0 .bsh)
 
 #Write message to stderr preceeded by program name
 function message() {

@@ -22,7 +22,7 @@ export PYTHONPATH="${PYSK_PATH}"
 
 #Do not edit beyond this point
 
-PROGRAM_NAME=$(basename $0 .sh)
+PROGRAM_NAME=$(basename $0 .bsh)
 HOST=$(hostname -i)
 LOCKFILE="${PYSK_PATH}/${PROGRAM_NAME}.lock"
 

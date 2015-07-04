@@ -20,7 +20,7 @@ logFile="/tmp/${key}_error.log"
 
 oDir=$(pwd)
 
-PROGRAM_NAME="$(basename $0 .sh)"
+PROGRAM_NAME="$(basename $0 .bsh)"
 
 
 function plainMessage() {

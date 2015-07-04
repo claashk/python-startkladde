@@ -12,7 +12,7 @@ IGNORE="users club flight-time-by-registration"      # list of tables which are 
 
 #Do not edit beyond this point
 
-PROGRAM_NAME="$(basename $0 .sh)"
+PROGRAM_NAME="$(basename $0 .bsh)"
 
 function plainMessage() {
   printf "$*" >&2
