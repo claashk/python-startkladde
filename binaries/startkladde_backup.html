@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Backups of the Startkladde MySQL Database &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="Executables of the python startkladde" href="executables.html" />
+    <link rel="next" title="Startkladde Backup" href="startkladde_restore.html" />
+    <link rel="prev" title="Print Launch Statistis" href="sk_stats.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="startkladde_restore.html" title="Startkladde Backup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sk_stats.html" title="Print Launch Statistis"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="executables.html" accesskey="U">Executables of the python startkladde</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="backups-of-the-startkladde-mysql-database">
+<h1>Backups of the Startkladde MySQL Database<a class="headerlink" href="#backups-of-the-startkladde-mysql-database" title="Permalink to this headline">¶</a></h1>
+<p>Backups of the Startkladde MySQL database can be performed with the bash script
+<strong class="program">startkladde_backup.bsh</strong></p>
+<div class="section" id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Permalink to this headline">¶</a></h2>
+<p>The script uses the program
+<a class="reference external" href="https://dev.mysql.com/doc/refman/5.1/en/mysqldump.html">mysqldump</a>
+to create MySQL scripts of all tables and stores them in a file called
+<code class="file docutils literal"><span class="pre">&lt;date&gt;_&lt;db&gt;_backup.tgz</span></code>, where</p>
+<ul class="simple">
+<li>&lt;date&gt; is the current date in format <em>YYYYmmdd_HHMMSS</em></li>
+<li>&lt;db&gt; is the name of the MySQL database, which has been backuped</li>
+</ul>
+</div>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>startkladde_backup.bsh &lt;dir&gt;
+</pre></div>
+</div>
+<p>The following command line options are accepted:</p>
+<dl class="option">
+<dt id="cmdoption-startkladde_backup.bsh-arg-dir">
+<code class="descname">dir</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-startkladde_backup.bsh-arg-dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>&lt;dir&gt; is the directory, where the output archives containing the backup are
+stored. Defaults to the current working directory.</p>
+</dd></dl>
+
+<p>The following envirionment variables, which may be defined inside the script,
+control the behaviour of the program:</p>
+<dl class="option">
+<dt id="cmdoption-startkladde_backup.bsh-arg-USER">
+<code class="descname">USER</code><code class="descclassname"> &lt;username&gt;</code><a class="headerlink" href="#cmdoption-startkladde_backup.bsh-arg-USER" title="Permalink to this definition">¶</a></dt>
+<dd><p>username of MySQL user performing the backup. Defaults to <em>backup</em></p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-startkladde_backup.bsh-arg-PASS">
+<code class="descname">PASS</code><code class="descclassname"> &lt;password&gt;</code><a class="headerlink" href="#cmdoption-startkladde_backup.bsh-arg-PASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Password for <code class="xref std std-option docutils literal"><span class="pre">USER</span></code>. Defaults to <em>sk</em>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-startkladde_backup.bsh-arg-DBNAME">
+<code class="descname">DBNAME</code><code class="descclassname"> &lt;database&gt;</code><a class="headerlink" href="#cmdoption-startkladde_backup.bsh-arg-DBNAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the database to backup. Defaults to <em>startkladde</em></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Backups of the Startkladde MySQL Database</a><ul>
+<li><a class="reference internal" href="#functionality">Functionality</a></li>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sk_stats.html"
+                        title="previous chapter">Print Launch Statistis</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="startkladde_restore.html"
+                        title="next chapter">Startkladde Backup</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/binaries/startkladde_backup.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/binaries/startkladde_backup.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

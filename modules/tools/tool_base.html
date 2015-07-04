@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tool Base Class &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tool-base-class">
+<h1>Tool Base Class<a class="headerlink" href="#tool-base-class" title="Permalink to this headline">¶</a></h1>
+<p>A Base class for tools, which provides the essential functionality required from
+all tools. Deriving from this class ensures seemless integration with the
+sk.py executable.</p>
+<dl class="class">
+<dt id="pysk.tools.ToolBase">
+<em class="property">class </em><code class="descclassname">pysk.tools.</code><code class="descname">ToolBase</code><span class="sig-paren">(</span><em>parent=None</em>, <em>description='A command line tool'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for command line tools</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; Parent, e.g. if tool is used as sub-tool of another tool.
+Defaults to None.</li>
+<li><strong>description</strong> &#8211; Description forwarded to ArgumentParser.</li>
+<li><strong>kwargs</strong> &#8211; Keyword arguments forwarded to constructor of ArgumentParser</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.tools.ToolBase.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process command line options and invoke self._exec</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Command line arguments forwarded to argparse. Defaults to
+None. (i.e. sys.argv)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.tools.ToolBase.defaultConfiguration">
+<em class="property">static </em><code class="descname">defaultConfiguration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.defaultConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.defaultConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Default Configuration Options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Default configuration object with the following arguments<ul class="simple">
+<li>force= False</li>
+<li>logStream= sys.stderr</li>
+<li>parseCommandLine= True</li>
+<li>verbose= 1</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.displayHelp">
+<code class="descname">displayHelp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.displayHelp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.displayHelp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print help to self.config.logStream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print error message to output stream</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) &#8211; Message to print to stream</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.helpMessage">
+<code class="descname">helpMessage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.helpMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.helpMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get help message as string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Help message as string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.importConfiguration">
+<code class="descname">importConfiguration</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.importConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.importConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy configuration options from another instance</p>
+<p>Adds each attribute found in config to the current configuration.
+Existing attributes will be overwritten.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> &#8211; Configuration to copy</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>message</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print log message to output stream</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>string</em>) &#8211; Message to print to stream</li>
+<li><strong>verbose</strong> (<em>int</em>) &#8211; Verbose mode. Message is only printed, if
+self.verbose is greater or equal this value. Defaults to 0
+(print always)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.main">
+<code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main wrapper</p>
+<p>Executes the tool as main routine. All exceptions are are caught and
+converted to error messages.</p>
+<p>The exit code is set to 0, if the program terminated successfully or to
+1 in case of errors.</p>
+<p>A stack trace is printed in addition to the error message, if
+config.debug is set to True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">exit code</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.mayOverwrite">
+<code class="descname">mayOverwrite</code><span class="sig-paren">(</span><em>path=None</em>, <em>message=None</em>, <em>retries=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.mayOverwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.mayOverwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a given file may be overwritten.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) &#8211; Path to file. Ignored if message is specified.</li>
+<li><strong>message</strong> (<em>str</em>) &#8211; Message displayed. Defaults to &#8216;&lt;path&gt; exists.
+Overwrite (yes/no) ?&#8217;</li>
+<li><strong>retries</strong> (<em>int</em>) &#8211; Number of retries allowed. An IOError is raised if
+the number is exceeded. A value of None, allows for infinite
+retries. Default is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if and only if either self.config.force is True or the user
+approves.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.parseCommandLineOptions">
+<code class="descname">parseCommandLineOptions</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.parseCommandLineOptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.parseCommandLineOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Arguments to parse. If None, defaults to command line
+arguments. Defaults to None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.ToolBase.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/tools/tool_base.html#ToolBase.warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.tools.ToolBase.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print warning message to output stream</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) &#8211; Message to print to stream</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/tools/tool_base.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../../_sources/modules/tools/tool_base.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>startkladde_sync_master.bsh &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="Executables of the python startkladde" href="executables.html" />
+    <link rel="next" title="Modules" href="../modules/modules.html" />
+    <link rel="prev" title="Synchronisation of the Startkladde Database with a Webserver" href="server_sync.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../modules/modules.html" title="Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="server_sync.html" title="Synchronisation of the Startkladde Database with a Webserver"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="executables.html" accesskey="U">Executables of the python startkladde</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="startkladde-sync-master-bsh">
+<h1>startkladde_sync_master.bsh<a class="headerlink" href="#startkladde-sync-master-bsh" title="Permalink to this headline">¶</a></h1>
+<p>A bash script which synchronises the master database with a database on a
+webserver.</p>
+<p>The script performs the following tasks:</p>
+<ol class="arabic simple">
+<li>Execute <a class="reference internal" href="startkladde_backup.html"><em>startkladde_backup.bsh</em></a> on the local
+machine (<em>master</em>) to create a backup file.</li>
+<li>Send the backup file to the remote host (<em>server</em>) via scp.</li>
+</ol>
+<p>The server is expected to be configured as described in the article
+<a class="reference internal" href="server_sync.html"><em>webserver synchronisation</em></a> to process the incoming backup
+file with a call to <code class="xref doc docutils literal"><span class="pre">startkladde_sync_server.bsh</span></code></p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>startkladde_sync_master.bsh
+</pre></div>
+</div>
+<p>The following envirionment variables, which may be defined inside the script,
+control the behaviour of the program:</p>
+<dl class="option">
+<dt id="cmdoption-startkladde_sync_master.bsh-arg-LOCAL_SCP">
+<code class="descname">LOCAL_SCP</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-startkladde_sync_master.bsh-arg-LOCAL_SCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to scp command on local machine. Defaults to <code class="file docutils literal"><span class="pre">/usr/bin/scp</span></code></p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-startkladde_sync_master.bsh-arg-BACKUP_DIR">
+<code class="descname">BACKUP_DIR</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-startkladde_sync_master.bsh-arg-BACKUP_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directory in which to store backups on local machine. Defaults to
+<code class="file docutils literal"><span class="pre">/home/user/backup</span></code>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-startkladde_sync_master.bsh-arg-BACKUP">
+<code class="descname">BACKUP</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-startkladde_sync_master.bsh-arg-BACKUP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to the <a class="reference internal" href="startkladde_backup.html"><em>startkladde_backup.bsh</em></a> script on the
+local machine. Defaults to <code class="file docutils literal"><span class="pre">/home/user/bin/startkladde_backup.bsh</span></code></p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-startkladde_sync_master.bsh-arg-SERVER">
+<code class="descname">SERVER</code><code class="descclassname"> &lt;user&gt;&#64;&lt;server&gt;</code><a class="headerlink" href="#cmdoption-startkladde_sync_master.bsh-arg-SERVER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Username on remote server and URI or IP of the server. Defaults to
+<strong>user&#64;server</strong></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">startkladde_sync_master.bsh</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="server_sync.html"
+                        title="previous chapter">Synchronisation of the Startkladde Database with a Webserver</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../modules/modules.html"
+                        title="next chapter">Modules</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/binaries/startkladde_sync_master.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/binaries/startkladde_sync_master.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

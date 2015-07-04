@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pysk.db.table &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pysk.db.table</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table">[docs]</a><span class="k">class</span> <span class="nc">Table</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;MySql table instance containing some meta information about a table</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct new table    </span>
+<span class="sd">    </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            columns: Iterable of Column instances storing information about a</span>
+<span class="sd">                table column</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">if</span> <span class="n">columns</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">appendColumn</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+                
+                
+<div class="viewcode-block" id="Table.appendColumn"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.appendColumn">[docs]</a>    <span class="k">def</span> <span class="nf">appendColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert a column into the table</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            col: Column to insert</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        
+
+</div>
+<div class="viewcode-block" id="Table.nColumns"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.nColumns">[docs]</a>    <span class="k">def</span> <span class="nf">nColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get number of columns in this table</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            Number of columns in this table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+
+</div>
+<div class="viewcode-block" id="Table.format"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a tuple to be passed to INSERT INTO VALUES command.</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            format string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">nColumns</span><span class="p">()</span> <span class="o">*</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+        
+
+        </div>
+<div class="viewcode-block" id="Table.getColumnByName"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.getColumnByName">[docs]</a>    <span class="k">def</span> <span class="nf">getColumnByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get column with a given name</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            name: Column name to search for</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            Column with the given name. Raises a key error if no such column</span>
+<span class="sd">            exists</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">col</span>
+                
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;No such column: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        
+        
+</div>
+<div class="viewcode-block" id="Table.iterColumns"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.iterColumns">[docs]</a>    <span class="k">def</span> <span class="nf">iterColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterates over the columns of a given object</span>
+<span class="sd">        </span>
+<span class="sd">        The object must provide an attribute for each column in the current</span>
+<span class="sd">        table.</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            Generator over the table columns filled with the values of cls</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>            
+            <span class="k">yield</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        
+</div>
+<div class="viewcode-block" id="Table.iterColumnNames"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.iterColumnNames">[docs]</a>    <span class="k">def</span> <span class="nf">iterColumnNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterate over column names</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            Generator over column names of this table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span>
+        
+        
+        </div>
+<div class="viewcode-block" id="Table.toTuple"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.toTuple">[docs]</a>    <span class="k">def</span> <span class="nf">toTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert class into tuple based on attributes.</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            cls: Class containing an attribute with same name as each table</span>
+<span class="sd">                column.</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            Tuple intended for insertion into table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterColumns</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span> <span class="p">)</span>
+            
+    
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

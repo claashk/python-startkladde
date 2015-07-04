@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Synchronisation of the Startkladde Database with a Webserver &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="Startkladde Backup" href="startkladde_restore.html" />
+    <link rel="next" title="startkladde_sync_master.bsh" href="startkladde_sync_master.html" />
+    <link rel="prev" title="Startkladde Backup" href="startkladde_restore.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="startkladde_sync_master.html" title="startkladde_sync_master.bsh"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="startkladde_restore.html" title="Startkladde Backup"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="executables.html" >Executables of the python startkladde</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="startkladde_restore.html" accesskey="U">Startkladde Backup</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="synchronisation-of-the-startkladde-database-with-a-webserver">
+<h1><a class="toc-backref" href="#id1">Synchronisation of the Startkladde Database with a Webserver</a><a class="headerlink" href="#synchronisation-of-the-startkladde-database-with-a-webserver" title="Permalink to this headline">¶</a></h1>
+<p>This page desribes the synchronisation of a publicly accessible webserver
+running the Startkladde Webinterface with a master device running the Startkladde
+executable program.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#synchronisation-of-the-startkladde-database-with-a-webserver" id="id1">Synchronisation of the Startkladde Database with a Webserver</a><ul>
+<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
+<li><a class="reference internal" href="#master-configuration" id="id3">Master Configuration</a><ul>
+<li><a class="reference internal" href="#the-flight-account" id="id4">The <em>flight</em> Account</a></li>
+<li><a class="reference internal" href="#the-account-admin" id="id5">The Account <em>admin</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-configuration" id="id6">Server Configuration</a></li>
+<li><a class="reference internal" href="#backup-process" id="id7">Backup Process</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This page describes the synchronisation of the main startkladde database with a
+webserver for decentralised access to the flight database. It is assumed, that
+a single master database exists on a device, which is used to log flights at
+the airfield (the <em>master</em>). Additionally a web server (the <em>server</em>) with a
+copy of the master database exists, which runs the Startkladde webinterface. The
+goal is to export the master database to the server database.</p>
+</div>
+<div class="section" id="master-configuration">
+<h2><a class="toc-backref" href="#id3">Master Configuration</a><a class="headerlink" href="#master-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The master is a linux system with the following accounts:</p>
+<ul class="simple">
+<li><em>flight</em>: account used for running the Startkladde executable</li>
+<li><em>admin</em>: account for database &amp; backup administration (not the same as root)
+This account should be used to execute the backup and synchronisation scripts.</li>
+<li><em>root</em>: account for system administration</li>
+</ul>
+<p>The mysql database on the master has two accounts:</p>
+<ul class="simple">
+<li><em>startkladde</em> is the functional account used by the startkladde program</li>
+<li><em>backup</em> has some additional rights needed to perform backup operations
+on the database.</li>
+</ul>
+<div class="section" id="the-flight-account">
+<h3><a class="toc-backref" href="#id4">The <em>flight</em> Account</a><a class="headerlink" href="#the-flight-account" title="Permalink to this headline">¶</a></h3>
+<p>The <em>flight</em> account is intended as general access acount which is used to run
+startkladde. Since this account is basically open to the public, the rights
+of this account should be restricted to a minimum. It should e.g. not have read
+access to any scripts containing passwords in clear text or any sensitive ssh
+key files.</p>
+</div>
+<div class="section" id="the-account-admin">
+<h3><a class="toc-backref" href="#id5">The Account <em>admin</em></a><a class="headerlink" href="#the-account-admin" title="Permalink to this headline">¶</a></h3>
+<p>The admin account is the owner of all scripts for sync and should have more
+rights in terms of database administration. The <em>admin</em> account must be
+configured to act as an ssh client with passwordless login.</p>
+</div>
+</div>
+<div class="section" id="server-configuration">
+<h2><a class="toc-backref" href="#id6">Server Configuration</a><a class="headerlink" href="#server-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The server has a dedicated account <em>sync</em> for the synchronisation.</p>
+</div>
+<div class="section" id="backup-process">
+<h2><a class="toc-backref" href="#id7">Backup Process</a><a class="headerlink" href="#backup-process" title="Permalink to this headline">¶</a></h2>
+<p>The backup follows the following sequence:</p>
+<ol class="arabic simple">
+<li><em>flight</em> executes the
+<a class="reference internal" href="startkladde_sync_master.html"><em>startkladde_sync_master.bsh</em></a> script on the
+master. Since the script belongs to <em>admin</em>, the right to execute this script
+as <em>admin</em> must be granted to flight using
+<a class="reference external" href="http://www.sudo.ws/man/1.8.13/visudo.man.html">visudo</a></li>
+<li>The startkladde_backup script is run by admin to create a backup file, which
+is transferred to the server using scp. Scp performs password-less login on
+the server using RSA. For this to work a public / private key pair has to
+exist in /home/admin/.ssh. The public key id_rsa.pub must be made availabe to
+the server.</li>
+<li>The server must be configured to allow password-less login via ssh. This
+requires to add the public key of the client to
+/home/sync/.ssh/authorized_keys on the server. The respective line in
+authorized_keys should have the form (without any newlines):
+command=&#8221;&lt;path to startkladde_sync_server.sh&gt;&#8221;,no-port-forwarding,
+no-X11-forwarding,no-agent-forwarding,no-pty,&lt;pub-key&gt;
+This automatically executes the sync_server script and exits and thus permits
+minimal possibilities for attackers.</li>
+<li>The sync_server script copies the backup file using scp, performs a backup of
+the current database using startkladde_backup and then restores the database
+using startkladde_restore with the backup file copied from the client.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Synchronisation of the Startkladde Database with a Webserver</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#master-configuration">Master Configuration</a><ul>
+<li><a class="reference internal" href="#the-flight-account">The <em>flight</em> Account</a></li>
+<li><a class="reference internal" href="#the-account-admin">The Account <em>admin</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-configuration">Server Configuration</a></li>
+<li><a class="reference internal" href="#backup-process">Backup Process</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="startkladde_restore.html"
+                        title="previous chapter">Startkladde Backup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="startkladde_sync_master.html"
+                        title="next chapter">startkladde_sync_master.bsh</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/binaries/server_sync.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/binaries/server_sync.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
