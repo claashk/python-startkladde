@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pysk.db.conflict_handler &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pysk.db.conflict_handler</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stderr</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
+
+<span class="kn">from</span> <span class="nn">pysk.utils</span> <span class="kn">import</span> <span class="n">UserQuery</span>
+
+<span class="c">#Warning flags</span>
+<span class="n">NONE</span>                       <span class="o">=</span> <span class="mh">0x0000</span> <span class="c">#: No warnings</span>
+<span class="n">ALL</span>                        <span class="o">=</span> <span class="mh">0xffff</span> <span class="c">#: All warnings are set</span>
+<span class="n">MISSING_DEPARTURE_TIME</span>     <span class="o">=</span> <span class="mh">0x0001</span> <span class="c">#: Record is lacking departure time</span>
+<span class="n">MISSING_LANDING_TIME</span>       <span class="o">=</span> <span class="mh">0x0002</span> <span class="c">#: Record is lacking landing time</span>
+<span class="n">MISSING_DEPARTURE_LOCATION</span> <span class="o">=</span> <span class="mh">0x0004</span> <span class="c">#: Record is lacking departure location</span>
+<span class="n">MISSING_LANDING_LOCATION</span>   <span class="o">=</span> <span class="mh">0x0008</span> <span class="c">#: Record is lacking landing location</span>
+<span class="n">MISSING_LAUNCH_METHOD</span>      <span class="o">=</span> <span class="mh">0x0010</span> <span class="c">#: Record is lacking launch method information</span>
+<span class="n">MISSING_PILOT</span>              <span class="o">=</span> <span class="mh">0x0020</span> <span class="c">#: Record is lacking pilot information</span>
+<span class="n">MISSING_PLANE</span>              <span class="o">=</span> <span class="mh">0x0040</span> <span class="c">#: Record is missing airplane information</span>
+
+<span class="n">WARNINGS</span><span class="o">=</span><span class="p">{</span> <span class="n">MISSING_DEPARTURE_TIME</span>    <span class="p">:</span> <span class="s">&quot;missing departure time&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_LANDING_TIME</span>      <span class="p">:</span> <span class="s">&quot;missing landing time&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_DEPARTURE_LOCATION</span><span class="p">:</span> <span class="s">&quot;missing departure location&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_LANDING_LOCATION</span>  <span class="p">:</span> <span class="s">&quot;missing landing location&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_LAUNCH_METHOD</span>     <span class="p">:</span> <span class="s">&quot;missing launch method&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_PILOT</span>             <span class="p">:</span> <span class="s">&quot;missing pilot&quot;</span><span class="p">,</span>
+           <span class="n">MISSING_PLANE</span>             <span class="p">:</span> <span class="s">&quot;missing plane&quot;</span>  <span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;Dictionary containing a warning string message for each warning flag&quot;&quot;&quot;</span>
+
+<span class="c">#Modes</span>
+<span class="n">INTERACTIVE</span>         <span class="o">=</span> <span class="mi">1</span> <span class="c">#: Prompts user on conflict for manual resolution</span>
+<span class="n">IGNORE_ALL_CONFLICTS</span><span class="o">=</span> <span class="mi">2</span> <span class="c">#: Import all records regardless of eventual conflicts</span>
+<span class="n">REJECT_ON_CONFLICT</span>  <span class="o">=</span> <span class="mi">3</span> <span class="c">#: Do not import records with conflicts</span>
+
+
+<div class="viewcode-block" id="ConflictHandler"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler">[docs]</a><span class="k">class</span> <span class="nc">ConflictHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks for conflicts in database and tries to resolve them</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">mode</span><span class="o">=</span><span class="n">INTERACTIVE</span><span class="p">,</span>
+                       <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">logFunctor</span><span class="o">=</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>      <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span>  <span class="o">=</span> <span class="n">ALL</span>      
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>   <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logFunctor</span><span class="o">=</span> <span class="n">logFunctor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nInserted</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># number of inserted candidates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nDeleted</span>  <span class="o">=</span> <span class="mi">0</span> <span class="c"># Number of erased flights</span>
+   
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db</span>       <span class="o">=</span> <span class="n">db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">=</span> <span class="bp">None</span> <span class="c"># Flight to add / to investigate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span> <span class="o">=</span> <span class="n">NONE</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="o">=</span> <span class="n">UserQuery</span><span class="p">(</span><span class="n">replies</span><span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="s">&quot;abort&quot;</span><span class="p">,</span>
+                                          <span class="s">&#39;r&#39;</span><span class="p">:</span> <span class="s">&quot;replace conflicts&quot;</span><span class="p">,</span>
+                                          <span class="s">&#39;s&#39;</span><span class="p">:</span> <span class="s">&quot;skip/remove candidate&quot;</span><span class="p">,</span>
+                                          <span class="s">&#39;i&#39;</span><span class="p">:</span> <span class="s">&quot;ignore conflict&quot;</span> <span class="p">},</span>
+                                <span class="n">defaultMessage</span><span class="o">=</span><span class="s">&quot;How do you want to proceed?</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">abort</span><span class="p">,</span>
+                        <span class="s">&#39;r&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">replaceConflicts</span><span class="p">,</span>
+                        <span class="s">&#39;s&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipCandidate</span><span class="p">,</span>
+                        <span class="s">&#39;i&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">keepAll</span> <span class="p">}</span>
+                
+
+<div class="viewcode-block" id="ConflictHandler.log"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log function. Forwards messages to the callback log function.</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            message: Message to print to stream</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logFunctor</span><span class="p">(</span> <span class="n">message</span> <span class="p">)</span>
+
+
+        </div>
+<div class="viewcode-block" id="ConflictHandler.__call__"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invoke conflict handler</span>
+
+<span class="sd">        Checks if the record is valid and if conflicts exist. Depending on the</span>
+<span class="sd">        mode settings conflicts are resolved.</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            rec: Rec to investigate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">=</span> <span class="n">rec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span> <span class="o">=</span> <span class="n">NONE</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="p">):</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">INTERACTIVE</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Candidate:</span><span class="se">\n</span><span class="s">  {0}</span><span class="se">\n</span><span class="s">has warnings:</span><span class="se">\n</span><span class="s"> -&gt; {1}</span><span class="se">\n</span><span class="s">&quot;</span>
+                         <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> -&gt; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="p">())</span> <span class="p">))</span>
+                
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">INTERACTIVE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">])</span> <span class="p">]()</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">REJECT_ON_CONFLICT</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">skipCandidate</span><span class="p">()</span>
+            <span class="c">#else Mode is IGNORE_ALL_CONFLICTS -&gt; continue</span>
+                       
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="p">:</span>
+            <span class="k">return</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">handleConflicts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="p">)</span>
+
+        <span class="c">#if there is still a candidate -&gt; add it</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">insertFlights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="p">],</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            
+         
+        </div>
+<div class="viewcode-block" id="ConflictHandler.isValid"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.isValid">[docs]</a>    <span class="k">def</span> <span class="nf">isValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flight</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check flight for consistency</span>
+<span class="sd">        </span>
+<span class="sd">        Verifies that all requirements of a flight are met.</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            flight Flight to check</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">flight</span><span class="o">.</span><span class="n">departure_location</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addWarning</span><span class="p">(</span> <span class="n">MISSING_DEPARTURE_LOCATION</span> <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">flight</span><span class="o">.</span><span class="n">landing_location</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addWarning</span><span class="p">(</span> <span class="n">MISSING_LANDING_LOCATION</span> <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">flight</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s">&quot;inbound&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">flight</span><span class="o">.</span><span class="n">departure_time</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addWarning</span><span class="p">(</span> <span class="n">MISSING_DEPARTURE_TIME</span> <span class="p">)</span>
+                                
+        <span class="k">if</span> <span class="n">flight</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s">&quot;outbound&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">flight</span><span class="o">.</span><span class="n">landing_time</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addWarning</span><span class="p">(</span> <span class="n">MISSING_LANDING_TIME</span> <span class="p">)</span>
+
+        <span class="c">#TODO check training flights for students</span>
+       
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasWarnings</span><span class="p">()</span>
+
+    
+    </div>
+<div class="viewcode-block" id="ConflictHandler.handleConflicts"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.handleConflicts">[docs]</a>    <span class="k">def</span> <span class="nf">handleConflicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flight</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Identify potential conflicts for a given flight</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            flight: Flight to search conflicts for</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">iterSimilarFlights</span><span class="p">(</span> <span class="n">flight</span><span class="p">,</span>
+                                                            <span class="nb">filter</span><span class="o">=</span><span class="s">&quot;id &gt; &#39;{0}&#39;&quot;</span>
+                                                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flight</span><span class="o">.</span><span class="n">id</span><span class="p">))</span> <span class="p">)</span>
+        
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="p">:</span>
+            <span class="c">#No conflicts found</span>
+            <span class="k">return</span>
+        
+        <span class="c">#if flight to add is an exact duplicate of another flight -&gt; skip it</span>
+        <span class="k">for</span> <span class="n">other</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isDuplicate</span><span class="p">(</span><span class="n">flight</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">skipCandidate</span><span class="p">()</span>
+                <span class="k">return</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">INTERACTIVE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Candidate:</span><span class="se">\n</span><span class="s">  {0}</span><span class="se">\n</span><span class="s">has conflicts:</span><span class="se">\n</span><span class="s">  {1}</span><span class="se">\n</span><span class="s">&quot;</span>
+                     <span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="p">,</span>
+                              <span class="s">&quot;</span><span class="se">\n</span><span class="s">  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterConflicts</span><span class="p">()</span> <span class="p">)))</span>            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dialog</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">])</span> <span class="p">]()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">REJECT_ON_CONFLICT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipCandidate</span><span class="p">()</span>
+
+
+</div>
+<div class="viewcode-block" id="ConflictHandler.addWarning"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.addWarning">[docs]</a>    <span class="k">def</span> <span class="nf">addWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">warning</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set warning flag</span>
+<span class="sd">        </span>
+<span class="sd">        Sets the respective warning flag in self._flags</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            warning: Flag to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span> <span class="o">|=</span> <span class="n">warning</span>
+        
+        
+        </div>
+<div class="viewcode-block" id="ConflictHandler.enableWarning"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.enableWarning">[docs]</a>    <span class="k">def</span> <span class="nf">enableWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">warning</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enable a given warning</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            warning: Warning</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">|=</span> <span class="n">warning</span>
+        
+        
+        </div>
+<div class="viewcode-block" id="ConflictHandler.disableWarning"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.disableWarning">[docs]</a>    <span class="k">def</span> <span class="nf">disableWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">warning</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disable a given warning</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            warning: Warning to disable        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">warning</span> 
+
+</div>
+<div class="viewcode-block" id="ConflictHandler.hasWarnings"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.hasWarnings">[docs]</a>    <span class="k">def</span> <span class="nf">hasWarnings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if current instance has enabled warnings</span>
+<span class="sd">        </span>
+<span class="sd">        Return:</span>
+<span class="sd">            True if and only if this instance has at least one enabled warning</span>
+<span class="sd">            flag            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+
+</div>
+<div class="viewcode-block" id="ConflictHandler.warnings"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.warnings">[docs]</a>    <span class="k">def</span> <span class="nf">warnings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get iterable over all warnings</span>
+<span class="sd">        </span>
+<span class="sd">        Yield:</span>
+<span class="sd">            String for each active warning</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">active</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_warnings</span>
+        
+        <span class="k">for</span> <span class="n">warning</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">WARNINGS</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">warning</span> <span class="o">&amp;</span> <span class="n">active</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">message</span>
+
+
+                </div>
+<div class="viewcode-block" id="ConflictHandler.abort"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.abort">[docs]</a>    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Raise runtime error</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">=</span> <span class="bp">None</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Program aborted by user.&quot;</span><span class="p">)</span>
+        
+        
+        </div>
+<div class="viewcode-block" id="ConflictHandler.skipCandidate"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.skipCandidate">[docs]</a>    <span class="k">def</span> <span class="nf">skipCandidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Skip or remove the candidate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">deleteFlights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nDeleted</span><span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">return</span>
+
+
+</div>
+<div class="viewcode-block" id="ConflictHandler.keepAll"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.keepAll">[docs]</a>    <span class="k">def</span> <span class="nf">keepAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ignore conflicts and import/keep the candidate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+
+</div>
+<div class="viewcode-block" id="ConflictHandler.replaceConflicts"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.replaceConflicts">[docs]</a>    <span class="k">def</span> <span class="nf">replaceConflicts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Replace all conflicting records by candidate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i0</span><span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_candidate</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">candidate</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">id</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conflicts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nInserted</span><span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">i0</span><span class="o">=</span> <span class="mi">1</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">deleteFlights</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="p">[</span><span class="n">i0</span><span class="p">:]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nDeleted</span><span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span><span class="p">)</span>         
+
+
+         </div>
+<div class="viewcode-block" id="ConflictHandler.iterConflicts"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.iterConflicts">[docs]</a>    <span class="k">def</span> <span class="nf">iterConflicts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterate conflicts as strings</span>
+<span class="sd">        </span>
+<span class="sd">        Yield:</span>
+<span class="sd">            String representation of each conflict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">makeRecords</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conflicts</span> <span class="p">))</span>
+
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ConflictHandler.isDuplicate"><a class="viewcode-back" href="../../../modules/db/conflict_handler.html#pysk.db.ConflictHandler.isDuplicate">[docs]</a>    <span class="k">def</span> <span class="nf">isDuplicate</span><span class="p">(</span><span class="n">flight</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if a flight is an exact duplicate of another flight</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            flight: first flight</span>
+<span class="sd">            other: second flight</span>
+<span class="sd">            </span>
+<span class="sd">        Return:</span>
+<span class="sd">            True if and only if first flight is an exact duplicate of other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span><span class="p">(</span>    <span class="n">flight</span><span class="o">.</span><span class="n">plane_id</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">plane_id</span>
+            <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">pilot_id</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pilot_id</span> 
+            <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">copilot_id</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">copilot_id</span>
+            <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">mode</span>
+            <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span>
+            <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">launch_method_id</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">launch_method_id</span> <span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+            
+        <span class="k">if</span><span class="p">(</span>     <span class="n">flight</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s">&quot;inbound&quot;</span> <span class="ow">and</span> <span class="p">(</span> 
+                   <span class="n">flight</span><span class="o">.</span><span class="n">departure_time</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">departure_time</span>
+                <span class="ow">or</span> <span class="n">flight</span><span class="o">.</span><span class="n">departure_location</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">departure_location</span> <span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span><span class="p">(</span>     <span class="n">flight</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s">&quot;outbound&quot;</span> <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">flight</span><span class="o">.</span><span class="n">landing_time</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">landing_time</span>
+                <span class="ow">or</span>  <span class="n">flight</span><span class="o">.</span><span class="n">landing_location</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">landing_location</span> <span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+          
+        <span class="k">return</span> <span class="bp">True</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

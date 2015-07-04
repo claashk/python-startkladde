@@ -56,14 +56,15 @@
 
 <div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table">[docs]</a><span class="k">class</span> <span class="nc">Table</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;MySql table instance containing some meta information about a table</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        columns: Iterable of :class:`pysk.db.Column` instances storing</span>
+<span class="sd">           information about a table column</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Construct new table    </span>
 <span class="sd">    </span>
-<span class="sd">        Arguments:</span>
-<span class="sd">            columns: Iterable of Column instances storing information about a</span>
-<span class="sd">                table column</span>
 <span class="sd">        &quot;&quot;&quot;</span>    
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span> <span class="p">[]</span>
         
@@ -77,11 +78,10 @@
         <span class="sd">&quot;&quot;&quot;Insert a column into the table</span>
 <span class="sd">        </span>
 <span class="sd">        Arguments:</span>
-<span class="sd">            col: Column to insert</span>
+<span class="sd">            col (:class:`pysk.db.Column`): Column to insert</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
         
-
 </div>
 <div class="viewcode-block" id="Table.nColumns"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.nColumns">[docs]</a>    <span class="k">def</span> <span class="nf">nColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get number of columns in this table</span>
@@ -90,7 +90,6 @@
 <span class="sd">            Number of columns in this table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-
 
 </div>
 <div class="viewcode-block" id="Table.format"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -101,24 +100,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">nColumns</span><span class="p">()</span> <span class="o">*</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">]</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
         
-
         </div>
 <div class="viewcode-block" id="Table.getColumnByName"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.getColumnByName">[docs]</a>    <span class="k">def</span> <span class="nf">getColumnByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get column with a given name</span>
 <span class="sd">        </span>
 <span class="sd">        Arguments:</span>
-<span class="sd">            name: Column name to search for</span>
+<span class="sd">            name(string): Column name to search for</span>
 <span class="sd">        </span>
 <span class="sd">        Return:</span>
-<span class="sd">            Column with the given name. Raises a key error if no such column</span>
-<span class="sd">            exists</span>
+<span class="sd">            pysk.db.Column instance with the given name. Raises a KeyError if no</span>
+<span class="sd">            such column exists</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">col</span>
                 
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;No such column: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-        
         
 </div>
 <div class="viewcode-block" id="Table.iterColumns"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.iterColumns">[docs]</a>    <span class="k">def</span> <span class="nf">iterColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
@@ -133,8 +130,7 @@
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>            
             <span class="k">yield</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-        
-</div>
+        </div>
 <div class="viewcode-block" id="Table.iterColumnNames"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.iterColumnNames">[docs]</a>    <span class="k">def</span> <span class="nf">iterColumnNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Iterate over column names</span>
 <span class="sd">        </span>
@@ -143,7 +139,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span>
-        
         
         </div>
 <div class="viewcode-block" id="Table.toTuple"><a class="viewcode-back" href="../../../modules/db/table.html#pysk.db.Table.toTuple">[docs]</a>    <span class="k">def</span> <span class="nf">toTuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
@@ -157,9 +152,8 @@
 <span class="sd">            Tuple intended for insertion into table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterColumns</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span> <span class="p">)</span>
-            
-    
-</pre></div></div></div>
+            </div></div>
+</pre></div>
 
           </div>
         </div>

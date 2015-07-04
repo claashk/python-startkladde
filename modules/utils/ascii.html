@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The db package &mdash; python-startkladde 0.8.0 documentation</title>
+    <title>ASCII Replacements &mdash; python-startkladde 0.8.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html" />
-    <link rel="up" title="The pysk package" href="../pysk.html" />
-    <link rel="next" title="Table Class" href="table.html" />
-    <link rel="prev" title="The pysk package" href="../pysk.html" />
+    <link rel="up" title="Utils package" href="utils.html" />
+    <link rel="next" title="GitHub Related Information" href="../../github.html" />
+    <link rel="prev" title="Utils package" href="utils.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -44,13 +44,14 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="table.html" title="Table Class"
+          <a href="../../github.html" title="GitHub Related Information"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../pysk.html" title="The pysk package"
+          <a href="utils.html" title="Utils package"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../pysk.html" accesskey="U">The pysk package</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../pysk.html" >The pysk package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="utils.html" accesskey="U">Utils package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,25 +60,27 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-db-package">
-<h1>The db package<a class="headerlink" href="#the-db-package" title="Permalink to this headline">¶</a></h1>
-<p>The database sub-package pysk.db contains several modules for to read and
-manipulate to startkladde database.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="table.html">Table Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="column.html">Column Class</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="column.html#interface">Interface</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="conflict_handler.html">Conflict Handler</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conflict_handler.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conflict_handler.html#constants">Constants</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="ascii-replacements">
+<h1>ASCII Replacements<a class="headerlink" href="#ascii-replacements" title="Permalink to this headline">¶</a></h1>
+<p>Replaces non-ASCII characters by ASCII combinations.</p>
+<dl class="function">
+<dt id="pysk.utils.ascii.toAscii">
+<code class="descclassname">pysk.utils.ascii.</code><code class="descname">toAscii</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/utils/ascii.html#toAscii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.utils.ascii.toAscii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert string to ASCII string</p>
+<p>Replaces all non-ASCII characters by suitable replacements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> &#8211; input string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string with all non-ASCII characters replaced</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<span class="target" id="module-pysk.db"></span></div>
 
 
           </div>
@@ -86,15 +89,15 @@ manipulate to startkladde database.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../pysk.html"
-                        title="previous chapter">The pysk package</a></p>
+  <p class="topless"><a href="utils.html"
+                        title="previous chapter">Utils package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="table.html"
-                        title="next chapter">Table Class</a></p>
+  <p class="topless"><a href="../../github.html"
+                        title="next chapter">GitHub Related Information</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/modules/db/db.txt"
+      <li><a href="../../_sources/modules/utils/ascii.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -123,7 +126,7 @@ manipulate to startkladde database.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
       
       |
-      <a href="../../_sources/modules/db/db.txt"
+      <a href="../../_sources/modules/utils/ascii.txt"
           rel="nofollow">Page source</a></li>
     </div>
 

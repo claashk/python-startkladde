@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Column Class &mdash; python-startkladde 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html" />
+    <link rel="up" title="The db package" href="db.html" />
+    <link rel="next" title="Conflict Handler" href="conflict_handler.html" />
+    <link rel="prev" title="Table Class" href="table.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conflict_handler.html" title="Conflict Handler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="table.html" title="Table Class"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-startkladde 0.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../pysk.html" >The pysk package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="db.html" accesskey="U">The db package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="column-class">
+<h1>Column Class<a class="headerlink" href="#column-class" title="Permalink to this headline">¶</a></h1>
+<p>The column class represents a Column in a <a class="reference internal" href="table.html#pysk.db.Table" title="pysk.db.Table"><code class="xref py py-class docutils literal"><span class="pre">pysk.db.Table</span></code></a>.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.db.Column">
+<em class="property">class </em><code class="descclassname">pysk.db.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>name=None</em>, <em>dataType=None</em>, <em>allowsNull=False</em>, <em>index=None</em>, <em>defaultValue=None</em>, <em>extra=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/db/column.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.db.Column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represenation of a single column in a MySQL Table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; Column name</li>
+<li><strong>dataType</strong> &#8211; Data type</li>
+<li><strong>allowsNull</strong> &#8211; True if and only if NULL is a valid value</li>
+<li><strong>index</strong> &#8211; Index type of this column. PRI (primary), UNI (unique) or
+MUL (multiple)</li>
+<li><strong>defaultValue</strong> &#8211; The default value for the column</li>
+<li><strong>extra</strong> &#8211; Extra information, such as &#8216;auto_increment&#8217;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.db.Column.default">
+<code class="descname">default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/db/column.html#Column.default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.db.Column.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value as escaped string required in MySQL statements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;&lt;val&gt;&#8217; or NULL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Column.hasAutoIncrement">
+<code class="descname">hasAutoIncrement</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/db/column.html#Column.hasAutoIncrement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.db.Column.hasAutoIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if column is incremented automatically</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if and only if the current column is incremented automatically</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Column.isPrimaryIndex">
+<code class="descname">isPrimaryIndex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pysk/db/column.html#Column.isPrimaryIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pysk.db.Column.isPrimaryIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if column is the primary index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if and only if the current column is the primary index</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Column Class</a><ul>
+<li><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="table.html"
+                        title="previous chapter">Table Class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="conflict_handler.html"
+                        title="next chapter">Conflict Handler</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/db/column.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Claas H. Köhler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../../_sources/modules/db/column.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
