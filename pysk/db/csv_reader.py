@@ -8,11 +8,16 @@ from pysk.db.model import Flight, Pilot, Airplane, LaunchMethod
 from pysk.db import Record
 
 
-class CsvReader():
+class CsvReader(object):
     """Csv Reader for Startkladde flights
+    
+    Arguments:
+       logStream: Stream used for log messages
+       verbose (int): Verbose mode setting.
+       debug(bool): Enable debug mode.
     """
     
-    #Mandatory columns
+    #: Mandatory columns in input files
     mandatoryColumns={
         "date",
         "plane_registration",
@@ -31,7 +36,7 @@ class CsvReader():
         "accounting_notes"
     }
 
-    #Optional columns
+    #: Optional columns in input files
     optionalColumns={
         "towplane_registration",
         "towflight_mode",
@@ -41,7 +46,7 @@ class CsvReader():
     }    
     
     
-    #column map from csv to internal names
+    #: Column map from csv to internal names
     columnMap={
         "datum"                       : "date",
         "kennzeichen"                 : "plane_registration",
@@ -66,7 +71,7 @@ class CsvReader():
         "dbid"                        : "flight_id"
     }
   
-    #Map for flight types  
+    #: Map for flight types  
     flightTypeMap={
         "normalflug"        : "normal",
         "schulung (1)"      : "training_1",
@@ -78,7 +83,7 @@ class CsvReader():
     }
 
 
-    #Map for flight types  
+    #: Map for flight types  
     flightModeMap={
         "lokal"   : "local",
         "kommt" : "inbound",
@@ -86,7 +91,7 @@ class CsvReader():
     }
 
 
-    #Map for tow flight comments  
+    #: Map for tow flight comments  
     towflightKeys=[
         "schleppflug",
         "towflight"
@@ -94,11 +99,7 @@ class CsvReader():
     
     
     def __init__(self, logStream=sys.stderr, verbose=1, debug=False):
-        """Create new reader instance
-        
-        Parameters
-        ----------
-        logStream Stream used for log messages
+        """Create new reader instance        
         """
         
         self.timeformat= None
@@ -113,23 +114,21 @@ class CsvReader():
     def log(self, message, verbose=0):
         """Print log message
         
-        Parameters
-        ----------
-        message Log message to print
+        Arguments:
+           message (str): Log message to print
+           verbose (int): Verbose mode from which on the message is printed
         """
         if self.verbose < verbose:
             return
             
         self.logStream.write( message )
 
-
         
     def warn(self, message):
         """Print warning message
         
-        Parameters
-        ----------
-        message Warn message to print
+        Arguments:
+           message (str): Warning to print (regardless of verbose mode setting)
         """
         self.log("WARNING: " + message )
 
@@ -138,13 +137,11 @@ class CsvReader():
     def error(self, message):
         """Print error message
         
-        Parameters
-        ----------
-        message Error message to print
+        Arguments:
+           message (str): Error message to print
         """
         self.log("ERROR: " + message)
 
-    
     
     def __call__(self, path,
                        delimiter=";",
@@ -154,27 +151,21 @@ class CsvReader():
                        mergeTowflights=True):
         """Read input file and return a list of flights
         
-        Parameters
-        ----------
-        path      Path to input file
+        Arguments:
+           path (str): Path to input file
+           delimiter (str): Field delimiter. Defaults to ';'
+           encoding (str): Encoding of input file (e.g. 'utf8' or 'windows-1252').
+              Defaults to 'utf8'
+           dateformat (str): Date format used in csv (notation as in strptime).
+              Defaults to '%Y-%m-%d'
+           timeformat (str): Time format used in csv (notation as in strptime).
+              Defaults to '%H:%M'
+           mergeTowflights (bool): If towflights are listed in a separate line,
+              merge respective flights with towflights. Defaults to True
         
-        delimiter Field delimiter. Defaults to ';'
-        
-        encoding  Encoding of input file (e.g. 'utf8' or 'windows-1252').
-                  Defaults to 'utf8'
-                  
-        dateformat Date format used in csv (notation as in strptime). Defaults
-                   to '%Y-%m-%d'
-        
-        timeformat Time format used in csv (notation as in strptime). Defaults
-                   to '%H:%M'
-                   
-        mergeTowflights If towflights are listed in a separate line, merge
-                        respective flights with towflights. Defaults to True
-        
-        Returns
-        -------
-        List of Record instances with one record per line in input file
+        Return:
+            List of :class:`.Record` instances with one record per line in input
+            file
         """
         self.timeformat=dateformat + "T" + timeformat
         self.decoder= codecs.getdecoder(encoding)
@@ -214,13 +205,11 @@ class CsvReader():
         return retval
 
 
-
     def analyseHeader(self, header):
         """Analyse header string of csv file to identify needed columns
         
-        Parameters
-        ----------
-        header Header
+        Arguments:
+            header: Header object passed by csv reader.
         """
         
         columns=dict()
@@ -241,17 +230,14 @@ class CsvReader():
             setattr(self, key, value)
 
 
-
     def importRecord(self, record):
         """Convert csv record to database Record
         
-        Parameters
-        ----------
-        record csv record
+        Arguments:
+            record: csv record as passed by python csv reader
         
-        Returns
-        -------
-        Record instance
+        Return:
+            :class:`pysk.db.Record` instance
         """
         self.currentRecord= record
         return Record( flight       = self.getFlight(),
@@ -263,15 +249,12 @@ class CsvReader():
                        launch_method= self.getLaunchMethod() )
             
 
-
     def getFlight(self):
         """Extract flight information from current record
         
-        Returns
-        -------
-        Flight instance
+        Return:
+            :class:`pysk.db.model.Flight` instance
         """
-        
         return Flight(
           id                        = self.get("flight_id"),
           type                      = self.getFlightType(),
@@ -288,20 +271,16 @@ class CsvReader():
           accounting_notes          = self.get("accounting_notes") )
         
 
-
-
     def get(self, field):
         """Get field from current record by name
 
         Raises a KeyError if mandatory field is not found
         
-        Parameters
-        ----------
-        field Name of field to return
+        Arguments:
+           field (str): Name of field to return
 
-        Return
-        ------
-        value or None if no such field exists        
+        Return:
+           value or None if no such field exists        
         """
         i= getattr(self, field, None)
         
@@ -314,13 +293,11 @@ class CsvReader():
         return None
 
 
-
     def getFlightType(self):
-        """Get flight mode
+        """Get flight type
         
-        Returns
-        -------
-        Flight mode. One of inbound, outbound or local
+        Return:
+            Flight type as defined in :attr:`.flightTypeMap`
         """
         key= self.get("flight_type").lower()
         if(key is not None and len(key) > 0):
@@ -329,13 +306,11 @@ class CsvReader():
         return None
 
 
-
     def getMode(self):
         """Get flight mode of current record
         
-        Returns
-        -------
-        Flight mode. One of inbound, outbound or local
+        Return:
+           Flight mode as defined in :attr:`.flightModeMap`
         """
         key= self.get("flight_mode").lower()
         if key:
@@ -344,13 +319,11 @@ class CsvReader():
         return None
 
 
-
     def getTowflightMode(self):
-        """Get towflight mode
+        """Get towflight mode of current record
         
-        Returns
-        -------
-        Flight mode. One of inbound, outbound or local
+        Return:
+           Flight mode as defined in :attr:`.flightModeMap`
         """
         key= self.get("towflight_mode").lower()
         if key:
@@ -362,13 +335,8 @@ class CsvReader():
     def getPlane(self):
         """Extract plane information from current record
         
-        Parameters
-        ----------
-        record Input record
-        
-        Returns
-        -------
-        Airplane instance
+        Return:
+            :class:`db.model.Airplane` instance
         """
         registration= self.get("plane_registration")
         
@@ -378,13 +346,12 @@ class CsvReader():
         return None
 
 
-
     def getTowplane(self):
         """Extract towplane information from current record
         
-        Returns
-        -------
-        Airplane instance or None if no towplane registration exists
+        Return:
+            :class:`.db.model.Airplane` instance or *None* if no towplane
+               registration exists
         """
         registration= self.get("towplane_registration")
         if registration:
@@ -393,13 +360,11 @@ class CsvReader():
         return None
 
 
-
     def getPilot(self):
         """Extract pilot from current record
         
-        Returns
-        -------
-        Pilot instance
+        Return:
+            :class:`db.model.Pilot` instance
         """
         firstName= self.get("pilot_first_name")
         lastName= self.get("pilot_last_name")
@@ -409,14 +374,12 @@ class CsvReader():
 
         return None
 
-
         
     def getCopilot(self):
         """Extract copilot from current record
         
-        Returns
-        -------
-        Pilot instance
+        Return:
+            :class:`db.model.Pilot` instance or *None*
         """
         firstName= self.get("copilot_first_name")
         lastName= self.get("copilot_last_name")
@@ -426,14 +389,12 @@ class CsvReader():
 
         return None
 
-
         
     def getTowpilot(self):
         """Extract towpilot from current record
         
-        Returns
-        -------
-        Pilot instance
+        Return:
+            :class:`db.model.Pilot` instance or *None*
         """
         firstName= self.get("towpilot_first_name")
         lastName= self.get("towpilot_last_name")
@@ -444,13 +405,11 @@ class CsvReader():
         return None
 
 
-
     def getLaunchMethod(self):
         """Extract launch method from current record
         
-        Returns
-        -------
-        LaunchMethod instance
+        Return:
+            :class:`db.model.LaunchMethod` instance or *None*
         """
         name= self.get("launch_method")
         
@@ -460,73 +419,58 @@ class CsvReader():
         return None
 
 
-
-
     def getDepartureTime(self):
         """Extract departure time from record
         
-        Returns
-        -------
-        datetime instance
+        Return:
+            :class:`datetime.datetime` instance
         """
         return self._getTime( self.get("date"), self.get("departure_time") )
-
 
 
     def getLandingTime(self):
         """Extract landing time from current record
         
-        Returns
-        -------
-        datetime instance
+        Return:
+            :class:`datetime.datetime` instance
         """
         return self._getTime( self.get("date"), self.get("landing_time") )
-
 
 
     def getTowflightLandingTime(self):
         """Extract towflight landing time from current record
         
-        Returns
-        -------
-        datetime instance
+        Return:
+            :class:`datetime.datetime` instance
         """
         return self._getTime( self.get("date"),
                               self.get("towflight_landing_time") )
         
 
-
     def _isTowflight(self, flight):
         """Check if a flight is a towflight for another flight
         
-        Parameters
-        ----------
-        flight Flight to check
+        Arguments:
+            flight (db.model.Flight): Flight to check
         
-        Return
-        ------
-        True if flight is a towflight, False otherwise
+        Return:
+            True if and only if flight is a towflight
         """
         if flight.type.lower() == "towflight":
             return True
         return False
 
 
-
     def _findRecordById(self, records, id):
         """Finds a record with a given flight id
         
-        Parameters
-        ----------
-        records Iterable containing records
-        
-        id Flight id to find
+        Arguments:
+            records(iterable): Iterable containing records
+            id(int): Flight id to find
 
-        Returns
-        -------
-        Matching record or None if no such flight can be found        
+        Return:
+            Matching record or *None* if no such flight can be found        
         """
-        
         if id == None:
             return None
         
@@ -537,7 +481,6 @@ class CsvReader():
         return None
             
 
-
     def _mergeTowflights(self, records):
         """Merge towflights with respective glider flights
 
@@ -545,9 +488,8 @@ class CsvReader():
         be merged with the respective flight records. The pure towflight
         reocords are removed
         
-        Parameters
-        ----------
-        records List of records        
+        Arguments:
+            records: List of records        
         """
         nRec= len(records)
         
@@ -590,24 +532,20 @@ class CsvReader():
             records.pop(i)
 
 
-
     def _getTime(self, date, time):
         """Convert separate date and time strings to datetime object
             
-        Parameters
-        ----------
-        date Date string
-        time time string
+        Arguments:
+            date (str): Date string
+            time (str): Time string
             
-        Returns
-        -------
-        datetime object
+        Return:
+            :class:`datetime.datetime` object
         """
         if(date is None or time is None or len(date) == 0 or len(time) == 0):
             return None
         
         return datetime.strptime( date + 'T' + time, self.timeformat )
-        
         
         
     def _initColumns(self):
@@ -619,8 +557,7 @@ class CsvReader():
         for key in CsvReader.optionalColumns:
             setattr(self, key, None)
         
-        
-        
+            
     def _checkMandadortyColumns(self):
         """Checks if all mandatory columns have been found.
         

@@ -6,8 +6,10 @@ manipulate to startkladde database.
 .. toctree::
    :maxdepth: 2
 
+   database
    table
    column
    conflict_handler
+   csv_reader
 
 .. automodule:: pysk.db

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-"
 
-
 import MySQLdb as mdb
 from subprocess import check_output
 
@@ -12,21 +11,21 @@ from record import Record
 
 class Database(object):
     """Interface for MySQL database used by Startkladde
+
+    If password is not None, a new connection to the database will be
+    attempted.        
+        
+    Arguments:
+        host (str): Hostname. Defaults to '*localhost*'
+        user (str): MySQL username. Defaults to *'startkladde'*.
+        password (str): Password for user. Defaults to *None*.
+        dbName (str): Name of Database to open. Defaults to *'startkladde'*.        
     """
     def __init__(self, host='localhost',
                        user='startkladde',
                        password=None,
                        dbName='startkladde'):
         """Create new Database instance
-        
-        If password is not None, a new connection to the database will be
-        attempted.        
-        
-        Arguments:
-            host: Hostname. Defaults to 'localhost'
-            user: MySQL username. Defaults to 'startkladde'.
-            password: Password for user. Defaults to None
-            dbName: Name of Database to open. Defaults to 'startkladde'        
         """
         self._sk= None
         self._cursor= None
@@ -34,7 +33,6 @@ class Database(object):
         if(password):
             self.connect(host, user, password, dbName)        
     
-
     
     def connect(self, host='localhost',
                       user='startkladde',
@@ -43,10 +41,10 @@ class Database(object):
         """Connect to MySQL server
         
         Arguments:
-            host: Hostname. Defaults to 'localhost'
-            user: MySQL username. Defaults to 'startkladde'.
-            password: Password for user. Defaults to None
-            dbName: Name of Database to open. Defaults to 'startkladde'        
+            host (str): Hostname. Defaults to 'localhost'
+            user (str): MySQL username. Defaults to 'startkladde'.
+            password (str): Password for user. Defaults to None
+            dbName (str): Name of Database to open. Defaults to 'startkladde'        
         """
         self._sk= mdb.connect(host, user, password, dbName)
         self._cursor= self._sk.cursor()
@@ -84,10 +82,10 @@ class Database(object):
         """Get information about tables                
                     
         Return:
-            Dictionary with table name as key and Table instance as value
+            Dictionary with table name as key and :class:`.db.Table` instance as
+            value
         """
         tables= self.listTables()
-
         retval= dict()        
         
         for tableName in tables:
@@ -112,15 +110,16 @@ class Database(object):
         
         Arguments:
             cls: Class specifying the table. Must provide a static method
-                tableName, which returns the name of the selected table and a
-                constructor which accepts the returned tuple.
-            filter: Any filter string in the format passed to SQL WHERE
-                command. If None, no filter is applied. Defaults to None.
-            order: Optional order key. Passed verbatim to SQL ORDER BY
-                statement. Defaults to None.
+               tableName, which returns the name of the selected table and a
+               constructor which accepts the returned tuple.
+            filter (str): Any filter string in the format passed to *SQL*
+               ``WHERE`` command. If *None*, no filter is applied. Defaults to
+               *None*.
+            order (str): Optional order key. Passed verbatim to *SQL*
+               ``ORDER BY`` statement. Defaults to *None*.
             
         Return:
-            Generator yielding an instance of cls for each table row
+            Generator yielding an instance of *cls* for each table row
         """
         whereStr=""
         orderStr=""
@@ -138,36 +137,32 @@ class Database(object):
         
         for row in self._cursor:
             yield cls(*row)
-        
 
 
     def iterPlanes(self, filter=None):
         """Iterate over all airplanes in database
             
         Arguments:
-            filter: Any filter string in the format passed to SQL WHERE
-                command. If None, no filter is applied. Defaults to None.
+            filter (str): Any filter string accepted by *SQL*'s ``WHERE``
+               command. If *None*, no filter is applied. Defaults to *None*.
                 
         Return:
-            Generator yielding an Airplane instance for each airplane in
-            database matching the filter criteria.
+            Generator yielding an :class:`.db.model.Airplane` instance for each
+            airplane in database matching the filter criteria.
         """
         return self.iterate(Airplane, filter)
-
         
         
     def iterPilots(self, filter=None):
         """Iterate over all pilots in database
             
-        Parameters
-        ----------
-        filter Any filter string in the format passed to SQL WHERE command.
-               If None, no filter is applied. Defaults to None.
+        Arguments:
+            filter (str): Any filter string accepted by *SQL*'s ``WHERE``
+               command. If *None*, no filter is applied. Defaults to *None*.
                 
-        Returns
-        -------
-        Generator yielding a Pilot instance for each pilot in database matching
-        the filter criteria
+        Return:
+            Generator yielding an :class:`.db.model.Pilot` instance for each
+            airplane in database matching the filter criteria.
         """
         return self.iterate(Pilot, filter)
 
@@ -176,51 +171,46 @@ class Database(object):
     def iterUsers(self, filter=None):
         """Iterate over all users in database
             
-        Parameters
-        ----------
-        filter Any filter string in the format passed to SQL WHERE command.
-               If None, no filter is applied. Defaults to None.
+        Arguments:
+            filter (str): Any filter string accepted by *SQL*'s ``WHERE``
+               command. If *None*, no filter is applied. Defaults to *None*.
                 
-        Returns
-        -------
-        Generator yielding a user instance for each user in database matching
-        the filter criteria
+        Return:
+            Generator yielding an :class:`.db.model.User` instance for each
+            airplane in database matching the filter criteria.
         """
         return self.iterate(User, filter)
-
 
 
     def iterFlights(self, filter=None, order=None):
         """Iterate over all flights in database
             
         Arguments:
-            filter: Any filter string in the format passed to SQL WHERE command.
-                If None, no filter is applied. Defaults to None.
-            order: Parameter by which to order. Passed verbatim to SQL ORDER BY
-                statement. Defaults to None.
-        
+            filter (str): Any filter string accepted by *SQL*'s ``WHERE``
+               command. If *None*, no filter is applied. Defaults to *None*.
+            order (str): Parameter by which to order. Passed verbatim to *SQL*'s
+               ``ORDER BY`` statement. Defaults to *None*.
+                
         Return:
-            Generator yielding a Flight instance for each flight in database
-            matching the filter criteria
+            Generator yielding an :class:`.db.model.Flight` instance for each
+            airplane in database matching the filter criteria.
         """
         return self.iterate(Flight, filter, order)
-
 
 
     def iterSimultaneousFlights(self, flight):
         """Iterate over all flights, which overlap with the given flight
 
         Raises an exception if either landing or departure time are not
-        specified in flight
+        specified in *flight*.
         
-        Parameters
-        ----------
-        flight Flight for which to get overlapping flights
+        Arguments:
+            flight (:class:`.db.model.Flight`): Flight for which to get
+               overlapping flights
         
-        Returns
-        -------
-        Generator yielding a Flight instance for each flight in database
-        matching the filter criteria
+        Return:
+            Generator yielding a :class:`.db.model.Flight` instance for each
+            flight in database overlapping with *flight*.
         """        
         return self.iterFlights(filter= "(landing_time >= '{0}') AND "
                                         "(departure_time <= '{1}')"
@@ -228,20 +218,22 @@ class Database(object):
                                                  flight.landingTime() ))
 
 
-
     def iterSimilarFlights(self, flight, filter=None):
         """Get all flights from database, which are similar to a given flight
 
+        A flight is *similar* to another flight, if it is conducted by the same
+        pilot or with the same airplane in an overlapping time span.
+
         Raises an exception if either landing or departure time are not
-        specified in flight
+        specified in flight.
         
-        Parameters
-        ----------
-        flight Flight for which to get overlapping flights
+        Arguments:
+            flight (:class:`.db.model.Flight`): Flight for which to get
+               overlapping flights
         
-        Returns
-        -------
-        Dictionary with overlapping flights
+        Return:
+            Generator yielding a :class:`.db.model.Flight` instance for each
+            flight in database simlar to *flight*.
         """
         selection= str(
             "(mode='local') "
@@ -265,24 +257,20 @@ class Database(object):
         return self.iterFlights(filter= selection)
 
 
-
     def getDictionary(self, iterable, key='id'):
         """Creates a dictionary of a given table                
         
-        Parameters
-        ----------
-        iterable Iterable containing table rows             
-        key The key used in the dictionary to return. Can be the name of any
-            attribute provided by the iterable's elements in as string form. If
-            a tuple of attribute strings is passed, the key will be the tuple
-            of the associated attributes.
-            Defaults to 'id'.
+        Arguments:
+            iterable (iterable): Iterable containing table rows             
+            key (str): The key used in the dictionary to return. Can be the name
+               of any attribute provided by the iterable's elements. If a tuple
+               of attribute strings is passed, the key will be the tuple of the
+               associated attributes. Defaults to 'id'.
 
-        Returns
-        -------
-        Dictionary containing a cls instance for each row in the specified
-        table as value. The associated key is the respective member chosen
-        through parameter key.
+        Return:
+            Dictionary containing a cls instance for each row in the specified
+            table as value. The associated key is the respective member chosen
+            through parameter *key*.
         """
         retval= dict()
 
@@ -299,86 +287,86 @@ class Database(object):
         return retval
         
         
-        
     def insert(self, cls, rows, force=False):
         """Insert new values into a table                
         
-        Parameters
-        ----------
-        cls Class specifying the table. Must provide a static method tableName, 
-            which returns the name of the selected table
-            
-        rows Rows to insert into the table. Must provide an attribute for each
-             table column with the same name as the column
-             
-        force If True, existing rows are overwritten. Otherwise they are
-              ignored. Defaults to False.
+        Arguments:
+             cls (class): Class specifying the table. Must provide a static method
+                :meth:`tableName`, which returns the name of the selected table
+             rows (iterable): Rows to insert into the table. Each element shall
+                provide an attribute for each table column with the same name as
+                the column, i.e. :meth:`.db.Table.toTuple` (*row*) must be well
+                defined for each element.
+            force (bool): If True, existing rows are overwritten. Otherwise they
+               are ignored. Defaults to False.
         """
         tableInfo= self.getTables()[ cls.tableName() ]
-
         commands={True : "REPLACE", False : "INSERT IGNORE"}
-
-
         command= "{0} INTO {1} VALUES {2}".format( commands[force],
                                                    cls.tableName(),
                                                    tableInfo.format() )
         
         for row in rows:        
             self._cursor.execute(command, tableInfo.toTuple(row))
-
-            
+         
     
     def insertUsers(self, users, force=False):
         """Insert users.
         
-        Shortcut for insert(User, users, force)
+        Shortcut for
         
-        Parameters
-        ----------
-        users List of users to insert
-        force Overwrite existing users. Defaults to False.
+        .. code-block:: python
+        
+           self.insert(cls=User, table=users, force=force)
+        
+        Arguments:
+            users (iterable): List of users to insert
+            force (bool): Overwrite existing users. Defaults to False.
         """
         self.insert(User, users, force)
-
     
                 
     def insertFlights(self, flights, force=False):
-        """Insert users.
+        """Insert flights.
         
-        Shortcut for insert(Flight, flights, force)
+        Shortcut for
         
-        Parameters
-        ----------
-        flights List of flights to insert
-        force Overwrite existing users. Defaults to False.
+        .. code-block:: python
+        
+           self.insert(cls=Flight, table=flights, force=force)
+        
+        Arguments:
+            flights (iterable): List of flights to insert
+            force (bool): Overwrite existing flights. Defaults to False.
         """
         self.insert(Flight, flights, force)
-
 
 
     def insertPilots(self, pilots, force=False):
         """Insert pilots.
         
-        Shortcut for insert(Pilot, pilots, force)
+        Shortcut for
         
-        Parameters
-        ----------
-        pilots List of pilots to insert
+        .. code-block:: python
         
-        force Overwrite existing pilots. Defaults to False.
+           self.insert(cls=Pilot, table=flights, force=force)
+        
+        Arguments:
+            pilots (iterable): List of pilots to insert
+            force (bool): Overwrite existing pilots. Defaults to False.
         """
         self.insert(Pilot, pilots, force)
-
 
 
     def orderTable(self, cls):
         """Orders a given table
         
+        .. warning:: "Deprecated. Raises RuntimeError"
+        
         Reorders the ids in a given table by the natural sort order.
         
-        Parameters
-        ----------
-        cls Class containing table name
+        Arguments:
+            cls: Class containing table name
         """
         raise RuntimeError("Not good. Works only for flights")
         #TODO Depending id columns in other tables have to be updated!        
@@ -394,20 +382,19 @@ class Database(object):
         self.insert(cls, values, force=True)
 
 
-
     def delete(self, cls, filter=None, data=None):
         """Delete records from table                
         
-        Parameters
-        ----------
-        cls Class specifying the table. Must provide a static method tableName, 
-            which returns the name of the selected table
-            
-        filter String passed to where clause identifying the rows to be deleted.
-               If filter is None or the empty string, all rows will be deleted.
-               Defaults to None.
-               
-        data  Data argument passed verbatim to cursor. Defaults to None.
+        Arguments:
+            cls (object): Class representing the table from which to delete.
+               Must provide a static method tableName, which returns the name of
+               the selected table
+            filter (str): Passed verbatim to *SQL*'s ``WHERE`` clause
+               to identify the rows to be deleted. If filter is *None* or the
+               empty string, all rows will be deleted. Defaults to *None*.
+            data:  Data argument passed verbatim to
+               `cursor.execute <http://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html>`_.
+               as second argument (*param*). Defaults to *None*.
         """
         command= "DELETE FROM {0}".format( cls.tableName() )
         
@@ -417,16 +404,14 @@ class Database(object):
         self._cursor.execute(command, data)
 
 
-
     def deleteById(self, cls, ids):
-        """Deletes records by id
+        """Delete records by id
         
-        Parameters
-        ----------
-        cls Class specifying the table. Must provide a static method tableName, 
-            which returns the name of the selected table
-
-        ids A list of ids which are going to be deleted
+        Arguments:
+            cls (object): Class specifying the table. Must provide a static
+               method :meth:`tableName` returning the name of the selected table
+            ids (iterable): ids to be deleted. Each element should be
+               convertible to an integer.
         """
         if not ids:
             return
@@ -436,56 +421,53 @@ class Database(object):
         self.delete(cls, filter=filter, data=ids)        
 
 
-
     def deleteFlights(self, ids):
         """Delete flights by id
         
-        ids Iterable of ids
+        Arguments:
+            ids (iterable): IDs to delete
         """
         self.deleteById(Flight, ids)
-
 
         
     def deletePilots(self, ids):
         """Delete pilots by id
         
-        ids Iterable of ids
+        Arguments:
+            ids (iterable): IDs to delete
         """
         self.deleteById(Pilot, ids)
-
 
 
     def deleteUsers(self, ids):
         """Delete users by id
         
-        ids Iterable of ids
+        Arguments:
+            ids (iterable): IDs to delete
         """
         self.deleteById(User, ids)
         
-
         
     def createUsersFromPilots(self):
         """Generate a user account for each pilot in database
         
         Generates a user account with auto-generated password for each pilot,
         which does not have a standard account yet. The username is of the form
-        <first_name>.<last_name> and the password will be autogenerated to an
-        initial value.
+        ``<first_name>.<last_name>`` and the password will be autogenerated to
+        a random initial value.
         
         The user account is not added to the database.
         
-        Parameters
-        ----------
-        exclude List of regular expression objects. Usernames matching any
-                expression in this list are skipped. Defaults to None
-                
-        club Club for which to create user accounts. If None, no filter by club
-             is applied. Otherwise, users accounts are exclusively generated
-             for the specified club. Defaults to None.
+        Arguments:
+            exclude (iterable): List of regular expression objects. Usernames
+               matching any expression in this list are skipped. Defaults to
+               *None*.
+            club (str): Club for which to create user accounts. If *None*, no
+               filter by club is applied. Otherwise, users accounts are
+               exclusively generated for the specified club. Defaults to *None*.
         
-        Returns
-        -------
-        generator of tuples containing (pilot, user, password)
+        Return:
+            Generator of tuples containing ``(pilot, user, password)``.
         """
         existingUsers= set()
         
@@ -527,23 +509,26 @@ class Database(object):
     def update(self, cls, assignment, filter=None):
         """Update value in table
         
-        Uses mysql UPDATE statement to update values of a table.
+        Uses mysql ``UPDATE`` statement to update values of a table.
         
-        Parameters
-        ----------
-        cls Class for which to update the respective table
+        Arguments:
+            cls (class): Class for which to update the respective table
+            assignment (str): Update information in format compatible with MySQL
+               ``SET`` clause of ``UPDATE`` statement
+            filter (str): Optional filter string passed verbatim to ``WHERE``
+               statement.
 
-        assignment String containing update information in format compatible
-                   with MySQL SET clause of UPDATE statement
-
-        filter   Optional filter string passed verbatim to WHERE statement
-
-
-        Example
-        -------
-        update(Flight, "pilot_id=5", "pilot_id=3")
+        Example:
+            Assuming *db* is a connected :class:`.db.Database` instance, the
+            following code replaces each occurence of the ``pilot_id`` 3 with a
+            ``pilot_id`` of 5 in table *Flights*:
+        
+            .. code-block:: python
+            
+               import pysk.db.model.Flight as Flight
+               [...]
+               db.update(Flight, "pilot_id=5", "pilot_id=3")
           
-        Replaces each occurence of the pilot_id 3 with a pilot id of 5.
         """
         command="UPDATE {0} SET {1}".format(cls.tableName(), assignment)
         
@@ -553,34 +538,28 @@ class Database(object):
         self._cursor.execute(command)
                 
 
-
     def updateFlight(self, assignment, filter=None):
         """Update fields of selected flights
         
-        Parameters
-        ----------
-        assignment String containing update information in format compatible
-                   with MySQL SET clause of UPDATE statement
-
-        filter   Optional filter string passed verbatim to WHERE statement
+        Arguments:
+            assignment (str): Update information in format compatible with MySQL
+               ``SET`` clause of ``UPDATE`` statement.
+            filter (str): Optional filter string passed verbatim to ``WHERE``
+               statement.
         """
         self.update(assignment, filter)
-        
         
         
     def unique(self, cls, filter):
         """Get unique result of a query
         
-        Parameters
-        ----------
-        cls Class to select
+        Arguments:
+            cls (class): Class to select
+            filter (str): Filter criteria
         
-        filter Filter criteria
-        
-        Returns
-        -------
-        cls instance matching query, if and only if the query returns exactly
-        one result. Otherwise a KeyError is raised.
+        Return:
+            Instance of *cls* matching query, if and only if the query returns
+            exactly one result. Otherwise a :class:`KeyError` is raised.
         """        
         retval= None
         
@@ -597,20 +576,16 @@ class Database(object):
         return retval
 
 
-
     def uniqueById(self, cls, id):
         """Get unique result of a query
         
-        Parameters
-        ----------
-        cls Class to select
+        Arguments:
+            cls (class): Class to select
+            id (int): ID of item to select
         
-        id Id of item to select
-        
-        Returns
-        -------
-        cls instance matching query, if and only if the query returns exactly
-        one result. Otherwise a KeyError is raised.
+        Return:
+            Instance of *cls* matching query, if and only if the query returns
+            exactly one result. Otherwise a :class:`KeyError` is raised.
         """
         if not id:
             return None
@@ -618,20 +593,17 @@ class Database(object):
         return self.unique(cls, filter="id={0}".format(id))
 
 
-
     def pilot(self, id):
         """Get Pilot by id
         
-        Parameters
-        ----------
-        id Id of item to select
+        Argument:
+            id (int): ID of item to select
         
-        Returns
-        -------
-        Pilot with given id. Raises a KeyError if no matching item is found.
+        Return:
+            :class:`.db.model.Pilot` instance with ID *id*. Raises
+            :class:`KeyError` if no matching item is found.
         """
         return self.uniqueById(Pilot, id)
-
 
 
     def plane(self, id):
