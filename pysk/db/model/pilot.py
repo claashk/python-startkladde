@@ -3,9 +3,21 @@ import re
 from pysk.utils.ascii import toAscii
            
 class Pilot():
-    """Pilot representation used in Startkladde Database"""
-    
-    
+    """Pilot representation used in Startkladde Database
+
+    Arguments:
+        id (int): ID of this record in ``people`` table.        
+        last_name (str): Pilot last name.
+        first_name (str): Pilot first name.
+        club (str): Name of Club.
+        nickname (str): Pilot nickname.
+        club_id (int): ID of club (**deprecated**).
+        comments (str): Comments field.
+        medical_validity: :class:``datetime`` object holding expiration date of
+           medical
+        check_medical_validity (int): Shall Startkladde warn if medical is
+           expired ? Use ``1`` for *yes* and ``0`` for *no*.
+    """
     
     def __init__(self, id= None,
                        last_name= None,
@@ -17,18 +29,6 @@ class Pilot():
                        medical_validity=None,
                        check_medical_validity= None):
         """Create new Pilot instance
-        
-        Arguments:
-        id: ID used in Startkladde database        
-        last_name: Pilot last name
-        first_name: Pilot first name
-        club: Name of Club
-        nickname: Pilot nickname
-        club_id: ID of club (not used)
-        comments: any comments
-        medical_validity: datetime object holding expiration date of medical
-        check_medical_validity: Shall Startkladde warn if medical is expired?
-            Use 1 for yes and 0 for no.
         """                 
         self.id= id
         self.last_name= last_name
@@ -45,16 +45,14 @@ class Pilot():
         """Convert instance to string
         
         Return:
-            <Last name>, <first name>        
+            '``last_name``, ``first_name``'        
         """
         return "{0}, {1}".format(self.last_name, self.first_name)
-        
-        
+                
         
     def __repr__(self):
         return ("Startkladde Python Interface::Pilot('{0}')"
                .format(self.__str__()))
-
 
 
     def __eq__(self, other):
@@ -64,41 +62,38 @@ class Pilot():
         are equal.
         
         Arguments:
-            other: Other instance to compare to
+            other (:class:`~.model.Pilot`): Other instance to compare to
         
         Return:
-            True if and only if self and other are equal
+            ``True`` if and only if ``self`` and *other* are equal.
         """
         return self.last_name == other.last_name and self.first_name == other.first_name
-
 
 
     def __lt__(self, other):
         """Less comparison by last name and first name
                 
         Arguments:
-            other: Other instance to compare to
+            other (:class:`~.model.Pilot`): Other instance to compare to
         
         Return:
-            True if and only if self is less than other
+            ``True`` if and only if ``self`` is less than *other*.
         """
         return( (self.last_name, self.first_name)
               < (other.last_name, other.first_name) )
-    
     
     
     def __hash__(self):
         """Hash for object.
         
         Return:
-            (self.last_name, self.first_name).__hash__
+            ``(self.last_name, self.first_name).__hash__``
         """
         return (self.last_name, self.first_name).__hash__()
         
         
-        
     def generateUsername(self):
-        """Generate default user name of the form <first.name>.<last_name>
+        """Generate default user name of the form '``first_name``.\ ``last_name``'
         
         Return:
             Username as string (all lowercase without special characters)
@@ -109,16 +104,16 @@ class Pilot():
         return toAscii(retval)
         
 
-
     def getCommentField(self, key):
-        """Gets field from comment. Comment fields have the format
-        <key>='<value>'
+        """Gets field from comment.
+        
+        Comment fields are strings of the format '``key`` = ``value``'
         
         Arguments:
-            key: key string
+            key (str): Name of key to retrieve
         
         Return:
-            value associated with key or None if key does not exist
+            value associated with *key* or ``None`` if *key* does not exist.
         """
         if not self.comments:
             return None
@@ -132,17 +127,16 @@ class Pilot():
             
         return match.group(1)
 
-
         
     def setCommentField(self, key, value):
         """Set comment field.
         
-        Comment fields have the format <key>='<value>'
+        Comment fields are strings of the format '``key`` = ``value``'
         
         Arguments:
-            key: Key string
-            value: Value string. If None, the key value pair is removed, if it
-                exists.
+            key (str): Name of key to set
+            value (str): Value string. If ``None``, the key value pair is
+               removed, if it exists.
         """
         if not key:
             raise KeyError()
@@ -166,7 +160,6 @@ class Pilot():
                              + self.comments[match.end(0):] ).strip()
         else:
             self.comments+= "; " + comment
-            
 
 
     @staticmethod
@@ -174,22 +167,21 @@ class Pilot():
         """Get name of MySQL table, where this data type is used
         
         Return:
-            "people"        
+            '*people*'        
         """
         return "people"
 
         
-        
     @staticmethod
     def getMail(pilot):
-        """Retrieve email address from Pilot object
+        """Retrieve email address from :class:`~.model.Pilot` object
+        
+        The email is stored as comment field with key *email*.
         
         Arguments:
-            pilot: Pilot object to extract mail from
+            pilot (:class:`~.model.Pilot`): Object to extract mail from
         
         Return:
             String containing pilot's email
         """
         return pilot.getCommentField['email']
-
-        

@@ -7,6 +7,24 @@ Created on Fri Apr 18 13:02:20 2014
         
 class Airplane(object):
     """Airplane representation used in Startkladde database
+    
+    Implements a single record in the Startkladde *planes* table. Each member
+    represents the value of the column with the same name and type.
+
+    Arguments:
+        id (int): ID of this record in table ``planes``.
+        registration (str): Airplane registration
+        club (str): Club name to which airplane belongs as string
+        num_seats (int): Number of seats
+        type (str): Type (Manufacturer & Model) of the plane as string
+        category (str): Category. The following values are supported:
+  
+            - '*airplane*'
+            - '*glider*'
+            - '*motorglider*'
+            - '*ultralight*'
+        callsign (str): Callsign (e.g. competition call sign for gliders)
+        comments (str): any comment
     """
     
     def __init__(self, id= None,
@@ -17,21 +35,7 @@ class Airplane(object):
                        category= None,
                        callsign= None,
                        comments= None):
-        """Create a new airplane instance
-        
-        Arguments:
-            id: unique ID used in Startkladde database
-            registration: Airplane registration
-            club: Club name to which airplane belongs as string
-            num_seats: Number of seats
-            type: Type (Manufacturer & Model) of the plane as string
-            category: Category. Use one of the following:
-                - 'airplane'
-                - 'glider'
-                - 'motorglider'
-                - 'ultralight'
-            callsign: Callsign (e.g. competition call sign for gliders)
-            comments: any comment
+        """Create a new airplane instance        
         """
         self.id= id
         self.registration= registration
@@ -43,21 +47,18 @@ class Airplane(object):
         self.comments= comments
         
         
-        
     def __str__(self):
         """Convert instance to string
         
         Return:
-            <registration> as string        
+            ``registration`` string        
         """
         return "{0}".format(self.registration)
-        
         
         
     def __repr__(self):
         return ("Startkladde Python Interface::Airplane('{0}')"
                .format(self.__str__()))
-
 
 
     def __eq__(self, other):
@@ -67,23 +68,22 @@ class Airplane(object):
         equal.
         
         Arguments:
-            other: Other instance to compare to
+            other (:class:`.Airplane`): Other instance to compare to
         
         Return:
-            True if and only if self and other are equal
+            ``True`` if and only if ``self`` and *other* are equal
         """
         return self.registration == other.registration
-
 
 
     def __lt__(self, other):
         """Less comparison by registration string
         
         Arguments:
-            other: Other instance to compare to
+            other (:class:`.Airplane`): Other instance to compare to
         
         Return:
-            True if and only if self is less than other
+            ``True`` if and only if ``self`` is less than *other*.
         """
         return self.registration < other.registration
 
@@ -92,10 +92,9 @@ class Airplane(object):
         """Hash for object.
         
         Return:
-            self.registration.__hash__
+            ``self.registration.__hash__()``
         """
         return self.registration.__hash__()
-
 
 
     @staticmethod    
@@ -103,7 +102,7 @@ class Airplane(object):
         """Get name of MySQL table, where this data type is used
         
         Return:
-            "planes"        
+            '*planes*'
         """
         return "planes"
         

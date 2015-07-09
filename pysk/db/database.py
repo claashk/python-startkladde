@@ -12,14 +12,14 @@ from record import Record
 class Database(object):
     """Interface for MySQL database used by Startkladde
 
-    If password is not None, a new connection to the database will be
+    If *password* is not ``None``, a new connection to the database will be
     attempted.        
         
     Arguments:
         host (str): Hostname. Defaults to '*localhost*'
-        user (str): MySQL username. Defaults to *'startkladde'*.
-        password (str): Password for user. Defaults to *None*.
-        dbName (str): Name of Database to open. Defaults to *'startkladde'*.        
+        user (str): MySQL username. Defaults to '*startkladde*'.
+        password (str): Password for user. Defaults to ``None``.
+        dbName (str): Name of Database to open. Defaults to '*startkladde*'.        
     """
     def __init__(self, host='localhost',
                        user='startkladde',
@@ -41,10 +41,10 @@ class Database(object):
         """Connect to MySQL server
         
         Arguments:
-            host (str): Hostname. Defaults to 'localhost'
-            user (str): MySQL username. Defaults to 'startkladde'.
-            password (str): Password for user. Defaults to None
-            dbName (str): Name of Database to open. Defaults to 'startkladde'        
+            host (str): Hostname. Defaults to '*localhost*'.
+            user (str): MySQL username. Defaults to '*startkladde*'.
+            password (str): Password for user. Defaults to ``None``.
+            dbName (str): Name of Database to open. Defaults to '*startkladde*'.        
         """
         self._sk= mdb.connect(host, user, password, dbName)
         self._cursor= self._sk.cursor()
@@ -61,21 +61,19 @@ class Database(object):
         self._sk.commit()
         
         
-        
     def listTables(self):
         """Get list of tables                
                     
         Return:
             List of tables
         """
-        self._cursor.execute( "SHOW TABLES" )
+        self._cursor.execute("SHOW TABLES")
         
         retval=[]
         for table in self._cursor.fetchall():
             retval.append( table[0] )
         
         return retval
-
 
 
     def getTables(self):
@@ -103,7 +101,6 @@ class Database(object):
         
         return retval
                 
-
 
     def iterate(self, cls, filter=None, order=None):
         """Iterate over the rows of a given table                
@@ -165,7 +162,6 @@ class Database(object):
             airplane in database matching the filter criteria.
         """
         return self.iterate(Pilot, filter)
-
 
 
     def iterUsers(self, filter=None):
@@ -268,9 +264,9 @@ class Database(object):
                associated attributes. Defaults to 'id'.
 
         Return:
-            Dictionary containing a cls instance for each row in the specified
-            table as value. The associated key is the respective member chosen
-            through parameter *key*.
+            Dictionary containing a row in the specified table as value. The
+            associated key is the respective member chosen through parameter
+            *key*.
         """
         retval= dict()
 
@@ -366,7 +362,7 @@ class Database(object):
         Reorders the ids in a given table by the natural sort order.
         
         Arguments:
-            cls: Class containing table name
+            cls (class): Class containing table name
         """
         raise RuntimeError("Not good. Works only for flights")
         #TODO Depending id columns in other tables have to be updated!        
@@ -386,7 +382,7 @@ class Database(object):
         """Delete records from table                
         
         Arguments:
-            cls (object): Class representing the table from which to delete.
+            cls (class): Class representing the table from which to delete.
                Must provide a static method tableName, which returns the name of
                the selected table
             filter (str): Passed verbatim to *SQL*'s ``WHERE`` clause
@@ -408,7 +404,7 @@ class Database(object):
         """Delete records by id
         
         Arguments:
-            cls (object): Class specifying the table. Must provide a static
+            cls (class): Class specifying the table. Must provide a static
                method :meth:`tableName` returning the name of the selected table
             ids (iterable): ids to be deleted. Each element should be
                convertible to an integer.
@@ -609,90 +605,75 @@ class Database(object):
     def plane(self, id):
         """Get Airplane by id
         
-        Parameters
-        ----------
-        id Id of item to select
+        Argument:
+            id (int): ID of item to select
         
-        Returns
-        -------
-        Airplane with given id. Raises a KeyError if no matching item is found.
+        Return:
+            :class:`.db.model.Airplane` instance with ID *id*. Raises
+            :class:`KeyError` if no matching item is found.
         """
         return self.uniqueById(Airplane, id)
-
 
 
     def launchMethod(self, id):
         """Get launch method by id
         
-        Parameters
-        ----------
-        id Id of item to select
+        Argument:
+            id (int): ID of item to select
         
-        Returns
-        -------
-        LaunchMethod with given id. Raises a KeyError if no matching item is
-        found.
+        Return:
+            :class:`.db.model.LaunchMethod` instance with ID *id*. Raises
+            :class:`KeyError` if no matching item is found.
         """
         return self.uniqueById(LaunchMethod, id)
-
 
 
     def getPilotByName(self, firstName, lastName):
         """Get pilot id by name
         
-        Raises a KeyError if either no pilots or more than one pilot with this
-        name exist.        
+        Raises a :class:`KeyError` if either no pilots or more than one pilot
+        with this name exist.        
         
-        Parameters
-        ----------
-        firstName First name of pilot
+        Arguments:
+            firstName (str): First name of pilot
+            lastName (str): Last name of pilot
         
-        lastName Last name of pilot
-        
-        Returns
-        -------
-        Matching Pilot
+        Return:
+            Matching :class:`db.model.Pilot` instance
         """
         selection="first_name='{0}' AND last_name='{1}'".format( firstName,
                                                                  lastName )                 
         return self.unique(Pilot, selection)
 
             
-            
     def getPlaneByRegistration(self, registration):
         """Get aircraft id by registration
         
-        Raises a KeyError if either no plane or more than one plane with this
-        name exist.        
+        Raises a :class:`KeyError` if either no plane or more than one plane
+        with this *registration* exist.        
         
-        Parameters
-        ----------
-        registration Registration ID of aircraft
+        Arguments:
+            registration (str): Registration ID of aircraft
         
-        Returns
-        -------
-        Matching Airplane instance
+        Return:
+            Matching :class:`db.model.Airplane` instance
         """
         return self.unique(Airplane, filter="registration='{0}'".format(registration))        
-
 
         
     def getLaunchMethodByName(self, name, allowShortNames=True):
         """Get launch method id by name
         
-        Raises a KeyError if either no launch method or more than one launch
-        method with the given name exist.        
+        Raises a :class:`KeyError` if either no launch method or more than one
+        launch method with the given *name* exist.        
         
-        Parameters
-        ----------
-        name Name of launch method to find
+        Arguments:
+            name (str): Name of launch method to find
+            allowShortNames (bool): If True, name and short name of launch
+               method are searched. Otherwise only the long name is matched.
         
-        allowShortNames If True, name and short name of launch method are
-                        searched. Otherwise only the long name is matched.
-        
-        Returns
-        -------
-        Matching LaunchMethod instance
+        Return:
+            Matching :class:`db.model.LaunchMethod` instance
         """
         selection="name='{0}'".format(name)
         
@@ -703,20 +684,17 @@ class Database(object):
         return self.unique(LaunchMethod, filter=selection)
 
 
-
     def getLaunchMethodByTowplane(self, registration):
         """Get launch method by registration of towplane
         
-        Raises a KeyError if either no launch method or more than one launch
-        method with the given towplane exists.        
+        Raises a :class:`KeyError` if either no launch method or more than one
+        launch method with the given towplane *registration* exists.        
         
-        Parameters
-        ----------
-        registration Towplane registration as string
+        Arguments:
+            registration (str): Towplane registration ID
         
-        Returns
-        -------
-        Matching LaunchMethod instance
+        Return:
+            Matching :class:`db.model.LaunchMethod` instance
         """
         selection= "".join([ "(type='airtow') AND (towplane_registration = '",
                              registration,
@@ -724,18 +702,16 @@ class Database(object):
                 
         return self.unique(LaunchMethod, filter=selection)
 
-
     
     def makeRecords(self, flights):
         """Convert flights into full records
         
-        Parameters
-        ----------
-        flights Iterable of flights
+        Arguments:
+            flights (iterable): Iterable of :class:`.db.model.Flight` objects
         
-        Returns
-        -------
-        Generator yielding a Record instance per flight in flights.
+        Return:
+            Generator yielding a :class:`.db.Record` instance per flight in
+            *flights*.
         """
         for flight in flights:
             yield Record( flight= flight,
@@ -747,18 +723,15 @@ class Database(object):
                           launch_method= self.launchMethod(flight.launch_method_id) )
 
 
-        
     @staticmethod    
     def copy(src, dest, ignoreID=True):
-        """Copies all attributes of src to dest
+        """Copies all attributes of *src* to *dest*
         
-        Parameters
-        ----------
-        src Source dataset
-        
-        dest Destination dataset
-
-        ignoreID If True, id member is ignored. Defaults to True
+        Arguments:
+            src (object): Source dataset
+            dest (object): Destination dataset
+            ignoreID (bool): If ``True``, member *id* is ignored. Defaults to
+               ``True``.
         """
         for attr in dir(src):
             if attr.startswith('__'):
@@ -771,5 +744,4 @@ class Database(object):
                 continue
             
             setattr(dest, attr, getattr(src, attr))
-        
         
