@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CSV Reader Class &mdash; python-startkladde 0.8.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
+        <link rel="up" title="The db package" href="db.html"/>
+        <link rel="next" title="Conflict Handler" href="conflict_handler.html"/>
+        <link rel="prev" title="Column Class" href="column.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../index.html" class="icon icon-home"> python-startkladde
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html">Executables of the python startkladde</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html#python-scripts">Python Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/sk.html">sk.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_help.html">help</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_help.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_import-flights.html">import-flights</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_import-flights.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_stats.html">stats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_stats.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#synopsis">Synopsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#display-statistics">Display statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#set-email-adress-for-pilots">Set Email Adress for Pilots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html#bash-scripts">Bash Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_backup.html">startkladde_backup.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html#functionality">Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_restore.html">startkladde_restore.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/server_sync.html">Synchronisation of the Startkladde Database with a Webserver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#master-configuration">Master Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#server-configuration">Server Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#backup-process">Backup Process</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_sync_master.html">startkladde_sync_master.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../pysk.html">The pysk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="db.html">The db package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="model/model.html">Database Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model/model.html#tables">Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="database.html">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column.html">Column Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">CSV Reader Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expected-format">Expected Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="conflict_handler.html">Conflict Handler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="conflict_handler.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conflict_handler.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/tools.html">Tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/utils.html">Utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/ascii.html">ASCII Replacements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../github.html">GitHub Related Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#software-development">Software Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#getting-the-source-code">Getting the source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#workflow">Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#publishing-documentation-with-github-project-pages">Publishing Documentation with GitHub Project Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#setting-up-the-branch">Setting Up the Branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#disabling-jekyll">Disabling Jekyll</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#creating-and-publishing-documentation">Creating and Publishing Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">python-startkladde</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
+      
+          <li><a href="db.html">The db package</a> &raquo;</li>
+      
+    <li>CSV Reader Class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/modules/db/csv_reader.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="csv-reader-class">
+<h1>CSV Reader Class<a class="headerlink" href="#csv-reader-class" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#pysk.db.CsvReader" title="pysk.db.CsvReader"><code class="xref py py-class docutils literal"><span class="pre">CsvReader</span></code></a> enables import of CSV files containing flight
+information into the Startkladde database.</p>
+<div class="section" id="expected-format">
+<h2>Expected Format<a class="headerlink" href="#expected-format" title="Permalink to this headline">¶</a></h2>
+<p>The csv format expected as input to the <a class="reference internal" href="#pysk.db.CsvReader.__call__" title="pysk.db.CsvReader.__call__"><code class="xref py py-meth docutils literal"><span class="pre">CsvReader.__call__</span></code></a> is similar to the
+format produced by the Startkladde webinterface for csv export. Field delimiter,
+encoding and the date- and time format can be specified via respective arguments
+passed to <a class="reference internal" href="#pysk.db.CsvReader.__call__" title="pysk.db.CsvReader.__call__"><code class="xref py py-meth docutils literal"><span class="pre">CsvReader.__call__</span></code></a>.</p>
+<div class="section" id="mandatory-columns">
+<h3>Mandatory Columns<a class="headerlink" href="#mandatory-columns" title="Permalink to this headline">¶</a></h3>
+<p>The first line of the file must contain a header containing the columns. The
+given column names are first translated to internal column names using the
+dictionary <a class="reference internal" href="#pysk.db.CsvReader.columnMap" title="pysk.db.CsvReader.columnMap"><code class="xref py py-attr docutils literal"><span class="pre">CsvReader.columnMap</span></code></a> (allows to support several languages).
+At least the aliases for the columns defined in the set
+<code class="xref py py-attr docutils literal"><span class="pre">CsvReader.mandatoryColumns</span></code> must be defined. Optionally the columns
+defined in the set <code class="xref py py-attr docutils literal"><span class="pre">CsvReader.optionalColumns</span></code> may be present.</p>
+</div>
+<div class="section" id="date-and-time-format">
+<h3>Date and Time Format<a class="headerlink" href="#date-and-time-format" title="Permalink to this headline">¶</a></h3>
+<p>Fields requiring date and time information must be formatted according to the
+format string passed to <a class="reference internal" href="#pysk.db.CsvReader.__call__" title="pysk.db.CsvReader.__call__"><code class="xref py py-meth docutils literal"><span class="pre">CsvReader.__call__</span></code></a></p>
+</div>
+<div class="section" id="special-values">
+<h3>Special Values<a class="headerlink" href="#special-values" title="Permalink to this headline">¶</a></h3>
+<p>The columns <em>flight type</em> and <em>mode</em> require special values. Accepted are
+the strings defined in the dictionaries <a class="reference internal" href="#pysk.db.CsvReader.flightTypeMap" title="pysk.db.CsvReader.flightTypeMap"><code class="xref py py-attr docutils literal"><span class="pre">CsvReader.flightTypeMap</span></code></a> and
+<a class="reference internal" href="#pysk.db.CsvReader.flightModeMap" title="pysk.db.CsvReader.flightModeMap"><code class="xref py py-attr docutils literal"><span class="pre">CsvReader.flightModeMap</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.db.CsvReader">
+<em class="property">class </em><code class="descclassname">pysk.db.</code><code class="descname">CsvReader</code><span class="sig-paren">(</span><em>logStream=&lt;open file '&lt;stderr&gt;'</em>, <em>mode 'w'&gt;</em>, <em>verbose=1</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Csv Reader for Startkladde flights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>logStream</strong> &#8211; Stream used for log messages</li>
+<li><strong>verbose</strong> (<em>int</em>) &#8211; Verbose mode setting.</li>
+<li><strong>debug</strong> (<em>bool</em>) &#8211; Enable debug mode.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.db.CsvReader.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>path</em>, <em>delimiter=';'</em>, <em>encoding='utf8'</em>, <em>dateformat='%Y-%m-%d'</em>, <em>timeformat='%H:%M'</em>, <em>mergeTowflights=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read input file and return a list of flights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) &#8211; Path to input file</li>
+<li><strong>delimiter</strong> (<em>str</em>) &#8211; Field delimiter. Defaults to &#8216;;&#8217;</li>
+<li><strong>encoding</strong> (<em>str</em>) &#8211; Encoding of input file (e.g. &#8216;utf8&#8217; or &#8216;windows-1252&#8217;).
+Defaults to &#8216;utf8&#8217;</li>
+<li><strong>dateformat</strong> (<em>str</em>) &#8211; Date format used in csv (notation as in strptime).
+Defaults to &#8216;%Y-%m-%d&#8217;</li>
+<li><strong>timeformat</strong> (<em>str</em>) &#8211; Time format used in csv (notation as in strptime).
+Defaults to &#8216;%H:%M&#8217;</li>
+<li><strong>mergeTowflights</strong> (<em>bool</em>) &#8211; If towflights are listed in a separate line,
+merge respective flights with towflights. Defaults to True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of <code class="xref py py-class docutils literal"><span class="pre">Record</span></code> instances with one record per line in input
+file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.analyseHeader">
+<code class="descname">analyseHeader</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.analyseHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyse header string of csv file to identify needed columns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>header</strong> &#8211; Header object passed by csv reader.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print error message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) &#8211; Error message to print</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field from current record by name</p>
+<p>Raises a KeyError if mandatory field is not found</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<em>str</em>) &#8211; Name of field to return</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">value or None if no such field exists</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getCopilot">
+<code class="descname">getCopilot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getCopilot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract copilot from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code> instance or <em>None</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getDepartureTime">
+<code class="descname">getDepartureTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getDepartureTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract departure time from record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getFlight">
+<code class="descname">getFlight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getFlight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract flight information from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">pysk.db.model.Flight</span></code></a> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getFlightType">
+<code class="descname">getFlightType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getFlightType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get flight type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Flight type as defined in <a class="reference internal" href="#pysk.db.CsvReader.flightTypeMap" title="pysk.db.CsvReader.flightTypeMap"><code class="xref py py-attr docutils literal"><span class="pre">flightTypeMap</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getLandingTime">
+<code class="descname">getLandingTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getLandingTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract landing time from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getLaunchMethod">
+<code class="descname">getLaunchMethod</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getLaunchMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract launch method from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">db.model.LaunchMethod</span></code> instance or <em>None</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getMode">
+<code class="descname">getMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get flight mode of current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Flight mode as defined in <a class="reference internal" href="#pysk.db.CsvReader.flightModeMap" title="pysk.db.CsvReader.flightModeMap"><code class="xref py py-attr docutils literal"><span class="pre">flightModeMap</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getPilot">
+<code class="descname">getPilot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getPilot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract pilot from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getPlane">
+<code class="descname">getPlane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getPlane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract plane information from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">db.model.Airplane</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getTowflightLandingTime">
+<code class="descname">getTowflightLandingTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getTowflightLandingTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract towflight landing time from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getTowflightMode">
+<code class="descname">getTowflightMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getTowflightMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get towflight mode of current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Flight mode as defined in <a class="reference internal" href="#pysk.db.CsvReader.flightModeMap" title="pysk.db.CsvReader.flightModeMap"><code class="xref py py-attr docutils literal"><span class="pre">flightModeMap</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getTowpilot">
+<code class="descname">getTowpilot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getTowpilot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract towpilot from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code> instance or <em>None</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.getTowplane">
+<code class="descname">getTowplane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.getTowplane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract towplane information from current record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="model/airplane.html#pysk.db.model.Airplane" title="pysk.db.model.Airplane"><code class="xref py py-class docutils literal"><span class="pre">db.model.Airplane</span></code></a> instance or <em>None</em> if no towplane
+registration exists</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.importRecord">
+<code class="descname">importRecord</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.importRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert csv record to database Record</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>record</strong> &#8211; csv record as passed by python csv reader</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">pysk.db.Record</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>message</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print log message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; Log message to print</li>
+<li><strong>verbose</strong> (<em>int</em>) &#8211; Verbose mode from which on the message is printed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.CsvReader.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.CsvReader.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print warning message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) &#8211; Warning to print (regardless of verbose mode setting)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.columnMap">
+<code class="descname">columnMap</code><em class="property"> = {'landung schleppflugzeug': 'towflight_landing_time', 'zielort schleppflugzeug': 'towflight_landing_location', 'flugtyp': 'flight_type', 'pilot nachname': 'pilot_last_name', 'zielort': 'landing_location', 'dbid': 'flight_id', 'modus schleppflugzeug': 'towflight_mode', 'datum': 'date', 'startort': 'departure_location', 'begleiter vorname': 'copilot_first_name', 'anzahl landungen': 'num_landings', 'startart': 'launch_method', 'modus': 'flight_mode', 'abrechnungshinweis': 'accounting_notes', 'kennzeichen': 'plane_registration', 'startzeit': 'departure_time', 'begleiter nachname': 'copilot_last_name', 'pilot vorname': 'pilot_first_name', 'kennzeichen schleppflugzeug': 'towplane_registration', 'bemerkungen': 'comments', 'landezeit': 'landing_time'}</em><a class="headerlink" href="#pysk.db.CsvReader.columnMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Column map from csv to internal names</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.flightModeMap">
+<code class="descname">flightModeMap</code><em class="property"> = {'geht': 'outbound', 'kommt': 'inbound', 'lokal': 'local'}</em><a class="headerlink" href="#pysk.db.CsvReader.flightModeMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map for flight types</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.flightTypeMap">
+<code class="descname">flightTypeMap</code><em class="property"> = {'schulung (1)': 'training_1', 'gastflug (p)': 'guest_private', 'schulung (2)': 'training_2', 'schlepp': 'towflight', 'gastflug': 'guest_external', 'gastflug (e)': 'guest_external', 'normalflug': 'normal'}</em><a class="headerlink" href="#pysk.db.CsvReader.flightTypeMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map for flight types</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.mandatoryColumns">
+<code class="descname">mandatoryColumns</code><em class="property"> = set(['copilot_first_name', 'launch_method', 'landing_time', 'pilot_first_name', 'plane_registration', 'comments', 'copilot_last_name', 'departure_location', 'flight_mode', 'date', 'landing_location', 'flight_type', 'num_landings', 'accounting_notes', 'departure_time'])</em><a class="headerlink" href="#pysk.db.CsvReader.mandatoryColumns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mandatory columns in input files</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.optionalColumns">
+<code class="descname">optionalColumns</code><em class="property"> = set(['towflight_mode', 'towflight_landing_location', 'towflight_pilot', 'towflight_landing_time', 'towplane_registration'])</em><a class="headerlink" href="#pysk.db.CsvReader.optionalColumns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional columns in input files</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.db.CsvReader.towflightKeys">
+<code class="descname">towflightKeys</code><em class="property"> = ['schleppflug', 'towflight']</em><a class="headerlink" href="#pysk.db.CsvReader.towflightKeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map for tow flight comments</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="conflict_handler.html" class="btn btn-neutral float-right" title="Conflict Handler" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="column.html" class="btn btn-neutral" title="Column Class" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Claas H. Köhler.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.8.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

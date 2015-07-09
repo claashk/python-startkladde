@@ -1,0 +1,1041 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Database Class &mdash; python-startkladde 0.8.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
+        <link rel="up" title="The db package" href="db.html"/>
+        <link rel="next" title="Table Class" href="table.html"/>
+        <link rel="prev" title="User Record" href="model/user.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../index.html" class="icon icon-home"> python-startkladde
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html">Executables of the python startkladde</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html#python-scripts">Python Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/sk.html">sk.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_help.html">help</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_help.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_import-flights.html">import-flights</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_import-flights.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk_stats.html">stats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_stats.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#synopsis">Synopsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#display-statistics">Display statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html#set-email-adress-for-pilots">Set Email Adress for Pilots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html#bash-scripts">Bash Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_backup.html">startkladde_backup.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html#functionality">Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_restore.html">startkladde_restore.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/server_sync.html">Synchronisation of the Startkladde Database with a Webserver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#master-configuration">Master Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#server-configuration">Server Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html#backup-process">Backup Process</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/startkladde_sync_master.html">startkladde_sync_master.bsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../pysk.html">The pysk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="db.html">The db package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="model/model.html">Database Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model/model.html#tables">Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column.html">Column Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="csv_reader.html">CSV Reader Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="csv_reader.html#expected-format">Expected Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="csv_reader.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="conflict_handler.html">Conflict Handler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="conflict_handler.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conflict_handler.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/tools.html">Tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/utils.html">Utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/ascii.html">ASCII Replacements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../github.html">GitHub Related Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#software-development">Software Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#getting-the-source-code">Getting the source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#workflow">Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#publishing-documentation-with-github-project-pages">Publishing Documentation with GitHub Project Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#setting-up-the-branch">Setting Up the Branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#disabling-jekyll">Disabling Jekyll</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#creating-and-publishing-documentation">Creating and Publishing Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">python-startkladde</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
+      
+          <li><a href="db.html">The db package</a> &raquo;</li>
+      
+    <li>Database Class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/modules/db/database.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="database-class">
+<h1>Database Class<a class="headerlink" href="#database-class" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#pysk.db.Database" title="pysk.db.Database"><code class="xref py py-class docutils literal"><span class="pre">db.Database</span></code></a> class constitutes the interface to the Startkladde
+MySQL database.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.db.Database">
+<em class="property">class </em><code class="descclassname">pysk.db.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>user='startkladde'</em>, <em>password=None</em>, <em>dbName='startkladde'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for MySQL database used by Startkladde</p>
+<p>If <em>password</em> is not <code class="docutils literal"><span class="pre">None</span></code>, a new connection to the database will be
+attempted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> (<em>str</em>) &#8211; Hostname. Defaults to &#8216;<em>localhost</em>&#8216;</li>
+<li><strong>user</strong> (<em>str</em>) &#8211; MySQL username. Defaults to &#8216;<em>startkladde</em>&#8216;.</li>
+<li><strong>password</strong> (<em>str</em>) &#8211; Password for user. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>dbName</strong> (<em>str</em>) &#8211; Name of Database to open. Defaults to &#8216;<em>startkladde</em>&#8216;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.db.Database.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>user='startkladde'</em>, <em>password=None</em>, <em>dbName='startkladde'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to MySQL server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> (<em>str</em>) &#8211; Hostname. Defaults to &#8216;<em>localhost</em>&#8216;.</li>
+<li><strong>user</strong> (<em>str</em>) &#8211; MySQL username. Defaults to &#8216;<em>startkladde</em>&#8216;.</li>
+<li><strong>password</strong> (<em>str</em>) &#8211; Password for user. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>dbName</strong> (<em>str</em>) &#8211; Name of Database to open. Defaults to &#8216;<em>startkladde</em>&#8216;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect from database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.commit">
+<code class="descname">commit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Commit all changes to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.listTables">
+<code class="descname">listTables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.listTables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of tables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of tables</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getTables">
+<code class="descname">getTables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getTables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about tables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with table name as key and <a class="reference internal" href="table.html#pysk.db.Table" title="pysk.db.Table"><code class="xref py py-class docutils literal"><span class="pre">db.Table</span></code></a> instance as
+value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterate">
+<code class="descname">iterate</code><span class="sig-paren">(</span><em>cls</em>, <em>filter=None</em>, <em>order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over the rows of a given table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cls</strong> &#8211; Class specifying the table. Must provide a static method
+tableName, which returns the name of the selected table and a
+constructor which accepts the returned tuple.</li>
+<li><strong>filter</strong> (<em>str</em>) &#8211; Any filter string in the format passed to <em>SQL</em>
+<code class="docutils literal"><span class="pre">WHERE</span></code> command. If <em>None</em>, no filter is applied. Defaults to
+<em>None</em>.</li>
+<li><strong>order</strong> (<em>str</em>) &#8211; Optional order key. Passed verbatim to <em>SQL</em>
+<code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> statement. Defaults to <em>None</em>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Generator yielding an instance of <em>cls</em> for each table row</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterPlanes">
+<code class="descname">iterPlanes</code><span class="sig-paren">(</span><em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterPlanes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all airplanes in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<em>str</em>) &#8211; Any filter string accepted by <em>SQL</em>&#8216;s <code class="docutils literal"><span class="pre">WHERE</span></code>
+command. If <em>None</em>, no filter is applied. Defaults to <em>None</em>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding an <a class="reference internal" href="model/airplane.html#pysk.db.model.Airplane" title="pysk.db.model.Airplane"><code class="xref py py-class docutils literal"><span class="pre">db.model.Airplane</span></code></a> instance for each
+airplane in database matching the filter criteria.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterPilots">
+<code class="descname">iterPilots</code><span class="sig-paren">(</span><em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterPilots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all pilots in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<em>str</em>) &#8211; Any filter string accepted by <em>SQL</em>&#8216;s <code class="docutils literal"><span class="pre">WHERE</span></code>
+command. If <em>None</em>, no filter is applied. Defaults to <em>None</em>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding an <a class="reference internal" href="model/pilot.html#pysk.db.model.Pilot" title="pysk.db.model.Pilot"><code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code></a> instance for each
+airplane in database matching the filter criteria.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterUsers">
+<code class="descname">iterUsers</code><span class="sig-paren">(</span><em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterUsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all users in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<em>str</em>) &#8211; Any filter string accepted by <em>SQL</em>&#8216;s <code class="docutils literal"><span class="pre">WHERE</span></code>
+command. If <em>None</em>, no filter is applied. Defaults to <em>None</em>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding an <a class="reference internal" href="model/user.html#pysk.db.model.User" title="pysk.db.model.User"><code class="xref py py-class docutils literal"><span class="pre">db.model.User</span></code></a> instance for each
+airplane in database matching the filter criteria.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterFlights">
+<code class="descname">iterFlights</code><span class="sig-paren">(</span><em>filter=None</em>, <em>order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterFlights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all flights in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filter</strong> (<em>str</em>) &#8211; Any filter string accepted by <em>SQL</em>&#8216;s <code class="docutils literal"><span class="pre">WHERE</span></code>
+command. If <em>None</em>, no filter is applied. Defaults to <em>None</em>.</li>
+<li><strong>order</strong> (<em>str</em>) &#8211; Parameter by which to order. Passed verbatim to <em>SQL</em>&#8216;s
+<code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> statement. Defaults to <em>None</em>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Generator yielding an <a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a> instance for each
+airplane in database matching the filter criteria.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterSimultaneousFlights">
+<code class="descname">iterSimultaneousFlights</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterSimultaneousFlights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all flights, which overlap with the given flight</p>
+<p>Raises an exception if either landing or departure time are not
+specified in <em>flight</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a>) &#8211; Flight for which to get
+overlapping flights</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding a <a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a> instance for each
+flight in database overlapping with <em>flight</em>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.iterSimilarFlights">
+<code class="descname">iterSimilarFlights</code><span class="sig-paren">(</span><em>flight</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.iterSimilarFlights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all flights from database, which are similar to a given flight</p>
+<p>A flight is <em>similar</em> to another flight, if it is conducted by the same
+pilot or with the same airplane in an overlapping time span.</p>
+<p>Raises an exception if either landing or departure time are not
+specified in flight.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a>) &#8211; Flight for which to get
+overlapping flights</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding a <a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a> instance for each
+flight in database simlar to <em>flight</em>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getDictionary">
+<code class="descname">getDictionary</code><span class="sig-paren">(</span><em>iterable</em>, <em>key='id'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getDictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a dictionary of a given table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Iterable containing table rows</li>
+<li><strong>key</strong> (<em>str</em>) &#8211; The key used in the dictionary to return. Can be the name
+of any attribute provided by the iterable&#8217;s elements. If a tuple
+of attribute strings is passed, the key will be the tuple of the
+associated attributes. Defaults to &#8216;id&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary containing a row in the specified table as value. The
+associated key is the respective member chosen through parameter
+<em>key</em>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>cls</em>, <em>rows</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert new values into a table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class specifying the table. Must provide a static method
+<code class="xref py py-meth docutils literal"><span class="pre">tableName</span></code>, which returns the name of the selected table</li>
+<li><strong>rows</strong> &#8211; Rows to insert into the table. Each element shall
+provide an attribute for each table column with the same name as
+the column, i.e. <a class="reference internal" href="table.html#pysk.db.Table.toTuple" title="pysk.db.Table.toTuple"><code class="xref py py-meth docutils literal"><span class="pre">db.Table.toTuple</span></code></a> (<em>row</em>) must be well
+defined for each element.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.insertUsers">
+<code class="descname">insertUsers</code><span class="sig-paren">(</span><em>users</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.insertUsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert users.</p>
+<p>Shortcut for</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cls</span><span class="o">=</span><span class="n">User</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">users</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>users</strong> (<em>iterable</em>) &#8211; List of users to insert</li>
+<li><strong>force</strong> (<em>bool</em>) &#8211; Overwrite existing users. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.insertFlights">
+<code class="descname">insertFlights</code><span class="sig-paren">(</span><em>flights</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.insertFlights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert flights.</p>
+<p>Shortcut for</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cls</span><span class="o">=</span><span class="n">Flight</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">flights</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>flights</strong> (<em>iterable</em>) &#8211; List of flights to insert</li>
+<li><strong>force</strong> (<em>bool</em>) &#8211; Overwrite existing flights. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.insertPilots">
+<code class="descname">insertPilots</code><span class="sig-paren">(</span><em>pilots</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.insertPilots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert pilots.</p>
+<p>Shortcut for</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cls</span><span class="o">=</span><span class="n">Pilot</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">flights</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pilots</strong> (<em>iterable</em>) &#8211; List of pilots to insert</li>
+<li><strong>force</strong> (<em>bool</em>) &#8211; Overwrite existing pilots. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.orderTable">
+<code class="descname">orderTable</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.orderTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orders a given table</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">&#8220;Deprecated. Raises RuntimeError&#8221;</p>
+</div>
+<p>Reorders the ids in a given table by the natural sort order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cls</strong> (<em>class</em>) &#8211; Class containing table name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>cls</em>, <em>filter=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete records from table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class representing the table from which to delete.
+Must provide a static method tableName, which returns the name of
+the selected table</li>
+<li><strong>filter</strong> (<em>str</em>) &#8211; Passed verbatim to <em>SQL</em>&#8216;s <code class="docutils literal"><span class="pre">WHERE</span></code> clause
+to identify the rows to be deleted. If filter is <em>None</em> or the
+empty string, all rows will be deleted. Defaults to <em>None</em>.</li>
+<li><strong>data</strong> &#8211; Data argument passed verbatim to
+<a class="reference external" href="http://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html">cursor.execute</a>.
+as second argument (<em>param</em>). Defaults to <em>None</em>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.deleteById">
+<code class="descname">deleteById</code><span class="sig-paren">(</span><em>cls</em>, <em>ids</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.deleteById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete records by id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class specifying the table. Must provide a static
+method <code class="xref py py-meth docutils literal"><span class="pre">tableName</span></code> returning the name of the selected table</li>
+<li><strong>ids</strong> (<em>iterable</em>) &#8211; ids to be deleted. Each element should be
+convertible to an integer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.deleteFlights">
+<code class="descname">deleteFlights</code><span class="sig-paren">(</span><em>ids</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.deleteFlights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete flights by id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ids</strong> (<em>iterable</em>) &#8211; IDs to delete</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.deletePilots">
+<code class="descname">deletePilots</code><span class="sig-paren">(</span><em>ids</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.deletePilots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete pilots by id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ids</strong> (<em>iterable</em>) &#8211; IDs to delete</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.deleteUsers">
+<code class="descname">deleteUsers</code><span class="sig-paren">(</span><em>ids</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.deleteUsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete users by id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ids</strong> (<em>iterable</em>) &#8211; IDs to delete</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.createUsersFromPilots">
+<code class="descname">createUsersFromPilots</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.createUsersFromPilots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a user account for each pilot in database</p>
+<p>Generates a user account with auto-generated password for each pilot,
+which does not have a standard account yet. The username is of the form
+<code class="docutils literal"><span class="pre">&lt;first_name&gt;.&lt;last_name&gt;</span></code> and the password will be autogenerated to
+a random initial value.</p>
+<p>The user account is not added to the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>exclude</strong> (<em>iterable</em>) &#8211; List of regular expression objects. Usernames
+matching any expression in this list are skipped. Defaults to
+<em>None</em>.</li>
+<li><strong>club</strong> (<em>str</em>) &#8211; Club for which to create user accounts. If <em>None</em>, no
+filter by club is applied. Otherwise, users accounts are
+exclusively generated for the specified club. Defaults to <em>None</em>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Generator of tuples containing <code class="docutils literal"><span class="pre">(pilot,</span> <span class="pre">user,</span> <span class="pre">password)</span></code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>cls</em>, <em>assignment</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update value in table</p>
+<p>Uses mysql <code class="docutils literal"><span class="pre">UPDATE</span></code> statement to update values of a table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class for which to update the respective table</li>
+<li><strong>assignment</strong> (<em>str</em>) &#8211; Update information in format compatible with MySQL
+<code class="docutils literal"><span class="pre">SET</span></code> clause of <code class="docutils literal"><span class="pre">UPDATE</span></code> statement</li>
+<li><strong>filter</strong> (<em>str</em>) &#8211; Optional filter string passed verbatim to <code class="docutils literal"><span class="pre">WHERE</span></code>
+statement.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p>Assuming <em>db</em> is a connected <a class="reference internal" href="#pysk.db.Database" title="pysk.db.Database"><code class="xref py py-class docutils literal"><span class="pre">db.Database</span></code></a> instance, the
+following code replaces each occurence of the <code class="docutils literal"><span class="pre">pilot_id</span></code> 3 with a
+<code class="docutils literal"><span class="pre">pilot_id</span></code> of 5 in table <em>Flights</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pysk.db.model.Flight</span> <span class="kn">as</span> <span class="nn">Flight</span>
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Flight</span><span class="p">,</span> <span class="s">&quot;pilot_id=5&quot;</span><span class="p">,</span> <span class="s">&quot;pilot_id=3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.updateFlight">
+<code class="descname">updateFlight</code><span class="sig-paren">(</span><em>assignment</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.updateFlight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update fields of selected flights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>assignment</strong> (<em>str</em>) &#8211; Update information in format compatible with MySQL
+<code class="docutils literal"><span class="pre">SET</span></code> clause of <code class="docutils literal"><span class="pre">UPDATE</span></code> statement.</li>
+<li><strong>filter</strong> (<em>str</em>) &#8211; Optional filter string passed verbatim to <code class="docutils literal"><span class="pre">WHERE</span></code>
+statement.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.unique">
+<code class="descname">unique</code><span class="sig-paren">(</span><em>cls</em>, <em>filter</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get unique result of a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class to select</li>
+<li><strong>filter</strong> (<em>str</em>) &#8211; Filter criteria</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance of <em>cls</em> matching query, if and only if the query returns
+exactly one result. Otherwise a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> is raised.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.uniqueById">
+<code class="descname">uniqueById</code><span class="sig-paren">(</span><em>cls</em>, <em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.uniqueById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get unique result of a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cls</strong> (<em>class</em>) &#8211; Class to select</li>
+<li><strong>id</strong> (<em>int</em>) &#8211; ID of item to select</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Instance of <em>cls</em> matching query, if and only if the query returns
+exactly one result. Otherwise a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> is raised.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.pilot">
+<code class="descname">pilot</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.pilot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Pilot by id</p>
+<dl class="docutils">
+<dt>Argument:</dt>
+<dd>id (int): ID of item to select</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="model/pilot.html#pysk.db.model.Pilot" title="pysk.db.model.Pilot"><code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code></a> instance with ID <em>id</em>. Raises
+<code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if no matching item is found.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.plane">
+<code class="descname">plane</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Airplane by id</p>
+<dl class="docutils">
+<dt>Argument:</dt>
+<dd>id (int): ID of item to select</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="model/airplane.html#pysk.db.model.Airplane" title="pysk.db.model.Airplane"><code class="xref py py-class docutils literal"><span class="pre">db.model.Airplane</span></code></a> instance with ID <em>id</em>. Raises
+<code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if no matching item is found.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.launchMethod">
+<code class="descname">launchMethod</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.launchMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get launch method by id</p>
+<dl class="docutils">
+<dt>Argument:</dt>
+<dd>id (int): ID of item to select</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="model/launch_method.html#pysk.db.model.LaunchMethod" title="pysk.db.model.LaunchMethod"><code class="xref py py-class docutils literal"><span class="pre">db.model.LaunchMethod</span></code></a> instance with ID <em>id</em>. Raises
+<code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if no matching item is found.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getPilotByName">
+<code class="descname">getPilotByName</code><span class="sig-paren">(</span><em>firstName</em>, <em>lastName</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getPilotByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pilot id by name</p>
+<p>Raises a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if either no pilots or more than one pilot
+with this name exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>firstName</strong> (<em>str</em>) &#8211; First name of pilot</li>
+<li><strong>lastName</strong> (<em>str</em>) &#8211; Last name of pilot</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Matching <code class="xref py py-class docutils literal"><span class="pre">db.model.Pilot</span></code> instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getPlaneByRegistration">
+<code class="descname">getPlaneByRegistration</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getPlaneByRegistration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get aircraft id by registration</p>
+<p>Raises a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if either no plane or more than one plane
+with this <em>registration</em> exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> (<em>str</em>) &#8211; Registration ID of aircraft</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matching <code class="xref py py-class docutils literal"><span class="pre">db.model.Airplane</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getLaunchMethodByName">
+<code class="descname">getLaunchMethodByName</code><span class="sig-paren">(</span><em>name</em>, <em>allowShortNames=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getLaunchMethodByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get launch method id by name</p>
+<p>Raises a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if either no launch method or more than one
+launch method with the given <em>name</em> exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Name of launch method to find</li>
+<li><strong>allowShortNames</strong> (<em>bool</em>) &#8211; If True, name and short name of launch
+method are searched. Otherwise only the long name is matched.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Matching <code class="xref py py-class docutils literal"><span class="pre">db.model.LaunchMethod</span></code> instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.getLaunchMethodByTowplane">
+<code class="descname">getLaunchMethodByTowplane</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.getLaunchMethodByTowplane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get launch method by registration of towplane</p>
+<p>Raises a <code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if either no launch method or more than one
+launch method with the given towplane <em>registration</em> exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> (<em>str</em>) &#8211; Towplane registration ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matching <code class="xref py py-class docutils literal"><span class="pre">db.model.LaunchMethod</span></code> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.db.Database.makeRecords">
+<code class="descname">makeRecords</code><span class="sig-paren">(</span><em>flights</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.makeRecords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert flights into full records</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flights</strong> (<em>iterable</em>) &#8211; Iterable of <a class="reference internal" href="model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">db.model.Flight</span></code></a> objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Generator yielding a <code class="xref py py-class docutils literal"><span class="pre">db.Record</span></code> instance per flight in
+<em>flights</em>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.db.Database.copy">
+<em class="property">static </em><code class="descname">copy</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>ignoreID=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.db.Database.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies all attributes of <em>src</em> to <em>dest</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>src</strong> (<em>object</em>) &#8211; Source dataset</li>
+<li><strong>dest</strong> (<em>object</em>) &#8211; Destination dataset</li>
+<li><strong>ignoreID</strong> (<em>bool</em>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code>, member <em>id</em> is ignored. Defaults to
+<code class="docutils literal"><span class="pre">True</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="table.html" class="btn btn-neutral float-right" title="Table Class" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="model/user.html" class="btn btn-neutral" title="User Record" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Claas H. Köhler.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.8.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
