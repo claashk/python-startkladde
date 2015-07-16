@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utils package &mdash; python-startkladde 0.8.0 documentation</title>
+  <title>Create User Accounts Tool &mdash; python-startkladde 0.8.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
-        <link rel="up" title="The pysk package" href="../pysk.html"/>
-        <link rel="next" title="Mailer Class" href="mailer.html"/>
-        <link rel="prev" title="Tool Base Class" href="../tools/tool_base.html"/> 
+        <link rel="up" title="Tools package" href="tools.html"/>
+        <link rel="next" title="Set Pilot Email Tool" href="set_pilot_email.html"/>
+        <link rel="prev" title="Import Flights Tool" href="import_flights.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -111,13 +111,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../db/model/model.html#tables">Tables</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../db/record.html">Record Class</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../db/record.html#interface">Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../db/record.html#exceptions">Exceptions</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../db/table.html">Table Class</a></li>
@@ -137,23 +137,38 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/tools.html">Tools package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="tools.html">Tools package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tool_base.html">Tool Base Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="help.html">Help Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html">Statistics Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="stats.html#interface">Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mailer.html">Mailer Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#example">Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#interface">Interface</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#message-element-interface">Message Element Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="import_flights.html">Import Flights Tool</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Create User Accounts Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="user_query.html">User Query Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="user_query.html#interface">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_pilot_email.html">Set Pilot Email Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="set_pilot_email.html#extracting-data-from-resi">Extracting data from RESI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="set_pilot_email.html#interface">Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/utils.html">Utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/mailer.html">Mailer Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#message-element-interface">Message Element Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/user_query.html">User Query Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/user_query.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/ascii.html">ASCII Replacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/iter_members.html">Iterator over attributes</a></li>
 </ul>
 </li>
 </ul>
@@ -198,11 +213,13 @@
       
           <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
       
-    <li>Utils package</li>
+          <li><a href="tools.html">Tools package</a> &raquo;</li>
+      
+    <li>Create User Accounts Tool</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../../_sources/modules/utils/utils.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/modules/tools/update_users.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -211,18 +228,52 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="utils-package">
-<h1>Utils package<a class="headerlink" href="#utils-package" title="Permalink to this headline">¶</a></h1>
-<p>Contains several general purpose helper classes and utility functions.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="mailer.html">Mailer Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_query.html">User Query Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
-</ul>
+  <div class="section" id="create-user-accounts-tool">
+<h1>Create User Accounts Tool<a class="headerlink" href="#create-user-accounts-tool" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of the <strong class="program">update-users</strong> tool contained in <strong class="program">sk.py</strong>.
+Creates a user account for each member in the <code class="docutils literal"><span class="pre">people</span></code> table, if an email
+adress is specified in the <code class="docutils literal"><span class="pre">comments</span></code> column.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.tools.UpdateUsers">
+<em class="property">class </em><code class="descclassname">pysk.tools.</code><code class="descname">UpdateUsers</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.UpdateUsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create user accounts for web interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference internal" href="tool_base.html#pysk.tools.ToolBase" title="pysk.tools.ToolBase"><code class="xref py py-class docutils literal"><span class="pre">ToolBase</span></code></a>) &#8211; Parent tool</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.tools.UpdateUsers.createUserAccounts">
+<code class="descname">createUserAccounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.UpdateUsers.createUserAccounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create user accounts and sent emails.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.tools.UpdateUsers.defaultConfiguration">
+<em class="property">static </em><code class="descname">defaultConfiguration</code><span class="sig-paren">(</span><em>config=Namespace(debug=False</em>, <em>force=False</em>, <em>logStream=&lt;open file '&lt;stderr&gt;'</em>, <em>mode 'w' at 0x7f3f8ea231e0&gt;</em>, <em>parseCommandLine=True</em>, <em>verbose=1)</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.UpdateUsers.defaultConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get default configuration options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>object</em>) &#8211; Input configuration. Existing attributes will be
+overwritten.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Default configuration object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<span class="target" id="module-pysk.utils"></span></div>
+</div>
 
 
           </div>
@@ -230,10 +281,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mailer.html" class="btn btn-neutral float-right" title="Mailer Class" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="set_pilot_email.html" class="btn btn-neutral float-right" title="Set Pilot Email Tool" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tools/tool_base.html" class="btn btn-neutral" title="Tool Base Class" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="import_flights.html" class="btn btn-neutral" title="Import Flights Tool" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

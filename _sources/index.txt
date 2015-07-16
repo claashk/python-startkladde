@@ -1,8 +1,3 @@
-.. python-startkladde documentation master file, created by
-   sphinx-quickstart on Sun Feb 22 14:18:23 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to python-startkladde's documentation!
 ==============================================
 Python startkladde is a python interface to the
@@ -10,14 +5,14 @@ Python startkladde is a python interface to the
 a maintenance tool for admins who have to maintain either the Startkladde
 Database and/or the associated web interface.
 
-The python interface consists of a package called skpy and a set of executable
-tools, which provide the functionality implemented in the package from the
-command line.
+The python interface consists of a package called :mod:`pysk` and a set of 
+:doc:`binaries/executables`.
 
 :doc:`modules/pysk` contains several sub-packages, which group the different
 python modules by their respective functionality.
 
-Contents:
+Contents
+========
 
 .. toctree::
    :maxdepth: 2

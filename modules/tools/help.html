@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utils package &mdash; python-startkladde 0.8.0 documentation</title>
+  <title>Help Tool &mdash; python-startkladde 0.8.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
-        <link rel="up" title="The pysk package" href="../pysk.html"/>
-        <link rel="next" title="Mailer Class" href="mailer.html"/>
-        <link rel="prev" title="Tool Base Class" href="../tools/tool_base.html"/> 
+        <link rel="up" title="Tools package" href="tools.html"/>
+        <link rel="next" title="Import Flights Tool" href="import_flights.html"/>
+        <link rel="prev" title="Tool Base Class" href="tool_base.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -111,13 +111,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../db/model/model.html#tables">Tables</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../db/record.html">Record Class</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../db/record.html#interface">Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../db/record.html#exceptions">Exceptions</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../db/table.html">Table Class</a></li>
@@ -137,23 +137,25 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../tools/tools.html">Tools package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="tools.html">Tools package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tool_base.html">Tool Base Class</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Help Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="import_flights.html">Import Flights Tool</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mailer.html">Mailer Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#example">Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#interface">Interface</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mailer.html#message-element-interface">Message Element Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/utils.html">Utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/mailer.html">Mailer Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#message-element-interface">Message Element Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="user_query.html">User Query Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="user_query.html#interface">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/user_query.html">User Query Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/user_query.html#interface">Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/ascii.html">ASCII Replacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/iter_members.html">Iterator over attributes</a></li>
 </ul>
 </li>
 </ul>
@@ -198,11 +200,13 @@
       
           <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
       
-    <li>Utils package</li>
+          <li><a href="tools.html">Tools package</a> &raquo;</li>
+      
+    <li>Help Tool</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../../_sources/modules/utils/utils.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/modules/tools/help.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -211,18 +215,30 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="utils-package">
-<h1>Utils package<a class="headerlink" href="#utils-package" title="Permalink to this headline">¶</a></h1>
-<p>Contains several general purpose helper classes and utility functions.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="mailer.html">Mailer Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_query.html">User Query Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+  <div class="section" id="help-tool">
+<h1>Help Tool<a class="headerlink" href="#help-tool" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of the <strong class="program">help</strong> tool contained in <strong class="program">sk.py</strong>.</p>
+<dl class="class">
+<dt id="pysk.tools.Help">
+<em class="property">class </em><code class="descclassname">pysk.tools.</code><code class="descname">Help</code><span class="sig-paren">(</span><em>parent</em>, <em>description='Describe the usage of this program or its subcommands'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Help tool implementation</p>
+<p>Displays a help messag for a given tool</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<em>object</em>) &#8211; Parent <a class="reference internal" href="tool_base.html#pysk.tools.ToolBase" title="pysk.tools.ToolBase"><code class="xref py py-class docutils literal"><span class="pre">ToolBase</span></code></a> object</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; Description of the Help tool.</li>
+<li><strong>**kwargs</strong> &#8211; Key word arguments forwarded to <em>parent</em></li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<span class="target" id="module-pysk.utils"></span></div>
 
 
           </div>
@@ -230,10 +246,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mailer.html" class="btn btn-neutral float-right" title="Mailer Class" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="import_flights.html" class="btn btn-neutral float-right" title="Import Flights Tool" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tools/tool_base.html" class="btn btn-neutral" title="Tool Base Class" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tool_base.html" class="btn btn-neutral" title="Tool Base Class" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

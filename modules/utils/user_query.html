@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utils package &mdash; python-startkladde 0.8.0 documentation</title>
+  <title>User Query Class &mdash; python-startkladde 0.8.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
-        <link rel="up" title="The pysk package" href="../pysk.html"/>
-        <link rel="next" title="Mailer Class" href="mailer.html"/>
-        <link rel="prev" title="Tool Base Class" href="../tools/tool_base.html"/> 
+        <link rel="up" title="Utils package" href="utils.html"/>
+        <link rel="next" title="GitHub Related Information" href="../../github.html"/>
+        <link rel="prev" title="Iterator over attributes" href="iter_members.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -141,19 +141,19 @@
 <li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Utils package</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="utils.html">Utils package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="mailer.html">Mailer Class</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="mailer.html#example">Example</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mailer.html#interface">Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mailer.html#message-element-interface">Message Element Interface</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="user_query.html">User Query Class</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="user_query.html#interface">Interface</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">User Query Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -198,11 +198,13 @@
       
           <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
       
-    <li>Utils package</li>
+          <li><a href="utils.html">Utils package</a> &raquo;</li>
+      
+    <li>User Query Class</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../../_sources/modules/utils/utils.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/modules/utils/user_query.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -211,18 +213,81 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="utils-package">
-<h1>Utils package<a class="headerlink" href="#utils-package" title="Permalink to this headline">¶</a></h1>
-<p>Contains several general purpose helper classes and utility functions.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="mailer.html">Mailer Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_query.html">User Query Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+  <div class="section" id="user-query-class">
+<h1>User Query Class<a class="headerlink" href="#user-query-class" title="Permalink to this headline">¶</a></h1>
+<p>Prompts for user interaction on the command line and stores the user&#8217;s response.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.utils.UserQuery">
+<em class="property">class </em><code class="descclassname">pysk.utils.</code><code class="descname">UserQuery</code><span class="sig-paren">(</span><em>replies={'y': 'yes'</em>, <em>'n': 'no'}</em>, <em>maxRetries=10</em>, <em>defaultMessage='Proceed ?'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.UserQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query user via stdout</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>replies</strong> (<code class="xref py py-class docutils literal"><span class="pre">dict</span></code>) &#8211; Dictionary of allowed replies, with reply
+letter as key and description as value.</li>
+<li><strong>maxRetries</strong> (<em>int</em>) &#8211; Number of allowed retries.</li>
+<li><strong>defaultMessage</strong> (<em>str</em>) &#8211; Message supplied to user.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.utils.UserQuery.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>message=None</em>, <em>selection=None</em>, <em>retries=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.UserQuery.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get response from user</p>
+<p>Prints <em>message</em> to <code class="xref py py-attr docutils literal"><span class="pre">stdout</span></code> and returns the first valid user
+reply.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; Message to forward to user. Defaults to standard
+message set in constructor</li>
+<li><strong>selection</strong> (<em>iterable</em>) &#8211; Subset of reply keys passed to constructor via
+replies</li>
+<li><strong>retries</strong> (<em>int</em>) &#8211; Maximum number of retries. Defaults to <em>maxRetries</em>
+set in constructor.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">User response</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raise:</dt>
+<dd><code class="xref py py-class docutils literal"><span class="pre">IOError</span></code> if maximum number of retries is exceeded.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.UserQuery.iterOptions">
+<code class="descname">iterOptions</code><span class="sig-paren">(</span><em>selection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.UserQuery.iterOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over possible options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selection</strong> (<em>iterable</em>) &#8211; Subset of replies defined in
+<code class="xref py py-attr docutils literal"><span class="pre">self.replies</span></code>. Defaults to all known replies.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body">Option description with associated key</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<span class="target" id="module-pysk.utils"></span></div>
+</div>
 
 
           </div>
@@ -230,10 +295,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mailer.html" class="btn btn-neutral float-right" title="Mailer Class" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../github.html" class="btn btn-neutral float-right" title="GitHub Related Information" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tools/tool_base.html" class="btn btn-neutral" title="Tool Base Class" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="iter_members.html" class="btn btn-neutral" title="Iterator over attributes" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

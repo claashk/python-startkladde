@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mailer Class &mdash; python-startkladde 0.8.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Utils package" href="utils.html"/>
+        <link rel="next" title="ASCII Replacements" href="ascii.html"/>
+        <link rel="prev" title="Utils package" href="utils.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../index.html" class="icon icon-home"> python-startkladde
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html">Command Line Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/executables.html#python-scripts">Python Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html">sk.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_help.html">help</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_import-flights.html">import-flights</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_stats.html">stats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#synopsis">Synopsis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#display-statistics">Display statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#set-email-adress-for-pilots">Set Email Adress for Pilots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/executables.html#bash-scripts">Bash Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html">startkladde_backup.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_backup.html#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_backup.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_restore.html">startkladde_restore.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html">Synchronisation of the Startkladde Database with a Webserver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html">startkladde_sync_master.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../pysk.html">The pysk package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../db/db.html">The db package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../db/model/model.html">Database Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/model/model.html#tables">Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/record.html">Record Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/record.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/record.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/table.html">Table Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../db/column.html">Column Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/column.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/csv_reader.html">CSV Reader Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/csv_reader.html#expected-format">Expected Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/csv_reader.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/conflict_handler.html">Conflict Handler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/conflict_handler.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/conflict_handler.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/tools.html">Tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/tool_base.html">Tool Base Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="utils.html">Utils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">Mailer Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#message-element-interface">Message Element Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ascii.html">ASCII Replacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iter_members.html">Iterator over attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_query.html">User Query Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="user_query.html#interface">Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../github.html">GitHub Related Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#software-development">Software Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#getting-the-source-code">Getting the source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#workflow">Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#publishing-documentation-with-github-project-pages">Publishing Documentation with GitHub Project Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#setting-up-the-branch">Setting Up the Branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#disabling-jekyll">Disabling Jekyll</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#creating-and-publishing-documentation">Creating and Publishing Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">python-startkladde</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
+      
+          <li><a href="utils.html">Utils package</a> &raquo;</li>
+      
+    <li>Mailer Class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/modules/utils/mailer.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="mailer-class">
+<h1>Mailer Class<a class="headerlink" href="#mailer-class" title="Permalink to this headline">¶</a></h1>
+<p>Supports sending automated emails to a list of recipients. The message body
+is formed according to a template, which allows to insert fields, which are
+automatically replaced by individual text for each recipient.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>A message may look like this:</p>
+<div class="highlight-none"><div class="highlight"><pre>Hi ${first_name}!
+
+You receive this reminder email, because your are registred at the URI
+http://www.example.com with the following credentials:
+
+  Username: ${username}
+  Password: ${password()}
+
+Regards,
+The Webmaster
+</pre></div>
+</div>
+<p>When invoking <a class="reference internal" href="#pysk.utils.Mailer.__call__" title="pysk.utils.Mailer.__call__"><code class="xref py py-meth docutils literal"><span class="pre">__call__</span></code></a> with this string, then each
+<em>recipient</em> object passed as argument shall provide the members <code class="docutils literal"><span class="pre">first_name</span></code>,
+<code class="docutils literal"><span class="pre">last_name</span></code> and <code class="docutils literal"><span class="pre">username</span></code>. Additionally a dictionary with key &#8216;<em>password</em>&#8216;
+and an unary functor as value shall be passed as the <em>functors</em> argument. The
+functor will be executed with each <em>recipient</em> as argument and the result will
+replace the <code class="docutils literal"><span class="pre">${password()}</span></code> field.</p>
+</div>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.utils.Mailer">
+<em class="property">class </em><code class="descclassname">pysk.utils.</code><code class="descname">Mailer</code><span class="sig-paren">(</span><em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>logStream=&lt;open file '&lt;stderr&gt;'</em>, <em>mode 'w'&gt;</em>, <em>verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write automated emails to a set of addresses</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> (<em>str</em>) &#8211; IP or hostname of SMTP mail server. If <code class="docutils literal"><span class="pre">None</span></code>, no login is
+attempted. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>user</strong> (<em>str</em>) &#8211; Username for SMTP server. If <code class="docutils literal"><span class="pre">None</span></code>, no login is attempted.
+Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>password</strong> (<em>str</em>) &#8211; Password for login to SMTP server. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>logStream</strong> (<em>stream</em>) &#8211; Stream object used for messages. Defaults to
+<code class="docutils literal"><span class="pre">stderr</span></code></li>
+<li><strong>verbose</strong> (<em>int</em>) &#8211; Verbose mode setting. Defaults to <code class="docutils literal"><span class="pre">1</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.utils.Mailer.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>recipients</em>, <em>message=None</em>, <em>subject=''</em>, <em>sender=None</em>, <em>email=&lt;pysk.utils.mailer.MessageElement object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send messages to a number of recipients.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>recipients</strong> (<em>iterable</em>) &#8211; Iterable of recipient objects. Each object
+must contain the fields specified in <em>message</em>.</li>
+<li><strong>message</strong> (<em>str</em>) &#8211; Message to send. If not specified, the message set
+via the constructor or a call to <a class="reference internal" href="#pysk.utils.Mailer.setMessage" title="pysk.utils.Mailer.setMessage"><code class="xref py py-meth docutils literal"><span class="pre">setMessage</span></code></a>
+is used.</li>
+<li><strong>subject</strong> (<em>str</em>) &#8211; Subject used for all messages. Defaults to &#8220;&#8221;.</li>
+<li><strong>sender</strong> (<em>str</em>) &#8211; Sender&#8217;s email address. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+<li><strong>email</strong> (<em>functor</em>) &#8211; <p>Functor which returns the email from each
+<em>recipient</em> object. Defaults to</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MessageElement</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;attribute&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>implying that each <em>recipient</em> must provide an attribute
+<code class="xref py py-attr docutils literal"><span class="pre">email</span></code>.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary containing Error messages</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.Mailer.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>hostname</em>, <em>username</em>, <em>password=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to SMTP server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hostname</strong> (<em>str</em>) &#8211; Hostname of SMTP server</li>
+<li><strong>username</strong> (<em>str</em>) &#8211; User name for SMTP server</li>
+<li><strong>password</strong> (<em>str</em>) &#8211; Password used for login</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.Mailer.getMessage">
+<code class="descname">getMessage</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.getMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create message for a given object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<em>object</em>) &#8211; Object from which to create fields. Must contain one
+attribute for each specified field. Attribute names and respective
+field names must be identical.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Message with fields replaced from data object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.Mailer.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>msg</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print log message to logStream</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<em>str</em>) &#8211; Message to print</li>
+<li><strong>verbose</strong> (<em>int</em>) &#8211; Verbose mode. Message is not printed, if this value
+is greater than <code class="docutils literal"><span class="pre">self.verbose</span></code>. Defaults to <code class="docutils literal"><span class="pre">0</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.Mailer.msgGenerator">
+<code class="descname">msgGenerator</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.msgGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all message elements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<em>object</em>) &#8211; Object from which to extract missing fields</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.utils.Mailer.setMessage">
+<code class="descname">setMessage</code><span class="sig-paren">(</span><em>msg</em>, <em>functors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.Mailer.setMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the message to send</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<em>str</em>) &#8211; String containing message. Fields to be replaced from
+other objects shall be marked as <code class="docutils literal"><span class="pre">${name}</span></code>, where <code class="xref py py-attr docutils literal"><span class="pre">name</span></code>
+is an attribute to be provided by each <em>recipient</em> object.</li>
+<li><strong>functors</strong> (<code class="xref py py-class docutils literal"><span class="pre">dict</span></code>) &#8211; Dictionary with functors. If this is
+provided, a field of the form <code class="docutils literal"><span class="pre">${name()}</span></code> will be replaced by
+<code class="docutils literal"><span class="pre">functors[name]</span></code>, which should be a unary function accepting a
+<em>recipient</em> object as parameter. Defaults to <code class="docutils literal"><span class="pre">None</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raise:</dt>
+<dd><code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if functor fields are specified in message string,
+for which no matching key exists in <em>functors</em>.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="message-element-interface">
+<h2>Message Element Interface<a class="headerlink" href="#message-element-interface" title="Permalink to this headline">¶</a></h2>
+<p>Internally, each message is composed of several
+<a class="reference internal" href="#pysk.utils.mailer.MessageElement" title="pysk.utils.mailer.MessageElement"><code class="xref py py-class docutils literal"><span class="pre">MessageElement</span></code></a> instances, each of which represents
+either a literal string or an attribute to be retrieved from each <em>recipient</em>
+or an unary functor to be invoked with a <em>recpient</em> as argument.</p>
+<dl class="class">
+<dt id="pysk.utils.mailer.MessageElement">
+<em class="property">class </em><code class="descclassname">pysk.utils.mailer.</code><code class="descname">MessageElement</code><span class="sig-paren">(</span><em>value=''</em>, <em>type='string'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.mailer.MessageElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>A message consists of strings and fields.</p>
+<p>The MessageElement represents both string and field elements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> &#8211; The message element value. Either a string, which will be
+returned verbatim, or an attribute, which will be extracted from an
+object during runtime.</li>
+<li><strong>type</strong> (<em>str</em>) &#8211; <p>Type of the message element. Allowed values are those listed
+in <a class="reference internal" href="#pysk.utils.mailer.MessageElement.TYPES" title="pysk.utils.mailer.MessageElement.TYPES"><code class="xref py py-attr docutils literal"><span class="pre">TYPES</span></code></a>:</p>
+<ul>
+<li>&#8216;<em>attribute</em>&#8216;: attribute to be retrieved from <em>recipient</em> objects</li>
+<li>&#8216;<em>functor</em>&#8216;: unary functor called with <em>recipient</em> as argument</li>
+<li>&#8216;<em>string</em>&#8216;: a literal string.</li>
+</ul>
+<p>Defaults to &#8216;<em>string</em>&#8216;.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.utils.mailer.MessageElement.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>obj=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.utils.mailer.MessageElement.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method called when message is constructed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<em>object</em>) &#8211; Object from which to extract parameters. Defaults to
+<code class="docutils literal"><span class="pre">None</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Message part as string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.utils.mailer.MessageElement.ATTRIBUTE_TYPE">
+<code class="descname">ATTRIBUTE_TYPE</code><em class="property"> = 0</em><a class="headerlink" href="#pysk.utils.mailer.MessageElement.ATTRIBUTE_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message element represents a class attribute</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.utils.mailer.MessageElement.FUNCTOR_TYPE">
+<code class="descname">FUNCTOR_TYPE</code><em class="property"> = 2</em><a class="headerlink" href="#pysk.utils.mailer.MessageElement.FUNCTOR_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message element represents a functor</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.utils.mailer.MessageElement.STRING_TYPE">
+<code class="descname">STRING_TYPE</code><em class="property"> = 1</em><a class="headerlink" href="#pysk.utils.mailer.MessageElement.STRING_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message element represents a literal string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pysk.utils.mailer.MessageElement.TYPES">
+<code class="descname">TYPES</code><em class="property"> = {'attribute': 0, 'string': 1, 'functor': 2}</em><a class="headerlink" href="#pysk.utils.mailer.MessageElement.TYPES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of recognised types for a message element</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ascii.html" class="btn btn-neutral float-right" title="ASCII Replacements" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="utils.html" class="btn btn-neutral" title="Utils package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Claas H. Köhler.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.8.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

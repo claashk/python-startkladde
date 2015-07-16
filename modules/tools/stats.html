@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Statistics Tool &mdash; python-startkladde 0.8.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="python-startkladde 0.8.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Tools package" href="tools.html"/>
+        <link rel="next" title="Import Flights Tool" href="import_flights.html"/>
+        <link rel="prev" title="Help Tool" href="help.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="../../index.html" class="icon icon-home"> python-startkladde
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../binaries/executables.html">Command Line Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/executables.html#python-scripts">Python Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/sk.html">sk.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_help.html">help</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_import-flights.html">import-flights</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk_stats.html">stats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#synopsis">Synopsis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#display-statistics">Display statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/sk.html#set-email-adress-for-pilots">Set Email Adress for Pilots</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../binaries/executables.html#bash-scripts">Bash Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_backup.html">startkladde_backup.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_backup.html#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_backup.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_restore.html">startkladde_restore.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/server_sync.html">Synchronisation of the Startkladde Database with a Webserver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../binaries/startkladde_sync_master.html">startkladde_sync_master.bsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../binaries/startkladde_sync_master.html#synopsis">Synopsis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../pysk.html">The pysk package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../db/db.html">The db package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../db/model/model.html">Database Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/model/model.html#tables">Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/database.html">Database Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/database.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/record.html">Record Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/record.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/record.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/table.html">Table Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../db/column.html">Column Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/column.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/csv_reader.html">CSV Reader Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/csv_reader.html#expected-format">Expected Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/csv_reader.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../db/conflict_handler.html">Conflict Handler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../db/conflict_handler.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../db/conflict_handler.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="tools.html">Tools package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tool_base.html">Tool Base Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="help.html">Help Tool</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Statistics Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="import_flights.html">Import Flights Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="set_pilot_email.html">Set Pilot Email Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="set_pilot_email.html#extracting-data-from-resi">Extracting data from RESI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="set_pilot_email.html#interface">Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/utils.html">Utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/mailer.html">Mailer Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#interface">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/mailer.html#message-element-interface">Message Element Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/user_query.html">User Query Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../utils/user_query.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/ascii.html">ASCII Replacements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/iter_members.html">Iterator over attributes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../github.html">GitHub Related Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#software-development">Software Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#getting-the-source-code">Getting the source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#workflow">Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../github.html#publishing-documentation-with-github-project-pages">Publishing Documentation with GitHub Project Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#setting-up-the-branch">Setting Up the Branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#disabling-jekyll">Disabling Jekyll</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../github.html#creating-and-publishing-documentation">Creating and Publishing Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">python-startkladde</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../pysk.html">The pysk package</a> &raquo;</li>
+      
+          <li><a href="tools.html">Tools package</a> &raquo;</li>
+      
+    <li>Statistics Tool</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/modules/tools/stats.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="statistics-tool">
+<h1>Statistics Tool<a class="headerlink" href="#statistics-tool" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of the <strong class="program">stats</strong> tool contained in <strong class="program">sk.py</strong>.
+Enables to query the database for launch statistics for each aircraft, which is
+typically helpful to check the plane log against the database for the ARC
+maintenance.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pysk.tools.Stats">
+<em class="property">class </em><code class="descclassname">pysk.tools.</code><code class="descname">Stats</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create plane logs for a given time period</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> (<a class="reference internal" href="tool_base.html#pysk.tools.ToolBase" title="pysk.tools.ToolBase"><code class="xref py py-class docutils literal"><span class="pre">ToolBase</span></code></a>) &#8211; Parent tool</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pysk.tools.Stats.addEntry">
+<code class="descname">addEntry</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.addEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add flight to current entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to add to current entry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.tools.Stats.date">
+<em class="property">static </em><code class="descname">date</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get date of flight as string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to check</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Departure date of flight as string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.tools.Stats.defaultConfiguration">
+<em class="property">static </em><code class="descname">defaultConfiguration</code><span class="sig-paren">(</span><em>config=Namespace(debug=False</em>, <em>force=False</em>, <em>logStream=&lt;open file '&lt;stderr&gt;'</em>, <em>mode 'w' at 0x7f677bb011e0&gt;</em>, <em>parseCommandLine=True</em>, <em>verbose=1)</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.defaultConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get default configuration options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>object</em>) &#8211; Input configuration. Existing attributes will be
+overwritten.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Default configuration object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pysk.tools.Stats.flightTimeStr">
+<em class="property">static </em><code class="descname">flightTimeStr</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.flightTimeStr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print flight time to string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dt</strong> (<code class="xref py py-class docutils literal"><span class="pre">datetime</span></code>) &#8211; datetime object containing time span</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Time span as string in format <code class="docutils literal"><span class="pre">HH</span></code>:<code class="docutils literal"><span class="pre">MM</span></code>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.flights">
+<code class="descname">flights</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.flights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter flights in database to plane and time constraints</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> (<em>str</em>) &#8211; Plan registration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Iterable of flights matching <em>registration</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.hasErrors">
+<code class="descname">hasErrors</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.hasErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure flight is valid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to validate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List containing errors</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.mayAdd">
+<code class="descname">mayAdd</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.mayAdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if flight may be added to current entry</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to add</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if and only if flight may be added to current entry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.newDay">
+<code class="descname">newDay</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.newDay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start new day</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to initialise day with</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.newEntry">
+<code class="descname">newEntry</code><span class="sig-paren">(</span><em>flight</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.newEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start new entry in plane log</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flight</strong> (<a class="reference internal" href="../db/model/flight.html#pysk.db.model.Flight" title="pysk.db.model.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a>) &#8211; Flight to initialise entry with</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.printDailySums">
+<code class="descname">printDailySums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.printDailySums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print daily sums to log stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.printEntry">
+<code class="descname">printEntry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.printEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print current entry to log stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.printHeader">
+<code class="descname">printHeader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.printHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print log book header to log stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.printStats">
+<code class="descname">printStats</code><span class="sig-paren">(</span><em>registration</em><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.printStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print stats for a plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>registration</strong> (<em>str</em>) &#8211; Registration of plane for which to print stats</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raise:</dt>
+<dd><code class="xref py py-class docutils literal"><span class="pre">KeyError</span></code> if no plane with this registration exists in
+Database</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pysk.tools.Stats.timeConstraints">
+<code class="descname">timeConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysk.tools.Stats.timeConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert user specified time constraints to MySQL search string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MySQL compatible search string specifying the time range to search</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="import_flights.html" class="btn btn-neutral float-right" title="Import Flights Tool" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="help.html" class="btn btn-neutral" title="Help Tool" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Claas H. Köhler.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.8.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

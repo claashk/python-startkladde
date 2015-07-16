@@ -1,10 +1,11 @@
-Executables of the python startkladde
-=====================================
-Python Startkladde comes with a set of executables, which allow quick execution
-of common database maintenance operations.
+Command Line Tools
+==================
+Python Startkladde comes with a set of command line tools, which allow quick
+execution of common database maintenance operations.
 
 Python Scripts
-==============
+--------------
+
 .. toctree::
    :maxdepth: 2
 
@@ -12,7 +13,7 @@ Python Scripts
 
    
 Bash Scripts
-============
+------------
 The following bash scripts are provided for your convenience:
 
 .. toctree::
