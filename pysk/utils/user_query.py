@@ -3,44 +3,43 @@ from sys import stdout
 
 class UserQuery(object):
     """Query user via stdout
+        
+    Arguments:
+        replies(:class:`dict`): Dictionary of allowed replies, with reply
+           letter as key and description as value.
+        maxRetries(int): Number of allowed retries.
+        defaultMessage(str): Message supplied to user.
     """
     
     def __init__(self, replies={'y' : 'yes', 'n' : 'no'},
                        maxRetries=10,
                        defaultMessage="Proceed ?"):
         """Constructor
-        
-        Initialise default options for query
-        
-        Arguments:
-            replies: Dictionary of allowed replies, with reply letter as key 
-                and description as value
-            mayRetries: Maximum number of retries allowed
-            defaultMessage: Message supplied to user.
         """
         self.replies= replies
         self.maxRetries= 10
         self.defaultMessage=defaultMessage
         
-        
-        
+                
     def __call__(self, message=None, selection=None, retries=None):
         """Get response from user
         
-        Asks a question and forwards the first valid user reply.
+        Prints *message* to :attr:`stdout` and returns the first valid user
+        reply.
         
         Arguments:
-            message: Message to forward to user. Defaults to standard message
-                set in constructor
-            selection: Subset of reply keys passed to constructor via replies
-            retries: Maximum number of retries. Defaults to number defined via
-                maxRetries in constructor.
+            message (str): Message to forward to user. Defaults to standard
+               message set in constructor
+            selection (iterable): Subset of reply keys passed to constructor via
+               replies
+            retries (int): Maximum number of retries. Defaults to *maxRetries*
+               set in constructor.
     
         Return:
             User response
             
         Raise:
-            IOError if maximum number of retries is exceeded.
+            :class:`IOError` if maximum number of retries is exceeded.
         """
         options= "[{0}]".format( ", ".join( self.iterOptions(selection) ) )
         response=""
@@ -67,13 +66,12 @@ class UserQuery(object):
         return response
             
             
-            
     def iterOptions(self, selection=None):
         """Iterate over possible options
         
         Arguments:
-            selection: Subset of replies defined in self.replies. Defaults to
-                all defined replies
+            selection (iterable): Subset of replies defined in
+               :attr:`self.replies`. Defaults to all known replies.
         
         Yield:
            Option description with associated key

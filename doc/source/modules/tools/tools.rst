@@ -11,8 +11,13 @@ package tools. To avoid duplication of code, all tools should derive from
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    tool_base
+   help
+   stats
+   import_flights
+   update_users
+   set_pilot_email
 
 .. automodule:: pysk.tools

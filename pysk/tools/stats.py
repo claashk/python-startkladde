@@ -9,6 +9,11 @@ TIME_FORMAT="%H:%M"
 
 
 class Stats(ToolBase):
+    """Create plane logs for a given time period
+  
+    Arguments:
+        parent (:class:`~.tools.ToolBase`): Parent tool
+    """
     
     def __init__(self, parent):
 
@@ -57,22 +62,20 @@ class Stats(ToolBase):
         self.parent.connectDatabase()
         
         #read records from input file
-
         for registration in self.config.registrations:
             self.printStats( registration )
-
 
 
     def printStats(self, registration):
         """Print stats for a plane
         
         Arguments:
-            registration: Registration of plane for which to print stats
+            registration (str): Registration of plane for which to print stats
         
         Raise:
-            KeyError if no plane with this registration exists in Database
-        """
-        
+            :class:`KeyError` if no plane with this registration exists in
+            Database
+        """        
         for flight in self.flights(registration):
 
             # Make sure all required fields are present
@@ -109,12 +112,11 @@ class Stats(ToolBase):
         self.printDailySums()
             
 
-
     def hasErrors(self, flight):
         """Make sure flight is valid
         
         Arguments:
-            flight: Flight to validate
+            flight (:class:`~.db.model.Flight`): Flight to validate
             
         Return:
             List containing errors
@@ -128,12 +130,14 @@ class Stats(ToolBase):
         return errors
 
 
-
     def mayAdd(self, flight):
         """Check if flight may be added to current entry
         
+        Arguments:
+            flight (:class:`~.db.model.Flight`): Flight to add        
+        
         Return:
-            True if and only if flight may be added to current entry        
+            ``True`` if and only if flight may be added to current entry        
         """
         if self._currentPic != flight.pic():
             return False
@@ -150,12 +154,11 @@ class Stats(ToolBase):
         return True
         
         
-        
     def newEntry(self, flight):
-        """Start new entry
+        """Start new entry in plane log
         
         Arguments:
-            flight: Flight for which to start a new entry
+            flight (:class:`~.db.model.Flight`): Flight to initialise entry with
         """
         self._currentPic = flight.pic()
         self._currentFrom= flight.departure_location
@@ -170,12 +173,11 @@ class Stats(ToolBase):
         self.addEntry(flight)
 
 
-
     def newDay(self, flight):
         """Start new day
         
         Arguments:
-            flight: Flight for which to start a new entry
+            flight (:class:`~.db.model.Flight`): Flight to initialise day with
         """
         self._currentDay = self.date(flight)
                                               
@@ -183,12 +185,11 @@ class Stats(ToolBase):
         self.flightTimeToday     = timedelta()
         
 
-
     def addEntry(self, flight):
         """Add flight to current entry
         
         Arguments:
-            flight: Flight to add to current entry
+            flight (:class:`~.db.model.Flight`): Flight to add to current entry
         """
         if flight.copilot_id:
             self._seats.add("2")
@@ -208,18 +209,16 @@ class Stats(ToolBase):
         self.flightTimeTotal+= dt
 
 
-
     def printHeader(self):
-        """Print current entry to stdout
+        """Print log book header to log stream
         """
         self.log(80*"+" + "\n")
         self.log( u"Datum|Nachname,      |Anz|Startort       |Start|# Ldg\n"
                   u"     |Vorname        |Crw|Landeort       |Ldg  |Zeit\n")
       
 
-
     def printEntry(self):
-        """Print current entry to stdout
+        """Print current entry to log stream
         """
         pilot= self.parent.db.pilot(self._currentPic)
 
@@ -245,9 +244,8 @@ class Stats(ToolBase):
                            self.flightTimeStr(self.flightTime)))
 
 
-
     def printDailySums(self):
-        """Print daily sums
+        """Print daily sums to log stream
         """
         self.log(80*"=" + "\n")
         self.log( "{0}{1:5d}\n"
@@ -259,20 +257,18 @@ class Stats(ToolBase):
         self.log("\n\n")    
     
     
-    
     def printTotals(self):
         self.log("Total: TODO")
-
 
 
     def flights(self, registration):
         """Filter flights in database to plane and time constraints
         
         Arguments:
-            registration: Plan registration        
+            registration (str): Plan registration        
         
         Return:
-            Iterable of flights
+            Iterable of flights matching *registration*
         """
         timeFilter= self.timeConstraints()
 
@@ -286,7 +282,6 @@ class Stats(ToolBase):
 
         return self.parent.db.iterFlights( filter=filter,
                                            order="departure_time")
-
 
 
     def _initCmdLineArguments(self):
@@ -334,7 +329,6 @@ class Stats(ToolBase):
                           .format( datetime.strftime(end, DATE_FORMAT) ) )
                         
         return " AND ".join(parts)
-
                 
 
     @staticmethod    
@@ -342,18 +336,23 @@ class Stats(ToolBase):
         """Get date of flight as string
         
         Arguments:
-            flight: Flight
-            
+            flight (:class:`~.db.model.Flight`): Flight to check            
+        
         Return:
             Departure date of flight as string
         """
         return datetime.strftime(flight.departure_time, DATE_FORMAT)        
 
 
-
     @staticmethod
     def flightTimeStr(dt):
-        """Print flight time to string in format HH:SS
+        """Print flight time to string
+        
+        Arguments:
+            dt (:class:`datetime`): datetime object containing time span
+            
+        Return:
+            Time span as string in format ``HH``\:``MM``.
         """
         s=int( dt.total_seconds() )
 
@@ -363,18 +362,16 @@ class Stats(ToolBase):
         return "{0:02d}:{1:02d}".format(hrs, minutes)        
 
 
-
     @staticmethod
     def defaultConfiguration(config=ToolBase.defaultConfiguration()):
-        """Get Default Configuration Options
+        """Get default configuration options
         
-        Parameters
-        ----------
-        config Input configuration. Existing attributes will be overwritten.
+        Arguments:
+            config (object): Input configuration. Existing attributes will be
+               overwritten.
         
-        Returns
-        -------
-        Default configuration object
+        Return:
+            Default configuration object
         """
         config.time= None
 

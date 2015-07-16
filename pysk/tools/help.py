@@ -8,13 +8,10 @@ class Help(ToolBase):
     
     Displays a help messag for a given tool
     
-    Parameters
-    ----------
-    parent Parent AdminTool object
-    
-    description Description of the Help tool.
-    
-    **kwargs Key word arguments forwarded to 
+    Arguments:
+        parent (object): Parent :class:`~.ToolBase` object
+        description (str): Description of the Help tool.
+        **kwargs: Key word arguments forwarded to *parent* 
     """
     
     def __init__(self, parent,

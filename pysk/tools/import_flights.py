@@ -12,7 +12,11 @@ from pysk.db.conflict_handler import INTERACTIVE, IGNORE_ALL_CONFLICTS, REJECT_O
 
 
 class ImportFlights(ToolBase):
+    """Import flights from csv file
     
+    Arguments:
+        parent (object): Parent tool object
+    """
     def __init__(self, parent):
 
         super(ImportFlights, self).__init__(description=
@@ -21,7 +25,6 @@ class ImportFlights(ToolBase):
         self.config= self.defaultConfiguration(self.config)
         self._initCmdLineArguments()        
 
-        
         #internal variables
         self.aliases= {"pilots": dict(),
                        "launch methods" : dict(),
@@ -32,10 +35,14 @@ class ImportFlights(ToolBase):
         
 
     def msg(self, message):
+        """Print message to standard out
+        
+        Arguments:
+            message (str): Message to print
+        """
         self.log("In {0}:{1}: {2}".format( self._currentFile,
                                            self._currentLine,
                                            message) )
-
 
 
     def _exec(self):
@@ -96,26 +103,28 @@ class ImportFlights(ToolBase):
             
     def importAliases(self, path):
         """Read alias names for planes, pilots or launch methods from file
-        
-        Aliases are stored in dictionary self.aliases[<string>]
 
-        Text file format is ASCII with one header of the form
-          [<category>]
-        following a number of alias definitions (one per line)
-          <key> : <alias>.
-        <category> can be any of fields speciefied in self.aliases
-
-        If <key> is a name, it should be given in the form
-        <last_name>, <first_name>        
+        :TODO: Should be replaced by a general ini parser in utils        
         
-        Parameters
-        ----------
-        path Path to text file containing aliases
+        Aliases are stored in dictionary ``self.aliases[<string>]``.
+        The expected format is ASCII with one header followed by a number of
+        key value pairs in the form
+        
+        .. code-block:: none
+        
+           [<category>]
+           <key>: <alias>
+           <key>: <alias>
+           ...
+           
+        ``<category>`` can be any field specified in ``self.aliases``. If
+        ``<key>`` is a person's name, it should be provided in the form
+        ``<last_name>, <first_name>``.
+        
+        Arguments:
+            path (str): Path to text file containing aliases
         """
-        #TODO Should be replaced by a general ini parser in utils        
-        
         dest= None        
-        
         self.log("\nImporting alias file {0} ...\n".format(path))
         
         nFields= 0 # Number of fields per entry
@@ -197,23 +206,20 @@ class ImportFlights(ToolBase):
                 self.log("-> Imported {0} {1}\n".format(len(vals), cat))
 
 
-
     def db(self):
         """Access to parent database
         
-        Returns
-        -------
-        self.parent.db
+        Return:
+            ``self.parent.db``
         """
         return self.parent.db
-
 
 
     def importCsv(self, path):
         """Import records from csv file
                 
         Arguments:
-            path: Path to input file
+            path (str): Path to input file
             
         Return:
             Iterable of imported records
@@ -244,7 +250,6 @@ class ImportFlights(ToolBase):
         return retval
 
 
-
     def createFlights(self, records):
         """Add flights to database
         
@@ -259,9 +264,8 @@ class ImportFlights(ToolBase):
           collision. This is the default.
         - If mode is 'replace', existing flights are overwritten
          
-        Parameters
-        ----------
-        records Input records
+        Arguments:
+            records (iterable): Input records
         """
         missing= {"pilots": dict(),
                   "planes" : dict(),
@@ -326,7 +330,6 @@ class ImportFlights(ToolBase):
 
         self.db().commit()
                        
-
                         
     def _updatePilot(self, pilot, missing):
         """Try to complete pilot information with information in database
@@ -335,11 +338,10 @@ class ImportFlights(ToolBase):
         found, pilot is reset to the respective database instance. If no match
         can be identified, pilot is moved to missing.
         
-        Parameters
-        ----------
-        pilot Instance to update from database
-        
-        missing Dictionary of missing pilots
+        Arguments:
+            pilot (:class:`~.db.model.Pilot`):  Pilot instance to update from
+               database
+            missing (:class:`dict`): Dictionary of missing pilots
         """
         if not (pilot.last_name or pilot.first_name):
             return
@@ -358,7 +360,6 @@ class ImportFlights(ToolBase):
             missing[(pilot.last_name, pilot.first_name)]= pilot
 
 
-
     def _updatePlane(self, plane, missing):
         """Try to complete airplane information with information in database
         
@@ -366,11 +367,10 @@ class ImportFlights(ToolBase):
         found, plane is reset to the respective database instance. If no match
         can be identified, plane is moved to missing.
         
-        Parameters
-        ----------
-        plane Instance to update from database
-        
-        missing Dictionary of missing planes
+        Arguments:
+            plane (:class:`~.db.model.Plane`): Plane instance to update from
+               database
+            missing (:class:`dict`): Dictionary of missing planes
         """
         if not plane.registration:
             return
@@ -387,7 +387,6 @@ class ImportFlights(ToolBase):
             missing[plane.registration]= plane
 
 
-
     def _updateLaunchMethod(self, method, missing):
         """Try to complete launch method information with information in
            database
@@ -397,11 +396,10 @@ class ImportFlights(ToolBase):
         instance. If no match can be identified, launchMethod is moved to
         missing.
         
-        Parameters
-        ----------
-        method Instance to update from database
-        
-        missing Dictionary of missing launch methods
+        Arguments:
+            method (:class:`~.db.model.LaunchMethod`): Launch method to update
+               from database
+            missing (:class:`dict`): Dictionary of missing launch methods
         """
         alias= self.aliases["launch methods"].get(method.name)        
         
@@ -443,16 +441,13 @@ class ImportFlights(ToolBase):
         missing[method.name]= method
 
 
-
     def _reportMissing(self, string, items):
         """Reports missing items
             
-        Parameters
-        ----------
-        string String describing items
-        iterms Iterable containing missing items
+        Arguments:
+           string (str): String describing items
+           iterms (iterable): Iterable containing missing items
         """
-
         if not items:
             return
         
@@ -463,18 +458,16 @@ class ImportFlights(ToolBase):
             self.log(" -> {0}\n".format(str(item)) )
 
 
-
     @staticmethod
     def defaultConfiguration(config=ToolBase.defaultConfiguration()):
         """Get Default Configuration Options
         
-        Parameters
-        ----------
-        config Input configuration. Existing attributes will be overwritten.
+        Arguments:
+            config (object): Input configuration. Existing attributes will be
+            overwritten.
         
-        Returns
-        -------
-        Default configuration object
+        Return:
+            Default configuration object
         """
         config.alias_file= None
         config.mode="interactive"
@@ -485,5 +478,4 @@ class ImportFlights(ToolBase):
         config.separator=","
 
         return config        
-
-                    
+                

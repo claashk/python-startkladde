@@ -5,6 +5,11 @@ from tool_base import ToolBase
 
 
 class SetPilotEmail(ToolBase):
+    """Set email addresses of pilots from html file.
+    
+    Arguments:
+        parent (:class:`~.tools.ToolBase`): Parent tool
+    """
 
     def __init__(self, parent):
         description=str( "Set email of pilots\n"
@@ -19,7 +24,6 @@ class SetPilotEmail(ToolBase):
         
         #internal variables
         self.emails= dict()
-
 
 
     def _exec(self):
@@ -48,7 +52,6 @@ class SetPilotEmail(ToolBase):
         
         self.parent.db.commit()
 
-
     
     def _initCmdLineArguments(self):
         """Initialise all command line arguments.
@@ -59,25 +62,22 @@ class SetPilotEmail(ToolBase):
                                  help="Restrict records to pilots belonging"
                                       " to the given club")
 
-
     
     def parseHtml(self, path):
-        """Parse Html file containing emails in same format as output by RESI
-           and add emails to self.emails
+        """Parse Html file containing emails and add emails to ``self.emails``
         
-        Parameters
-        ----------
-        path Input file
+        Format is the same format output by RESI
+           
+        Arguments:
+            path (str): Path to input file
 
-        Returns
-        -------
-        Number of extracted email addresses        
+        Return:
+            Number of extracted email addresses        
         """
         format=r".*<a href=\"http://app\.resi\.de/reg\.nsf.+\">(.*)</a>.*<a href=\"mailto:(.+)\">"
-
         pattern= re.compile(format)
-
         nExtracted= 0
+
         with io.open(path, mode="r", encoding="windows-1252") as file:
             for line in file:
                 match=pattern.match(line)
@@ -92,15 +92,17 @@ class SetPilotEmail(ToolBase):
                 nExtracted+= 1
         
         return nExtracted
-        
-        
+                
         
     def updateEmails(self, remove=False):
         """Reset Emails of all pilots in database
         
-        Returns
-        -------
-        Number of updated records           
+        Arguments:
+            remove (bool): If ``True``, existing emails of pilots not listed
+               in input file are deleted. Defaults to ``False``.
+        
+        Return:
+            Number of updated records           
         """
         filter= None
         if self.config.club:
@@ -130,13 +132,12 @@ class SetPilotEmail(ToolBase):
     def defaultConfiguration(config=ToolBase.defaultConfiguration()):
         """Get Default Configuration Options
         
-        Parameters
-        ----------
-        config Input configuration. Existing attributes will be overwritten.
+        Arguments:
+            config (object): Input configuration. Existing attributes will be
+               overwritten.
         
-        Returns
-        -------
-        Default configuration object
+        Return:
+            Default configuration object
         """
         config.club= None
 

@@ -12,26 +12,30 @@ from email.mime.text import MIMEText
 import re, sys
 
 
-
 class MessageElement(object):
     """A message consists of strings and fields.
     
     The MessageElement represents both string and field elements
 
-    Parameters
-    ----------
-    value The Message element value. Either a string, which will be returned
-          verbatim, or an attribute, which will be extracted from an object
-          during runtime.
+    Arguments:
+        value: The message element value. Either a string, which will be
+           returned verbatim, or an attribute, which will be extracted from an
+           object during runtime.
+        type(str): Type of the message element. Allowed values are those listed
+           in :attr:`~.utils.mailer.MessageElement.TYPES`:
 
-    type Type of the message element. Allowed values are "attribute", "functor"
-         and "string". Defaults to string.
+           - '*attribute*': attribute to be retrieved from *recipient* objects
+           - '*functor*': unary functor called with *recipient* as argument
+           - '*string*': a literal string.
+           
+           Defaults to '*string*'.
     """
 
-    ATTRIBUTE_TYPE= 0
-    STRING_TYPE   = 1
-    FUNCTOR_TYPE  = 2    
+    ATTRIBUTE_TYPE= 0 #: Message element represents a class attribute
+    STRING_TYPE   = 1 #: Message element represents a literal string
+    FUNCTOR_TYPE  = 2 #: Message element represents a functor   
     
+    #: Dictionary of recognised types for a message element
     TYPES={"attribute": ATTRIBUTE_TYPE,
            "functor" : FUNCTOR_TYPE,
            "string" : STRING_TYPE }    
@@ -45,18 +49,16 @@ class MessageElement(object):
         else:
             self.value= unicode(value)
 
-
         
     def __call__(self, obj=None):
         """Method called when message is constructed.
         
-        Parameters
-        ----------
-        obj Object from which to extract parameters. Defaults to None.
+        Arguments:
+            obj (object): Object from which to extract parameters. Defaults to
+               ``None``.
         
-        Returns
-        -------
-        Message part as string
+        Return:
+            Message part as string
         """
         if self.type == self.ATTRIBUTE_TYPE:
             return unicode( getattr(obj, self.value) )
@@ -67,23 +69,18 @@ class MessageElement(object):
 
 
 
-
 class Mailer(object):
     """Write automated emails to a set of addresses
     
-    Parameters
-    ----------
-    host IP or hostname or SMTP mail server. If None, no login is attempted.
-         Defaults to None.
-    
-    user Username for login to server. If None, no login is attempted.
-         Defaults to None.
-
-    password Password for login to server. Defaults to None.
-
-    logStream Stream used for messages. Defaults to stderr
-
-    verbose Verbose mode setting. Defaults to 1.
+    Arguments:
+        host (str): IP or hostname of SMTP mail server. If ``None``, no login is
+           attempted. Defaults to ``None``. 
+        user (str): Username for SMTP server. If ``None``, no login is attempted.
+           Defaults to ``None``.
+        password (str): Password for login to SMTP server. Defaults to ``None``.
+        logStream (stream): Stream object used for messages. Defaults to
+           ``stderr``
+        verbose (int): Verbose mode setting. Defaults to ``1``.
     """    
     def __init__(self, host=None,
                        user=None,
@@ -100,34 +97,27 @@ class Mailer(object):
             self.connect(host, user, password)
 
 
-
     def log(self, msg, verbose=0):
-        """Print log message
+        """Print log message to logStream
         
-        Parameters
-        ----------
-        msg Message to print
-        
-        verbose Verbose mode. Message is not printed, if verbose is greater
-                than self.verbose. Defaults to zero.
+        Arguments:
+            msg (str): Message to print
+            verbose (int): Verbose mode. Message is not printed, if this value
+               is greater than ``self.verbose``. Defaults to ``0``.
         """
         if verbose > self.verbose:
             return
         
         self.logStream.write(msg)
         
-
                 
     def connect(self, hostname, username, password=None):
         """Connect to SMTP server
         
-        Parameters
-        ----------
-        hostname Hostname
-        
-        username User name to login to server
-        
-        password Password used for login
+        Arguments:
+            hostname (str): Hostname of SMTP server
+            username (str): User name for SMTP server
+            password (str): Password used for login
         """
         self.log("Connecting to server {0}\n".format(hostname), verbose=1)
         self.server.connect(hostname)
@@ -149,8 +139,7 @@ class Mailer(object):
                               stream= self.logStream )
 
         self.server.login(username, password)
-        
-        
+             
     
     def __call__(self, recipients,
                        message=None,
@@ -159,25 +148,26 @@ class Mailer(object):
                        email= MessageElement("email", type="attribute") ) :
         """Send messages to a number of recipients.
         
-        Parameters
-        ----------
-        recipients Iterable of recipient objects. Each object must contain
-                   the fields specified in message as well as an attribute
-                   for the email address
-                   
-        message    Message to send. If not specified, the message set via the
-                   constructor or a call to setMessage is used.
+        Arguments:
+            recipients (iterable): Iterable of recipient objects. Each object
+               must contain the fields specified in *message*.
+            message (str): Message to send. If not specified, the message set
+               via the constructor or a call to :meth:`~.utils.Mailer.setMessage`
+               is used.
+            subject (str): Subject used for all messages. Defaults to "".
+            sender (str): Sender's email address. Defaults to ``None``.
+            email (functor): Functor which returns the email from each
+               *recipient* object. Defaults to
+               
+               .. code-block:: python
+               
+                  MessageElement("email", type="attribute")
 
-        subject    Subject used for all messages. Defaults to ""
-        
-        sender     Sender email address. Defaults to None.
-
-        email      Functor which returns the email from each recipient object.
-                   Defaults to MessageElement("email", type="attribute")
+               implying that each *recipient* must provide an attribute
+               :attr:`email`.
                    
-        Returns
-        -------
-        Dictionary containing Error messages
+        Return:
+            Dictionary containing Error messages
         """
         if message:
             self.setMessage(message)
@@ -206,31 +196,26 @@ class Mailer(object):
         return errors
         
         
-        
     def setMessage(self, msg, functors=None):
         """Sets the message to send
         
-        Parameters
-        ----------
-        msg  String containing message. Fields to be replaced from other
-             objects shall be marked as ${attributeName}
-             
-        functors Dictionary with functors. If this is provided, a field of the
-                 form ${name()} will be replaced by "functors[name]", which
-                 should be a unary function accepting a recipient object as
-                 parameter. Defaults to None.
+        Arguments:
+            msg (str):  String containing message. Fields to be replaced from
+               other objects shall be marked as ``${name}``, where :attr:`name`
+               is an attribute to be provided by each *recipient* object.
+            functors (:class:`dict`): Dictionary with functors. If this is
+               provided, a field of the form ``${name()}`` will be replaced by
+               ``functors[name]``, which should be a unary function accepting a
+               *recipient* object as parameter. Defaults to ``None``.
                  
-
-        Exceptions
-        ----------
-        Raises a KeyError if functor fields are found but no functors are
-        passed
+        Raise:
+            :class:`KeyError` if functor fields are specified in message string,
+            for which no matching key exists in *functors*.
         """
         self.message=[]       
-
-        match= self.fieldPattern.search(msg)        
-        
+        match= self.fieldPattern.search(msg)          
         begin=0
+        
         while(match):
             self.message.append( MessageElement( msg[begin:match.start()] ) )
 
@@ -253,30 +238,26 @@ class Mailer(object):
         self.message.append( MessageElement(msg[begin:]) )
 
 
-
     def msgGenerator(self, obj):
         """Iterate over all message elements
         
-        Parameters
-        ----------
-        obj Object from which to extract missing fields
+        Arguments:
+            obj (object): Object from which to extract missing fields
         """
         for element in self.message:
             yield element(obj)
             
             
-            
     def getMessage(self, obj):
         """Create message for a given object
         
-        Parameters
-        ----------
-        obj Object from which to create fields. Must contain an attribute with
-            same name for each field.
+        Arguments
+            obj (object): Object from which to create fields. Must contain one
+               attribute for each specified field. Attribute names and respective
+               field names must be identical.
             
-        Returns
-        -------
-        Message with fields replaced from data object
+        Return:
+           Message with fields replaced from data object
         """
         return "".join( self.msgGenerator(obj) )
 

@@ -7,6 +7,11 @@ import io
 
 
 class UpdateUsers(ToolBase):
+    """Create user accounts for web interface
+    
+    Arguments:
+        parent (:class:`~.tools.ToolBase`): Parent tool
+    """
     
     def __init__(self, parent):
         description=str("Creates a user account for each pilot in database"
@@ -24,17 +29,14 @@ class UpdateUsers(ToolBase):
         self.mailer= None
 
 
-
     def _exec(self):
         """Execute the tool
         """
         self.parent.connectDatabase()
         self._initMailer()
         
-
         self.createUserAccounts()        
         
-
 
     def _initCmdLineArguments(self):
         """Initialise all command line arguments.
@@ -68,9 +70,8 @@ class UpdateUsers(ToolBase):
                                  default= self.config.sender)
 
 
-
     def _initMailer(self):
-        """Initialise Mailer object and connect to SMTP server
+        """Initialise :class:`~utils.Mailer` object and connect to SMTP server
         """
         if not self.config.smtp_host:
             raise RuntimeError("No SMTP server specified\n")
@@ -96,7 +97,6 @@ class UpdateUsers(ToolBase):
                              self.config.smtp_user,
                              self.config.smtp_password )
         
-
 
     def createUserAccounts(self):
         """Create user accounts and sent emails.
@@ -146,15 +146,14 @@ class UpdateUsers(ToolBase):
 
     @staticmethod
     def defaultConfiguration(config=ToolBase.defaultConfiguration()):
-        """Get Default Configuration Options
+        """Get default configuration options
         
-        Parameters
-        ----------
-        config Input configuration. Existing attributes will be overwritten.
+        Arguments:
+            config (object): Input configuration. Existing attributes will be
+               overwritten.
         
-        Returns
-        -------
-        Default configuration object
+        Return:
+            Default configuration object
         """
         config.club         = None
         config.smtp_host    = "smtp.gmail.com"
@@ -164,8 +163,4 @@ class UpdateUsers(ToolBase):
         config.sender       = None
 
         return config        
-    
-      
-
-
                     

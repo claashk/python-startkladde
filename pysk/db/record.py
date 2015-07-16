@@ -5,11 +5,15 @@ from model import Airplane, Flight, Pilot, LaunchMethod
 
 
 class RecordError(Exception):
+    """Exception raised by some methods in :class:`~.db.Record`
+    
+    Arguments:
+        message(str): Message string containing error message
+    """
     def __init__(self, message=None):
 
         # Call the base class constructor with the parameters it needs
         super(RecordError, self).__init__(message)
-
 
 
     def __str__(self):
@@ -17,19 +21,17 @@ class RecordError(Exception):
 
 
 
-
-
-class Record():
+class Record(object):
     """Record containing all information stored in database
     
     Arguments:
-        flight: Flight instance.  Defaults to Flight().
-        plane: Plane instance. Defaults to Airplane().
-        pilot: Pilot instance. Defaults to Pilot().
-        copilot: Pilot instance. Defaults to Pilot().
-        towplane: Airplane instance. Defaults to Airplane()
-        towpilot: Pilot of towplane. Defaults to Pilot()
-        launch_method: LaunchMethod instance. Defaults to LaunchMethod().
+        flight (:class:`~.db.model.Flight`): Flight instance.
+        plane (:class:`~.db.model.Airplane`): Plane instance.
+        pilot (:class:`~.db.model.Pilot`): Pilot instance.
+        copilot (:class:`~.db.model.Pilot`): Pilot instance.
+        towplane (:class:`~.db.model.Airplane`): Airplane instance.
+        towpilot (:class:`~.db.model.Pilot`): Pilot of towplane.
+        launch_method (:class:`~.db.model.LaunchMethod`): LaunchMethod instance.
     """
     
     def __init__( self, flight=None,
@@ -86,7 +88,6 @@ class Record():
                 self.launch_method.towplane_registration= self.towplane.registration
     
 
-
     def __str__(self):
         """Convert instance to string
         
@@ -109,17 +110,16 @@ class Record():
         return retval
         
         
-        
     def __repr__(self):
         return ("Startkladde Python Interface::Record('{0}')"
                .format(self.__str__()))
-        
-        
+               
    
     def updateFlight(self):
         """Update flight information based on other attributes
 
-        Raises RecordError if critical parameters are missing.
+        Raise:
+           :class:`~.db.record.RecordError` if critical parameters are missing.
         
         Return:
             List with warning messages.
@@ -156,7 +156,6 @@ class Record():
         self.flight.update()        
         
         return retval
-
                 
 
     def _setFlightParameter(self, param, critical=False):
