@@ -2,8 +2,6 @@
 
 #: Default time format used for string IO
 TIME_FORMAT= "%Y-%m-%d %H:%M"
-
-
 BOOLEAN={False : 0, True : 1}
 
 class Flight(object):

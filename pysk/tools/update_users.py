@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from tool_base import ToolBase
-from pysk.utils import Mailer
-
 import io
+
+from .tool_base import ToolBase
+from pysk.utils import Mailer
 
 
 class UpdateUsers(ToolBase):

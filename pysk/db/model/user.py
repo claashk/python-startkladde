@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 18 13:02:20 2014
-
-@author: claas
-"""
 
 from hashlib import sha1
            
-           
-           
+
 class User(object):
     """Implementation of a user record for the Startkladde users table
     

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import io, os
-
-from tool_base import ToolBase
-from pysk.utils.iterMembers import copyMembers
 from traceback import print_exc
+
+from .tool_base import ToolBase
+from pysk.utils.iterMembers import copyMembers
 from pysk.db.record import RecordError
 from pysk.db import CsvReader
 from pysk.db import ConflictHandler

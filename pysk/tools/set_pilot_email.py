@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re, io
-from tool_base import ToolBase
+from .tool_base import ToolBase
 
 
 class SetPilotEmail(ToolBase):

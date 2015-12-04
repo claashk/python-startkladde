@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from sys import stdout
 
 class UserQuery(object):

@@ -1,7 +1,6 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from tool_base import ToolBase
+from .tool_base import ToolBase
 
 class Help(ToolBase):
     """Help tool implementation

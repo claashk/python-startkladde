@@ -3,10 +3,10 @@
 import MySQLdb as mdb
 from subprocess import check_output
 
-from model import Airplane, Flight, LaunchMethod, Pilot, User
-from table import Table
-from column import Column 
-from record import Record
+from pysk.db.model import Airplane, Flight, LaunchMethod, Pilot, User
+from .table import Table
+from .column import Column 
+from .record import Record
 
 
 class Database(object):

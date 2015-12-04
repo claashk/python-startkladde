@@ -5,7 +5,7 @@ from traceback import print_exc
 from datetime import datetime
 
 from pysk.db.model import Flight, Pilot, Airplane, LaunchMethod
-from pysk.db import Record
+from .record import Record
 
 
 class CsvReader(object):

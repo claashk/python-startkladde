@@ -1,3 +1,4 @@
+#!/usr/bin/env python2 
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -5,7 +6,6 @@ from pysk.utils.iterMembers import iterMembers, copyMembers, equalMembers
 
 class Object(object):
     pass
-
 
 
 class IterMembersTestCase(unittest.TestCase):
@@ -22,7 +22,6 @@ class IterMembersTestCase(unittest.TestCase):
         self.o2.third= None        
 
 
-
     def test_iterMembers(self):
         names, values= zip( *iterMembers(self.o1) )                
         self.assertItemsEqual(names, ["first", "second", "third"])
@@ -30,7 +29,6 @@ class IterMembersTestCase(unittest.TestCase):
         names, values= zip( *iterMembers(self.o1, ignore=["second"]) )                
         self.assertItemsEqual(names, ["first", "third"])
         self.assertItemsEqual(values, ["first", 3.])
-
 
 
     def test_copyMembers(self):
@@ -46,7 +44,6 @@ class IterMembersTestCase(unittest.TestCase):
         self.assertItemsEqual(values, ["first", 3.])
 
 
-
     def test_equalMembers(self):
         self.assertTrue( equalMembers(self.o1, self.o1) )
         self.assertFalse( equalMembers(self.o1, self.o2) )
@@ -55,7 +52,6 @@ class IterMembersTestCase(unittest.TestCase):
         self.assertTrue( equalMembers(self.o1, self.o2, ignore=["third"]) )
         self.assertFalse( equalMembers(self.o1, self.o2) )
         
-
 
 def suite():
     """Get Test suite object

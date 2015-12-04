@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 18 13:02:20 2014
 
-@author: claas
-"""
 
 class LaunchMethod():
     """Startkladde launch method representation

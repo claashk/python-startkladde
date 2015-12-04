@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from model import Airplane, Flight, Pilot, LaunchMethod
+from pysk.db.model import Airplane, Flight, Pilot, LaunchMethod
 
 
 

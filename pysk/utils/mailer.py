@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 18 13:02:20 2014
 
-@author: claas
-"""
-
+import re, sys
 from smtplib import SMTP, SMTPRecipientsRefused
 from getpass import getpass
-
 from email.mime.text import MIMEText
-import re, sys
 
 
 class MessageElement(object):
