@@ -59,6 +59,17 @@ class Stats(ToolBase):
             self.displayHelp()
             return
         
+        if self.config.time_offset:
+            times=self.config.time_offset.split(":")
+            if len(times) != 2:
+                self.error("Expected time-offset with format HH:MM, got {0}\n"
+                           .format(self.config.time_offset) )
+                return
+            self.config.time_offset=timedelta( hours=int(times[0]),
+                                               minutes=int(times[1]) )
+        else:
+            self.config.time_offset= timedelta()
+
         self.parent.connectDatabase()
         
         #read records from input file
@@ -76,6 +87,9 @@ class Stats(ToolBase):
             :class:`KeyError` if no plane with this registration exists in
             Database
         """        
+        #reset sums
+        self._nLandingsTotal= int(self.config.landing_offset)
+        self.flightTimeTotal= self.config.time_offset 
         for flight in self.flights(registration):
 
             # Make sure all required fields are present
@@ -108,8 +122,11 @@ class Stats(ToolBase):
                 
             self.newEntry(flight)
        
-        self.printEntry()
-        self.printDailySums()
+        if self._currentPic:
+            self.printEntry()
+            self.printDailySums()
+        else:
+            self.write("\n++++++++++No flights found!+++++++++++\n")
             
 
     def hasErrors(self, flight):
@@ -139,9 +156,6 @@ class Stats(ToolBase):
         Return:
             ``True`` if and only if flight may be added to current entry        
         """
-        if self._currentPic != flight.pic():
-            return False
-            
         if self._currentFrom != flight.departure_location:
             return False
             
@@ -151,6 +165,9 @@ class Stats(ToolBase):
         if self._currentDay != self.date( flight):
             return False
             
+        if not self.config.non_strict and self._currentPic != flight.pic():
+            return False
+
         return True
         
         
@@ -228,8 +245,8 @@ class Stats(ToolBase):
         else:
             self.output(80*"-" + "\n")
        
-        self.output( u"{0}.{1}|{3:15s}|{5:3s}|{6:15s}|{8}|{10:5d}\n"
-                     u"{2} |{4:15s}|   |{7:15s}|{9}|{11}\n"
+        self.output( u"{0}.{1}|{3:15s}|{5:3s}|{6:15s}|{8}|{10:5d}|{12:8d}\n"
+                     u"{2} |{4:15s}|   |{7:15s}|{9}|{11}|{13:>8s}\n"
                    .format( self._currentDay[8:10],
                             self._currentDay[5:7],
                             self._currentDay[0:4],
@@ -241,7 +258,9 @@ class Stats(ToolBase):
                             datetime.strftime(self._firstStart, TIME_FORMAT),
                             datetime.strftime(self._lastLanding, TIME_FORMAT),
                             self._nLandings,
-                            self.flightTimeStr(self.flightTime)))
+                            self.flightTimeStr(self.flightTime),
+                            self._nLandingsTotal,
+                            self.flightTimeStr( self.flightTimeTotal)))
 
 
     def printDailySums(self):
@@ -276,10 +295,7 @@ class Stats(ToolBase):
             timeFilter=" AND ({0})".format(timeFilter)
         
         self._plane= self.parent.db.getPlaneByRegistration(registration)
-
         filter="(plane_id = '{0}'){1}".format(self._plane.id, timeFilter)
-        
-
         return self.parent.db.iterFlights( filter=filter,
                                            order="departure_time")
 
@@ -290,9 +306,25 @@ class Stats(ToolBase):
         self.parser.add_argument("registrations", nargs='*')
 
         self.parser.add_argument("-t", "--time",
-                                 help="Single date or date range. Format is"
+                                 help="Single date or date range. Format is "
                                  "YYYY-MM-DD for a single date and " 
                                  "<begin>:<end> for a range.")
+
+        self.parser.add_argument("-T", "--time-offset",
+                                 help="Time offset added to total flight time",
+                                 default="0:00")
+
+        self.parser.add_argument("-L", "--landing-offset",
+                                 help="Offset added to total number of "
+                                      "landings",
+                                 type= int,
+                                 default=self.config.landing_offset)
+
+        self.parser.add_argument("-S", "--non-strict",
+                                 help="Allow summation of flights with "
+                                      "different PICs",
+                                 default=self.config.non_strict,
+                                 action="store_true")
 
 
     def timeConstraints(self):
@@ -318,16 +350,13 @@ class Stats(ToolBase):
             else:
                 raise RuntimeError( "Invalid time string '{0}'"
                                     .format(self.config.time) )
-
         parts=[]
-        
         if begin:
             parts.append( "(departure_time >= '{0}')"
                           .format( datetime.strftime(begin, DATE_FORMAT) ) )
         if end:
             parts.append( "(departure_time < '{0}')"
                           .format( datetime.strftime(end, DATE_FORMAT) ) )
-                        
         return " AND ".join(parts)
                 
 
@@ -355,10 +384,8 @@ class Stats(ToolBase):
             Time span as string in format ``HH``\:``MM``.
         """
         s=int( dt.total_seconds() )
-
         hrs= s // 3600
         minutes= (s - hrs * 3600) // 60
-
         return "{0:02d}:{1:02d}".format(hrs, minutes)        
 
 
@@ -374,6 +401,8 @@ class Stats(ToolBase):
             Default configuration object
         """
         config.time= None
+        config.landing_offset= 0
+        config.non_strict=False
 
         return config        
 
