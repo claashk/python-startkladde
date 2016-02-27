@@ -3,9 +3,7 @@
 import sys
 import argparse
 from traceback import print_exc
-
-
-
+from codecs import getwriter
 
 class ToolBase(object):
     """Base class for command line tools
@@ -29,6 +27,13 @@ class ToolBase(object):
         if self.parent:
             self.importConfiguration(parent.config)
         
+        #Encoding is not set e.g. when piping. Maybe move this to Logger ?
+        if self.config.outStream.encoding is None:
+            self.config.outStream= getwriter("utf8")(self.config.outStream)
+
+        if self.config.logStream.encoding is None:
+            self.config.logStream= getwriter("utf8")(self.config.logStream)
+
         self.parser= argparse.ArgumentParser( add_help= False,
                                               description=description,
                                               **kwargs )
@@ -94,6 +99,15 @@ class ToolBase(object):
             self.displayHelp()
 
         self.importConfiguration(config)
+
+
+    def output(self, message):
+        """Print log message to output stream
+        
+        Arguments:
+            message (string): Message to print to stream
+        """
+        self.config.outStream.write( message )
 
 
     def log(self, message, verbose=0):
@@ -241,12 +255,15 @@ class ToolBase(object):
             
             - force= False
             - logStream= sys.stderr
+            - outStream= sys.stdout
             - parseCommandLine= True
             - verbose= 1
+            - debug= False
         """
         config= argparse.Namespace()
         config.force= False
         config.logStream= sys.stderr
+        config.outStream= sys.stdout
         config.parseCommandLine= True
         config.verbose= 1
         config.debug= False

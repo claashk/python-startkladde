@@ -212,9 +212,9 @@ class Stats(ToolBase):
     def printHeader(self):
         """Print log book header to log stream
         """
-        self.log(80*"+" + "\n")
-        self.log( u"Datum|Nachname,      |Anz|Startort       |Start|# Ldg\n"
-                  u"     |Vorname        |Crw|Landeort       |Ldg  |Zeit\n")
+        self.output(80*"+" + "\n")
+        self.output( u"Datum|Nachname,      |Anz|Startort       |Start|# Ldg\n"
+                     u"     |Vorname        |Crw|Landeort       |Ldg  |Zeit\n")
       
 
     def printEntry(self):
@@ -224,41 +224,41 @@ class Stats(ToolBase):
 
         if self._nLandings == self._nLandingsToday:
             #First entry of the day -> user header delimiter
-            self.log(80*"+" + "\n")
+            self.output(80*"+" + "\n")
         else:
-            self.log(80*"-" + "\n")
+            self.output(80*"-" + "\n")
        
-        self.log( u"{0}.{1}|{3:15s}|{5:3s}|{6:15s}|{8}|{10:5d}\n"
-                  u"{2} |{4:15s}|   |{7:15s}|{9}|{11}\n"
-                  .format( self._currentDay[8:10],
-                           self._currentDay[5:7],
-                           self._currentDay[0:4],
-                           pilot.last_name.decode("utf8") + ",",
-                           pilot.first_name.decode("utf8"),
-                           "/".join(self._seats),
-                           self._currentFrom.decode("utf8"),
-                           self._currentTo.decode("utf8"),
-                           datetime.strftime(self._firstStart, TIME_FORMAT),
-                           datetime.strftime(self._lastLanding, TIME_FORMAT),
-                           self._nLandings,
-                           self.flightTimeStr(self.flightTime)))
+        self.output( u"{0}.{1}|{3:15s}|{5:3s}|{6:15s}|{8}|{10:5d}\n"
+                     u"{2} |{4:15s}|   |{7:15s}|{9}|{11}\n"
+                   .format( self._currentDay[8:10],
+                            self._currentDay[5:7],
+                            self._currentDay[0:4],
+                            pilot.last_name.decode("utf8") + ",",
+                            pilot.first_name.decode("utf8"),
+                            "/".join(self._seats),
+                            self._currentFrom.decode("utf8"),
+                            self._currentTo.decode("utf8"),
+                            datetime.strftime(self._firstStart, TIME_FORMAT),
+                            datetime.strftime(self._lastLanding, TIME_FORMAT),
+                            self._nLandings,
+                            self.flightTimeStr(self.flightTime)))
 
 
     def printDailySums(self):
         """Print daily sums to log stream
         """
-        self.log(80*"=" + "\n")
-        self.log( "{0}{1:5d}\n"
+        self.output(80*"=" + "\n")
+        self.output( "{0}{1:5d}\n"
                   u"{0}{2}\n"
                   .format( 48 * " ",
                            self._nLandingsToday,
                            self.flightTimeStr(self.flightTimeToday)))
 
-        self.log("\n\n")    
+        self.output("\n\n")    
     
     
     def printTotals(self):
-        self.log("Total: TODO")
+        self.output("Total: TODO")
 
 
     def flights(self, registration):

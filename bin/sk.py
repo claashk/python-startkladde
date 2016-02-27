@@ -25,13 +25,9 @@ class AdminTool(ToolBase):
                       }
 
         description="Administrate the Statkladde Database"
-
         super(AdminTool, self).__init__(description=description)
-
         self._initCmdLineArguments()        
-        
         self.db= Database()
-
 
 
     def _exec(self):
@@ -45,11 +41,9 @@ class AdminTool(ToolBase):
         #execute sub-command
         cmd= self.commands[self.config.command]
         cmd(self.config.cmdArgs)
-        
         self.nErrors+= cmd.nErrors
         
-        
-        
+               
     def _initCmdLineArguments(self):
         """Initialise all command line arguments.
         """
@@ -83,14 +77,12 @@ class AdminTool(ToolBase):
 
     def helpMessage(self):
         msg= super(AdminTool, self).helpMessage()
-        
         msg+= "\nAllowed commands are:\n"
 
         for cmd, obj in self.commands.items():
             msg+= "  {0}: {1}\n".format(cmd, obj.parser.description)
 
         return msg
-
 
 
     def connectDatabase(self):
