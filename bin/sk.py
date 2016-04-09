@@ -5,7 +5,7 @@ import argparse, sys
 from getpass import getpass
 
 from pysk.tools import ToolBase
-from pysk.tools import Help, ImportFlights, UpdateUsers, SetPilotEmail, Stats
+from pysk.tools import Help, ImportFlights, UpdateUsers, SetPilotEmail, Stats, Export
 from pysk.db import Database
 
 
@@ -19,6 +19,7 @@ class AdminTool(ToolBase):
 
         self.commands={ "help": Help(self),
                         "import-flights" : ImportFlights(self),
+                        "export" : Export(self),
                         "create-users" : UpdateUsers(self),
                         "set-pilot-email" : SetPilotEmail(self),
                         "stats" : Stats(self) 
