@@ -714,14 +714,22 @@ class Database(object):
             *flights*.
         """
         for flight in flights:
-            yield Record( flight= flight,
-                          plane= self.plane(flight.plane_id),
-                          pilot= self.pilot(flight.pilot_id),
-                          copilot= self.pilot(flight.copilot_id),
-                          towplane= self.plane(flight.towplane_id),
-                          towpilot= self.pilot(flight.towpilot_id),
-                          launch_method= self.launchMethod(flight.launch_method_id) )
+            rec= Record(flight= flight,
+                        plane= self.plane(flight.plane_id),
+                        pilot= self.pilot(flight.pilot_id),
+                        copilot= self.pilot(flight.copilot_id),
+                        towpilot= self.pilot(flight.towpilot_id),
+                        launch_method= self.launchMethod(flight.launch_method_id) )
 
+            if rec.launch_method.type == 'airtow':
+                #towplane_id is never set on flight
+                #set towplane for record
+                towplane= rec.launch_method.towplane_registration
+                if towplane:
+                    rec.towplane= self.getPlaneByRegistration(towplane)
+                    rec.towplane_id= rec.towplane.id
+            
+            yield rec
 
     @staticmethod    
     def copy(src, dest, ignoreID=True):

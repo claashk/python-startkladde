@@ -163,9 +163,21 @@ class Flight(object):
         """Get flight time
         
         Return:
-            Flight time as :class:`timedelta` object
+            :class:`timedelta` : Flight time
         """
         return self.landing_time - self.departure_time
+
+
+    def towFlightDuration(self):
+        """Get flight time of tow plane
+        
+        Return:
+            :class:`timedelta` : Flight time of tow plane
+        """
+        if self.towflight_landing_time is None:
+            return None
+            
+        return self.towflight_landing_time - self.departure_time
 
         
     def departureTime(self, format=None):
@@ -206,6 +218,26 @@ class Flight(object):
             format= TIME_FORMAT
             
         return self.landing_time.strftime(format)
+
+
+    def towLandingTime(self, format=None):
+        """Get landing time of tow plane as string.
+        
+        Arguments:
+            format (str): Output format (in :func:`strftime` notation).
+               Defaults to :data:`~pysk.db.model.flight.TIME_FORMAT`.
+        
+        Return:
+            Landing time of tow plane as string in given format for local and
+            inbound flights. Landing location for outbound flights.
+        """
+        if not self.towflight_landing_time:
+            return ""
+        
+        if not format:
+            format= TIME_FORMAT
+            
+        return self.towflight_landing_time.strftime(format)
 
 
     def similar(self, other):
