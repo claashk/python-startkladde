@@ -2,6 +2,7 @@
 
 from datetime import datetime, timedelta
 import sys
+from os import path as osPath
 import csv
 import io
 
@@ -25,7 +26,14 @@ class Export(ToolBase):
             "Export database", parent=parent )
 
         self.config= self.defaultConfiguration(self.config)
-        self._initCmdLineArguments()        
+        self._initCmdLineArguments()
+        self.flightTypes= {
+            "normal"         : "Normalflug",
+            "training_1"     : "Schulung(1)",
+            "training_2"     : "Schulung(2)",
+            "guest_external" : "Gastflug(E)",       
+            "guest_private"  : "Gastflug"       
+        }
 
 
     def _exec(self):
@@ -40,6 +48,8 @@ class Export(ToolBase):
             self.writeCsv(sys.stdout)
         else:
             self.log("Writing output to {0}...".format(self.config.ofile))
+            if osPath.isfile(self.config.ofile) and not self.mayOverwrite(self.config.ofile):
+                raise RuntimeError("Aborted by user")
             with io.open(self.config.ofile, mode="wb") as os:
                 self.writeCsv(os)
 
@@ -54,49 +64,106 @@ class Export(ToolBase):
         """        
         writer= csv.writer(os, dialect='excel')
         writer.writerow([
-            "Date",
-            "Departure Time",
-            "Landing Time",
-            "Flight Time",
-            "Pilot Last Name",
-            "Pilot First Name",
-            "Copilot Last Name",
-            "Copilot First name"
-            "Registration",
-            "Departure Location",
-            "Landing Location",
-            "Launch Method"
+            "Datum",
+            "Nummer",
+            "Kennzeichen",
+            "LFZ Typ",
+            "LFZ Verein",
+            "Pilot Nachame",
+            "Pilot Vorname",
+            "Pilot Verein",
+            "Pilot VID (leer)",
+            "Begleiter Nachname",
+            "Begleiter Vorname",
+            "Begleiter Verein",
+            "Begleiter VID (leer)",
+            "Flugtyp",
+            "Anzahl Landungen",
+            "Modus",
+            "Startzeit",
+            "Landezeit",
+            "Flugdauer",
+            "Startart",
+            "Kennz. Schleppflugzeug (leer)",
+            "Modus Schleppflugzeug (leer)",
+            "Landung Schleppflugzeug (leer)",
+            "Startort",
+            "Zielort",
+            "Zielort Schleppflugzeug",
+            "Bemerkungen",
+            "Abrechnungshinweis",
+            "DBID"
         ])
+        
+        count= 1
         for rec in self.records():
             writer.writerow([
                 self.date(rec.flight),
+                count,
+                rec.plane.registration,
+                rec.plane.type,
+                rec.plane.club,
+                rec.pilot.last_name,
+                rec.pilot.first_name,
+                rec.pilot.club,
+                None,
+                rec.copilot.last_name,
+                rec.copilot.first_name,
+                rec.copilot.club,
+                None,
+                self.flightTypes[rec.flight.type],
+                rec.flight.num_landings,
+                rec.flight.mode,
                 rec.flight.departureTime(TIME_FORMAT),
                 rec.flight.landingTime(TIME_FORMAT),
                 self.flightTimeStr(rec.flight.duration()),
-                rec.pilot.last_name,
-                rec.pilot.first_name,
-                rec.copilot.last_name,
-                rec.plane.registration,
+                rec.launch_method.log_string,
+                None,
+                None,
+                None,
                 rec.flight.departure_location,
                 rec.flight.landing_location,
-                rec.launch_method.log_string
+                None, #Landing location towplane
+                rec.flight.comments, #Bemerkungen
+                rec.flight.accounting_notes,
+                rec.flight.id
             ])
+            count+= 1
             
             if rec.launch_method.type == 'airtow':
                 #print towflight
                 writer.writerow([
                     self.date(rec.flight),
+                    count,
+                    rec.towplane.registration,
+                    rec.towplane.type,
+                    rec.towplane.club,
+                    rec.towpilot.last_name,
+                    rec.towpilot.first_name,
+                    rec.towpilot.club,
+                    None, # pilot VID
+                    None, #Copilot last name
+                    None, # - first name
+                    None, # club
+                    None, # VID
+                    "Schlepp", #Flugtyp
+                    0, #Anz. Landungen
+                    rec.flight.towflight_mode,
                     rec.flight.departureTime(TIME_FORMAT),
                     rec.flight.towLandingTime(TIME_FORMAT),
                     self.flightTimeStr(rec.flight.towFlightDuration()),
-                    rec.towpilot.last_name,
-                    rec.towpilot.first_name,
+                    "ES",
                     None,
-                    rec.towplane.registration,
+                    None,
+                    None,
                     rec.flight.departure_location,
                     rec.flight.towflight_landing_location,
-                    "Tow"
+                    None, #towplance landing location
+                    "Schleppflug für Flug Nr. {0}".format(rec.flight.id),
+                    None,
+                    rec.flight.id
                 ])
+                count+= 1
 
             
     def records(self):
@@ -120,6 +187,10 @@ class Export(ToolBase):
                                  help="Path to output file",
                                  default= self.config.ofile)
 
+        self.parser.add_argument("-f", "--force",
+                                 help="Overwrite existing files without warning",
+                                 default= self.config.force,
+                                 action="store_true")
 
     def timeConstraints(self):
         """Convert user specified time constraints to MySQL search string
